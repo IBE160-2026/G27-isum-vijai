@@ -8,4 +8,4 @@ Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og
 
 - Thor E Isum
 - Akshayah Vijai
-- Navn ikke oppgitt (medlem 1)
+- Abena Vijai
