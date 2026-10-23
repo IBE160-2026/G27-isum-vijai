@@ -12,12 +12,12 @@ from prototype.generator import (
 st.set_page_config(page_title="Notater til sammendrag og quiz", page_icon="📚")
 st.title("Foredragsnotater → Sammendrag & Quizgenerator")
 st.write(
-    "Lim inn notater for å prøve den første produktflyten. Teksten brukes bare "
-    "til inputkontroll; demoresultatene endres ikke basert på notatene."
+    "Lim inn notater for et enkelt, lokalt utdragssammendrag og begreper. "
+    "Quizspørsmålene er fortsatt faste demonstrasjonsdata."
 )
 st.warning(
-    "Prototyp: sammendrag, begreper og quiz er faste demonstrasjonsdata. "
-    "De er ikke generert fra notatene du limer inn. Ingen KI-tjeneste brukes."
+    "Sammendrag og begreper velges direkte fra notatene med lokal tekstbehandling. "
+    "Dette er ikke KI-generering. Quizzen er demo-data, og ingen KI-tjeneste brukes."
 )
 
 with st.form("notes_form"):
@@ -26,7 +26,7 @@ with st.form("notes_form"):
         placeholder="Lim inn notatene dine her …",
         height=220,
     )
-    generate_clicked = st.form_submit_button("Generer demonstrasjonsresultat")
+    generate_clicked = st.form_submit_button("Lag sammendrag og begreper")
 
 if generate_clicked:
     st.session_state.pop("prototype_result", None)
@@ -43,15 +43,19 @@ if generate_clicked:
 result = st.session_state.get("prototype_result")
 if result:
     st.divider()
-    st.caption("DEMO-DATA · Ikke generert fra brukerens notater")
+    st.caption("SAMMENDRAG OG BEGREPER · LOKAL TEKSTBEHANDLING · IKKE KI")
 
     st.header("Sammendrag")
     st.write(result["summary"])
 
     st.header("Sentrale begreper")
-    st.write(" · ".join(result["concepts"]))
+    if result["concepts"]:
+        st.write(" · ".join(result["concepts"]))
+    else:
+        st.info("Fant ingen tydelige begreper i teksten.")
 
-    st.header("Quiz · demonstrasjon")
+    st.header("Quiz · demonstrasjonsdata")
+    st.caption("Disse faste quizspørsmålene er ikke laget fra notatene.")
     with st.form("quiz_form"):
         answers = {}
         for index, question in enumerate(result["questions"]):
