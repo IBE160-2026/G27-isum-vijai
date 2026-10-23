@@ -2582,3 +2582,269 @@ Rapporter på norsk.
 - **Filer opprettet eller endret:** `docs/CODEX_PROMPT_LOG.md`.
 - **Verifiseringsresultater:** Staged innholdsskann fant ingen hemmeligheter, miljøfiler, cachefiler, midlertidige filer, binærfiler, e-postadresser eller de to redigerte kontonavnene. Commit `6e6cb8155fae368197544bc42b9400fcbda30129` med meldingen `Initialiser BMAD og prosessdokumentasjon` ble pushet. GitHub API returnerte `AksVijai`; `origin/main` og lokal `HEAD` peker begge på samme commit.
 - **Gjenstående problemer:** `git diff --cached --check` rapporterte whitespace-/linjesluttadvarsler i BMAD-ressurser og ekstra blanklinjer i dokumenter; filene ble ikke endret. Promptloggen ble oppdatert etter push for å registrere faktisk resultat og er derfor en lokal, ikke-committet endring.
+
+## PROMPT 020 – Kartlegg prosjektet før produktutvikling
+
+- **Dato:** 2026-10-23
+- **Formål:** Kartlegge repository, krav, BMAD, eksisterende kode og tester før produktutvikling, og foreslå en konkret MVP-plan.
+- **Full original prompt:**
+
+```text
+PROMPT 020 – Kartlegg prosjektet før produktutvikling
+
+Prosjekt
+
+IBE160 – G27-isum-vijai
+
+Produkt: Foredragsnotater → Sammendrag & Quizgenerator.
+
+Mål
+
+Vi ønsker å ferdigstille en fungerende applikasjon ved hjelp av BMAD og Codex CLI.
+
+Vi skal utvikle, teste, committe og pushe arbeidet underveis.
+
+GitHub-kontoen som skal brukes til push, er AksVijai.
+
+Oppgave
+
+Undersøk det eksisterende prosjektet før implementasjon.
+
+1. Kontroller Git
+
+* Bekreft riktig repository.
+* Kontroller aktiv branch og Git-status.
+* Kontroller eksisterende applikasjonskode.
+* Ikke endre Git-historikken.
+
+2. Les prosjektkravene
+
+Les:
+
+* README.md
+* product-brief.md
+* tilbakemelding-product-brief.md
+* docs/PROJECT_CONTEXT.md
+* docs/decisions/DECISION_LOG.md
+
+Identifiser:
+
+* Obligatoriske funksjoner.
+* Faglærerens tilbakemeldinger.
+* Forslag som ikke er obligatoriske.
+* Uavklarte beslutninger.
+
+3. Kontroller BMAD
+
+* Undersøk eksisterende BMAD-installasjon.
+* Identifiser tilgjengelige agenter og arbeidsflyter.
+* Finn ut om PRD, arkitektur eller implementeringsplan allerede finnes.
+* Ikke installer BMAD på nytt.
+
+4. Kontroller kode og tester
+
+* Finn eksisterende applikasjonskode.
+* Finn eksisterende tester.
+* Identifiser teknologistakken hvis den allerede er valgt.
+* Ikke anta at funksjoner er implementert.
+
+5. Lag en konkret utviklingsplan
+
+Foreslå den korteste forsvarlige veien til et fungerende produkt.
+
+Planen skal inneholde:
+
+* Første fungerende versjon (MVP).
+* Funksjoner som må implementeres.
+* Rekkefølge for utviklingen.
+* Tester som skal kjøres.
+* Når vi bør committe og pushe.
+* Eventuelle beslutninger som må avklares.
+
+6. Dokumentasjon
+
+Registrer denne prompten med full originaltekst i docs/CODEX_PROMPT_LOG.md.
+
+Oppdater utførelsesstatus etter at kontrollen er gjennomført.
+
+Ikke endre andre prosjektfiler i denne oppgaven.
+
+Viktige regler
+
+* Ikke gjett.
+* Ikke slett eksisterende arbeid.
+* Ikke endre applikasjonskode ennå.
+* Ikke kjør rebase eller amend.
+* Ikke commit eller push i denne oppgaven.
+* Ikke eksponer hemmeligheter.
+* Rapporter på norsk.
+
+Sluttrapport
+
+Rapporter:
+
+A. Hva som allerede er ferdig
+B. Hva som mangler
+C. Krav fra Product Brief og faglærer
+D. BMAD-status
+E. Teknologistakk
+F. Anbefalt MVP
+G. Konkret implementeringsrekkefølge
+H. Første utviklingsoppgave
+I. Git-status
+
+Stopp etter rapporten.
+```
+
+- **Utførelsesstatus:** Kartlegging fullført; ingen implementasjon, installasjon, Git-historikkendring, commit eller push utført.
+- **Sammendrag av fullført arbeid:** Bekreftet repository `IBE160-2026/G27-isum-vijai`, branch `main`, ren arbeidsmappe som følger `origin/main`, eksisterende krav og åpne produktbeslutninger. Ingen applikasjonskode, implementeringstester, PRD, arkitektur eller stories/epics ble funnet. Prosjektets BMAD-installasjon og dokumenterte arbeidsflyter ble kontrollert.
+- **Filer opprettet eller endret:** Kun `docs/CODEX_PROMPT_LOG.md`.
+- **Verifiseringsresultater:** `origin` er `https://github.com/IBE160-2026/G27-isum-vijai.git`; HEAD var `8fa62c3` på både `main` og `origin/main` ved kontroll. `gh auth status` viste AksVijai som aktivt valgt konto, men tokenet er ugyldig; autentisert GitHub-konto kan derfor ikke verifiseres i denne økten. Lokal Git-identitet er `AksVijai <akshayah.vijai@himolde.no>`. Lesing av README, product brief, faglærertilbakemelding, prosjektkontekst og beslutningslogg bekreftet krav og uavklarte valg. BMAD-manifestet og `docs/bmad/WORKFLOW_STATUS.md` viser BMad Method v6.12.4, agentene Analyst, Architect, Dev, PM og UX Designer og plan-/arbeidsflyter som PRD, Architecture, UX, Spec, Epics and Stories, Sprint Planning, Build, Code Review, QA E2E, Retrospective og Walkthrough. Ingen testfiler eller applikasjonsstakk ble funnet.
+- **Gjenstående problemer:** Før implementasjon må gruppen velge teknologistakk, KI-tjeneste/nøkkel- og kostnadsmodell, testmodus uten nøkkel, quizformat og om interaktiv quiz, lagring eller kildehenvisninger inngår i v1. Målbare akseptansekriterier og testnotater/fasit må konkretiseres. GitHub CLI-tokenet for AksVijai er ugyldig; ingen autentisert GitHub-operasjon ble forsøkt.
+
+## PROMPT 021 – Utarbeid PRD med BMAD
+
+- **Dato:** 2026-10-23
+- **Formål:** Lage en kildebasert PRD med prosjektets installerte BMAD-metode, bevare åpne produkt- og teknologivalg, og registrere arbeidsflyt og resultat.
+- **Full original prompt:**
+
+```text
+PROMPT 021 – Utarbeid PRD med BMAD
+
+Prosjekt
+
+IBE160 – G27-isum-vijai
+
+Produkt: Foredragsnotater → Sammendrag & Quizgenerator.
+
+Mål
+
+Utarbeide en konkret, gjennomførbar PRD som gjør at vi kan begynne å implementere applikasjonen.
+
+Bruk prosjektets installerte BMAD-metode.
+
+Oppgave
+
+1. Undersøk eksisterende krav
+
+Les:
+
+* product-brief.md
+* tilbakemelding-product-brief.md
+* docs/PROJECT_CONTEXT.md
+* docs/decisions/DECISION_LOG.md
+* docs/bmad/WORKFLOW_STATUS.md
+
+Ikke finn på krav eller beslutninger.
+
+2. Bruk BMAD
+
+Finn den installerte BMAD-arbeidsflyten for PRD.
+
+Følg arbeidsflytens faktiske instruksjoner.
+
+Ikke installer BMAD på nytt.
+
+Dokumenter hvilken BMAD-agent og arbeidsflyt som brukes.
+
+3. Utarbeid PRD
+
+PRD-en skal beskrive:
+
+* Produktets formål.
+* Målgruppe.
+* Brukerbehov.
+* Funksjonelle krav.
+* Ikke-funksjonelle krav.
+* Brukerflyt.
+* MVP-avgrensning.
+* Feilhåndtering.
+* Personvern og sikkerhet.
+* Testbare akseptansekriterier.
+
+4. Vurder anbefalt MVP
+
+Vurder følgende som et forslag, ikke som vedtatte krav:
+
+* PDF-opplasting.
+* Tekstuttrekk.
+* Sammendrag.
+* Quizgenerering.
+* Interaktiv quiz.
+* Resultatvisning.
+* Testmodus uten API-nøkkel.
+
+Identifiser hva Product Brief faktisk krever, og hva som eventuelt må godkjennes av gruppen.
+
+5. Teknologistakk
+
+Vurder:
+
+* Python.
+* Streamlit.
+* PyMuPDF.
+* pytest.
+* En KI-tjeneste.
+* Lokal testmodus.
+
+Ikke presenter teknologistakken som vedtatt før beslutningen er dokumentert.
+
+6. Dokumentasjon
+
+Registrer PROMPT 021 i docs/CODEX_PROMPT_LOG.md med full originaltekst og faktisk resultat.
+
+Oppdater docs/bmad/WORKFLOW_STATUS.md med korrekt status.
+
+Opprett PRD i plasseringen som følger av den installerte BMAD-arbeidsflyten.
+
+Ikke overskriv eksisterende dokumenter.
+
+7. Kvalitetskontroll
+
+Kontroller at:
+
+* Kravene kan spores til kildene.
+* Anbefalinger er merket som forslag.
+* Uavklarte beslutninger er synlige.
+* Akseptansekriteriene kan testes.
+* Ingen applikasjonskode er endret.
+
+Vis:
+
+* git status --short
+* git diff --stat
+* git diff --check
+
+Regler
+
+* Ikke gjett.
+* Ikke installer noe.
+* Ikke endre applikasjonskode ennå.
+* Ikke endre Git-historikk.
+* Ikke kjør rebase eller amend.
+* Ikke commit eller push ennå.
+* Ikke eksponer hemmeligheter.
+* Rapporter på norsk.
+
+Sluttrapport
+
+Rapporter:
+
+A. BMAD-agent og arbeidsflyt
+B. PRD-filens plassering
+C. Bekreftede krav
+D. Foreslåtte MVP-funksjoner
+E. Uavklarte beslutninger
+F. Akseptansekriterier
+G. Endrede filer
+H. Git-status
+I. Anbefalt første implementeringsoppgave
+
+Stopp etter rapporten.
+```
+
+- **Utførelsesstatus:** BMAD PRD-forfatting og kvalitetsgjennomgang fullført; PRD-en er `draft` og ikke implementeringsklar før gruppen har avklart de åpne valgene. Ingen installasjon, applikasjonskodeendring, commit eller push.
+- **Sammendrag av fullført arbeid:** Brukte BMM `bmad-prd`-arbeidsflyten med PM-agentrollen (John). Opprettet PRD og tillegg etter den konfigurerte BMAD-malen; oppdaterte BMAD-status. Kildene ble gjennomgått, og krav fra briefen ble skilt fra lærerens forslag og gruppens uavklarte valg.
+- **Filer opprettet eller endret:** `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/prd.md`, `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/addendum.md`, `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/.memlog.md`, `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/review-rubric.md`, `docs/bmad/WORKFLOW_STATUS.md` og `docs/CODEX_PROMPT_LOG.md`.
+- **Verifiseringsresultater:** Kildehenvisninger finnes i PRD-en; krav har testbare konsekvenser og AC-er; forslag og åpne beslutninger er særskilt merket. `.memlog.md` opprettet og oppdatert med BMAD-scriptet. BMAD-rubrikken vurderte PRD-en som adekvat, men ikke implementeringsklar, med 4 høye, 6 middels og 3 lave funn. Redaksjonell struktur- og språkkontroll ble gjennomført og konkrete språkfunn rettet. `git diff --check` kjørt etter endringene; ingen applikasjonskode er endret.
+- **Gjenstående problemer:** Gruppen må avklare punktene i PRD §9, særlig stakk, KI/dataflyt, PDF-grenser, quizformat og utvidet MVP, før implementeringsstories kan låses. Første oppgave er å ta disse beslutningene og registrere dem i beslutningsloggen.

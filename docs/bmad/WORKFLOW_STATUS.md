@@ -20,3 +20,12 @@ Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene fø
 ## Neste aktuelle fase
 
 **Foreslått:** Avklar v1-scope og åpne beslutninger i [beslutningsloggen](../decisions/DECISION_LOG.md), oppdater produktbriefen når gruppen har vedtatt endringer, og bruk deretter BMM-planleggingsskills som PRD og Architecture. Ingen PRD, arkitektur eller epics er opprettet gjennom installasjonen.
+
+## PROMPT 021 – PRD
+
+- **Dato:** 2026-10-23.
+- **BMAD-arbeidsflyt:** Prosjektets `bmad-prd`-skill (BMM PRD). Konfigurasjonen løser PRD-utdata til `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/`.
+- **BMAD-agentrolle:** PM (John, Product Manager) for krav- og PRD-arbeidet. Arkitektur- og teknologivalg er ikke gjort.
+- **Status:** BMM PRD-forfatting og kvalitetsgjennomgang er gjennomført; PRD-en står som `draft` fordi nødvendige produkt- og teknologivalg fortsatt mangler gruppevedtak. BMAD-rubrikken vurderte den som adekvat, men ikke implementeringsklar før åpne grenser og akseptansekriterier er avklart. PRD-en skiller mellom krav fra Product Brief, lærerens forslag og gruppens uavklarte valg.
+- **Artefakter:** `prd.md`, `addendum.md` (ikke-bindende teknologistakkvurdering), `.memlog.md` og `review-rubric.md` i PRD-mappen. Ingen PRD, arkitektur eller epics fantes før denne arbeidsøkten.
+- **Uavklart før implementasjon:** Quizinteraksjon, lagring, KI-tjeneste/nøkkel/kostnad, testmodus, teknologistakk, quizformat og -grenser, målbare kriterier for kildebinding og eventuell OCR. Se PRD §9 og [beslutningsloggen](../decisions/DECISION_LOG.md).
