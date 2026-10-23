@@ -29,3 +29,12 @@ Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene fø
 - **Status:** BMM PRD-forfatting og kvalitetsgjennomgang er gjennomført; PRD-en står som `draft` fordi nødvendige produkt- og teknologivalg fortsatt mangler gruppevedtak. BMAD-rubrikken vurderte den som adekvat, men ikke implementeringsklar før åpne grenser og akseptansekriterier er avklart. PRD-en skiller mellom krav fra Product Brief, lærerens forslag og gruppens uavklarte valg.
 - **Artefakter:** `prd.md`, `addendum.md` (ikke-bindende teknologistakkvurdering), `.memlog.md` og `review-rubric.md` i PRD-mappen. Ingen PRD, arkitektur eller epics fantes før denne arbeidsøkten.
 - **Uavklart før implementasjon:** Quizinteraksjon, lagring, KI-tjeneste/nøkkel/kostnad, testmodus, teknologistakk, quizformat og -grenser, målbare kriterier for kildebinding og eventuell OCR. Se PRD §9 og [beslutningsloggen](../decisions/DECISION_LOG.md).
+
+## PROMPT 022 – Første prototype
+
+- **Dato:** 2026-10-23.
+- **Arbeidsflyt:** BMM Build (`bmad-build`), one-shot for en liten, avgrenset prototype.
+- **Prototypvalg:** Python og Streamlit for UI, lokal deterministisk mock for resultatene, pytest-kompatible tester. Dette følger den uttrykkelige prototypetillatelsen i PROMPT 022; det er ikke et endelig produksjonsarkitekturvedtak og endrer ikke DEC-005.
+- **Omfang:** Tekstinput, feilhåndtering, mock-sammendrag/begreper/quiz og lokal quizbesvarelse. Ingen PDF-uttrekk, ekstern KI, API-nøkkel eller lagring.
+- **Verifisering:** Python 3.12 ble brukt i et isolert `.venv`. Etter godkjent installasjon av `requirements.txt` bestod pytest med 6 tester, og unittest-kjøringen bestod med 6 tester. `compileall` bestod. Streamlit startet kun på `127.0.0.1:8765`, og helsesjekken på `/_stcore/health` returnerte `ok`; lokal HTTP-server ble stoppet etter kontroll. Ingen ekstern KI eller API-nøkkel er brukt. Eksisterende PRD-`.memlog.md` ble ikke endret.
+- **Avgrensninger:** PDF-uttrekk, ekstern KI, lagring og produksjonsarkitektur er ikke implementert. Denne prototypen avgjør ikke de åpne gruppespørsmålene i DEC-001–DEC-005.

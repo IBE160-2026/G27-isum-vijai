@@ -2848,3 +2848,200 @@ Stopp etter rapporten.
 - **Filer opprettet eller endret:** `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/prd.md`, `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/addendum.md`, `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/.memlog.md`, `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/review-rubric.md`, `docs/bmad/WORKFLOW_STATUS.md` og `docs/CODEX_PROMPT_LOG.md`.
 - **Verifiseringsresultater:** Kildehenvisninger finnes i PRD-en; krav har testbare konsekvenser og AC-er; forslag og åpne beslutninger er særskilt merket. `.memlog.md` opprettet og oppdatert med BMAD-scriptet. BMAD-rubrikken vurderte PRD-en som adekvat, men ikke implementeringsklar, med 4 høye, 6 middels og 3 lave funn. Redaksjonell struktur- og språkkontroll ble gjennomført og konkrete språkfunn rettet. `git diff --check` kjørt etter endringene; ingen applikasjonskode er endret.
 - **Gjenstående problemer:** Gruppen må avklare punktene i PRD §9, særlig stakk, KI/dataflyt, PDF-grenser, quizformat og utvidet MVP, før implementeringsstories kan låses. Første oppgave er å ta disse beslutningene og registrere dem i beslutningsloggen.
+
+## PROMPT 022 – Bygg første fungerende prototype
+
+- **Dato:** 2026-10-23
+- **Formål:** Bygge en liten fungerende tekst-til-resultat-prototype med lokale demonstrasjonsdata, feilhåndtering, tester og oppstartsdokumentasjon.
+- **Full original prompt:**
+
+```text
+PROMPT 022 – Bygg første fungerende prototype
+
+Prosjekt
+
+IBE160 – G27-isum-vijai
+
+Produkt: Foredragsnotater → Sammendrag & Quizgenerator.
+
+Mål
+
+Gå fra planlegging til faktisk produktutvikling.
+
+Bygg en liten, fungerende prototype som demonstrerer produktets kjerneflyt, uten å være avhengig av en ekstern KI-tjeneste.
+
+1. Undersøk prosjektet
+
+Les følgende dokumenter:
+
+* product-brief.md
+* tilbakemelding-product-brief.md
+* docs/PROJECT_CONTEXT.md
+* docs/decisions/DECISION_LOG.md
+* docs/bmad/WORKFLOW_STATUS.md
+* _bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/prd.md
+
+Undersøk også eksisterende prosjektstruktur.
+
+Ikke anta at foreslåtte teknologier eller funksjoner allerede er godkjent av gruppen.
+
+2. Teknologivalg
+
+Vurder følgende som en enkel prototypestakk:
+
+* Python
+* Streamlit
+* pytest
+* Lokal mock for sammendrag og quiz
+* PyMuPDF for senere PDF-støtte
+
+Dersom dette ikke er i konflikt med dokumenterte krav eller beslutninger, kan du bruke Python og Streamlit til en isolert prototype.
+
+Dokumenter tydelig at dette er et foreløpig prototypvalg, ikke en endelig beslutning om produksjonsarkitektur.
+
+Ikke installer avhengigheter automatisk uten å forklare hva som trengs.
+
+3. Bygg en fungerende prototype
+
+Lag en enkel applikasjon med følgende funksjoner:
+
+A. Tekstinput
+
+Brukeren skal kunne:
+
+* Åpne applikasjonen.
+* Lime inn forelesningsnotater.
+* Trykke på en knapp for å generere resultat.
+
+B. Sammendrag
+
+Applikasjonen skal vise et eksempel på et sammendrag.
+
+I denne første versjonen brukes en lokal mock.
+
+Det må fremgå tydelig at resultatet er demonstrasjonsdata og ikke et ekte KI-generert sammendrag.
+
+C. Quiz
+
+Applikasjonen skal vise eksempelspørsmål basert på lokal mock.
+
+Dersom det er enkelt og innenfor prototypens omfang, kan brukeren velge svar og få tilbakemelding.
+
+Ikke presenter mock-spørsmål som faktisk generert fra brukerens notater.
+
+D. Feilhåndtering
+
+Applikasjonen skal håndtere:
+
+* Tom tekstinput.
+* Tekst som bare inneholder mellomrom.
+* Uventede feil ved resultatgenerering.
+
+Vis forståelige feilmeldinger på norsk.
+
+4. Struktur
+
+Lag en enkel og ryddig prosjektstruktur.
+
+Skill mellom:
+
+* Brukergrensesnitt.
+* Logikk for generering av resultater.
+* Mock-data.
+* Tester.
+
+Ikke bygg unødvendig kompleks arkitektur.
+
+5. Tester
+
+Lag automatiserte tester med pytest.
+
+Test minst:
+
+1. Gyldig tekstinput.
+2. Tom tekstinput.
+3. Input med bare mellomrom.
+4. At mock-resultatet har forventet struktur.
+5. At feil håndteres på en kontrollert måte.
+
+Kjør testene dersom miljøet tillater det.
+
+Rapporter hvilke tester som faktisk ble kjørt og resultatene.
+
+Ikke rapporter tester som bestått dersom de ikke ble kjørt.
+
+6. Dokumentasjon
+
+Oppdater README med:
+
+* Hva prototypen gjør.
+* Hva som ennå ikke er implementert.
+* Hvordan applikasjonen startes.
+* Hvordan testene kjøres.
+* At sammendrag og quiz foreløpig er mock-data.
+
+Oppdater relevante BMAD-statusdokumenter.
+
+Registrer PROMPT 022 med originaltekst og faktisk resultat i docs/CODEX_PROMPT_LOG.md.
+
+Ikke overskriv eksisterende dokumentasjon.
+
+7. Git-regler
+
+* Bruk eksisterende prosjekt.
+* Ikke installer BMAD på nytt.
+* Ikke endre Git-historikken.
+* Ikke bruk rebase eller amend.
+* Ikke bruk force push.
+* Ikke commit eller push automatisk.
+* Ikke legg til API-nøkler eller hemmeligheter.
+* Ikke endre andre gruppemedlemmers arbeid unødvendig.
+* La eksisterende .memlog.md være urørt.
+
+8. Kvalitetskontroll
+
+Kontroller:
+
+* At prototypen er enkel å kjøre.
+* At brukergrensesnittet er på norsk.
+* At mock-data er tydelig merket.
+* At applikasjonen ikke krever API-nøkkel.
+* At eksisterende dokumentasjon er bevart.
+* At testene fungerer dersom avhengighetene er tilgjengelige.
+
+Vis:
+
+* git status --short
+* git diff --stat
+* git diff --check
+
+9. Sluttrapport
+
+Rapporter på norsk:
+
+A. Hvilken teknologistakk som ble brukt.
+
+B. Hvilke filer som ble opprettet.
+
+C. Hvilke funksjoner som faktisk fungerer.
+
+D. Hvordan applikasjonen startes.
+
+E. Hvilke tester som ble kjørt.
+
+F. Hvilke funksjoner som fortsatt mangler.
+
+G. Hvilke tekniske beslutninger gruppen må godkjenne.
+
+H. Git-status.
+
+I. Anbefalt neste implementeringsoppgave.
+
+Stopp etter rapporten. Ikke commit eller push.
+```
+
+- **Utførelsesstatus:** Prototypen er implementert. Avhengigheter ble installert i ignorert `.venv/` etter at behovet var forklart og godkjent. Ingen commit eller push.
+- **Sammendrag av fullført arbeid:** Laget Streamlit UI på norsk, tekstinput, faste demonstrasjonsdata for sammendrag/begreper/quiz, interaktivt quizsvar med fasit/poengsum og kontrollert feilvisning. UI binder bare til `127.0.0.1`. Lagt til pytest-kompatible tester og README-kjøreinstruksjoner. Stacken er foreløpig og ikke produksjonsvedtak.
+- **Filer opprettet eller endret:** `app.py`, `prototype/__init__.py`, `prototype/generator.py`, `prototype/mock_data.py`, `tests/test_generator.py`, `pytest.ini`, `requirements.txt`, `.streamlit/config.toml`, `README.md`, `docs/bmad/WORKFLOW_STATUS.md`, `docs/CODEX_PROMPT_LOG.md` og `_bmad-output/implementation-artifacts/spec-first-working-prototype.md`. Eksisterende `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/.memlog.md` ble ikke endret eller lagt til i Git.
+- **Verifiseringsresultater:** Etter blindgjennomgang og rettinger: `./.venv/bin/pytest -q`: 6 tester bestått. `./.venv/bin/python -m unittest discover -s tests -v`: 6 tester bestått. `compileall` for app, prototype og tester bestod. Streamlit startet på `127.0.0.1:8765`; `curl http://127.0.0.1:8765/_stcore/health` returnerte `ok`. Serveren ble stoppet etter kontroll.
+- **Gjenstående problemer:** PDF-opplasting/-uttrekk og PyMuPDF, ekte KI-generering, lagring og produksjonsarkitektur er ikke implementert. Python/Streamlit er foreløpig prototypestakk; gruppen må fortsatt godkjenne produksjonsvalg i beslutningsloggen.
