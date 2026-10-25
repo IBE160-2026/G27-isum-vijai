@@ -3045,3 +3045,546 @@ Stopp etter rapporten. Ikke commit eller push.
 - **Filer opprettet eller endret:** `app.py`, `prototype/__init__.py`, `prototype/generator.py`, `prototype/mock_data.py`, `tests/test_generator.py`, `pytest.ini`, `requirements.txt`, `.streamlit/config.toml`, `README.md`, `docs/bmad/WORKFLOW_STATUS.md`, `docs/CODEX_PROMPT_LOG.md` og `_bmad-output/implementation-artifacts/spec-first-working-prototype.md`. Eksisterende `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/.memlog.md` ble ikke endret eller lagt til i Git.
 - **Verifiseringsresultater:** Etter blindgjennomgang og rettinger: `./.venv/bin/pytest -q`: 6 tester bestått. `./.venv/bin/python -m unittest discover -s tests -v`: 6 tester bestått. `compileall` for app, prototype og tester bestod. Streamlit startet på `127.0.0.1:8765`; `curl http://127.0.0.1:8765/_stcore/health` returnerte `ok`. Serveren ble stoppet etter kontroll.
 - **Gjenstående problemer:** PDF-opplasting/-uttrekk og PyMuPDF, ekte KI-generering, lagring og produksjonsarkitektur er ikke implementert. Python/Streamlit er foreløpig prototypestakk; gruppen må fortsatt godkjenne produksjonsvalg i beslutningsloggen.
+
+## PROMPT 023 – Lokal tekstbehandling
+
+- **Statuskontroll:** 2026-10-23 kl. 22:29 Europe/Oslo (GitHub `updatedAt` for PR: 2026-10-23T18:46:07Z).
+- **PR-status:** PR #1 er `OPEN`, base `main`, head branch `feature/023-local-text-processing`, head SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`. Se [PR #1](https://github.com/IBE160-2026/G27-isum-vijai/pull/1). PROMPT 023-funksjonene er derfor ikke registrert som del av `main`.
+- **Testbevis:** PROMPT 023-kjøringen med 15 beståtte tester er beskrevet i [testloggen](testing/TEST_LOG.md). Kjøringen skjedde før commitopprettelsen på arbeidsfila som senere ble denne head-committen.
+- **Historiske mellomresultater:** Tilgjengelig materiale dokumenterer ikke en separat kjøring med 14 tester. Kun sluttresultatet med 15 beståtte tester er registrert; et mellomresultat er derfor ikke lagt til eller rekonstruert.
+- **Full original prompt (gjengitt ordrett fra brukermeldingen):**
+
+```text
+PROMPT 023 – BMAD og smidig produktutvikling
+
+Prosjekt
+
+IBE160 – G27-isum-vijai
+
+Produkt: Foredragsnotater → Sammendrag & Quizgenerator.
+
+Mål
+
+Fortsette utviklingen av produktet med BMAD Method v6.12.4 og smidig utviklingsmetodikk.
+
+BMAD skal brukes aktivt, ikke bare nevnes i dokumentasjonen.
+
+Vi ønsker korte utviklingssykluser, små oppgaver, fungerende kode, automatiserte tester og jevnlige leveranser.
+
+1. Kontroller prosjektstatus
+
+Les:
+
+* product-brief.md
+* tilbakemelding-product-brief.md
+* PRD-en i _bmad-output/planning-artifacts/prds/
+* docs/PROJECT_CONTEXT.md
+* docs/decisions/DECISION_LOG.md
+* docs/bmad/WORKFLOW_STATUS.md
+* _bmad-output/implementation-artifacts/spec-first-working-prototype.md
+* Eksisterende applikasjonskode og tester.
+
+Kontroller Git-status.
+
+Ikke overskriv eller endre eksisterende arbeid uten grunn.
+
+Den eksisterende .memlog.md skal bevares og ikke inkluderes i Git.
+
+2. Bruk installert BMAD
+
+Finn de faktiske BMAD-agentene og arbeidsflytene som er installert i prosjektet.
+
+Les instruksjonene deres.
+
+Vurder hvilke av følgende som er nødvendige nå:
+
+* Architecture
+* Epics & Stories
+* Sprint Planning
+* Dev / Build
+* Code Review
+* QA
+
+Ikke installer BMAD på nytt.
+
+Ikke finn på BMAD-kommandoer eller arbeidsflyter.
+
+Dokumenter hvilke agenter og arbeidsflyter som faktisk ble brukt.
+
+3. Planlegg neste utviklingssyklus
+
+Målet er å videreutvikle prototypen slik at resultatene kan baseres på brukerens forelesningsnotater.
+
+Undersøk hvilke beslutninger som fortsatt er åpne.
+
+Lag en liten, konkret utviklingsoppgave med:
+
+* Brukerhistorie.
+* Akseptansekriterier.
+* Tekniske oppgaver.
+* Testtilfeller.
+* Definisjon av ferdig (Definition of Done).
+
+Skill mellom:
+
+1. Enkel lokal tekstbehandling.
+2. KI-generert sammendrag og quiz.
+3. Eksisterende demonstrasjonsdata.
+
+Ikke presenter enkel lokal tekstbehandling som ekte KI.
+
+4. Smidig arbeidsmetode
+
+Bruk en enkel iterativ prosess:
+
+1. Velg én liten brukerhistorie.
+2. Avklar nødvendige beslutninger.
+3. Implementer funksjonen.
+4. Kjør automatiserte tester.
+5. Kontroller funksjonen manuelt.
+6. Gjennomfør relevant BMAD Code Review.
+7. Oppdater oppgavestatus.
+8. Klargjør arbeidet for commit og push.
+
+Unngå store endringer som er vanskelige å teste.
+
+5. Teknisk plan
+
+Vurder hvordan eksisterende Streamlit-prototype kan videreutvikles uten unødvendig omskriving.
+
+Bevar fungerende kode og eksisterende tester.
+
+Prioriter en løsning som:
+
+* Er enkel å forstå.
+* Kan testes lokalt.
+* Ikke krever API-nøkkel for grunnleggende tester.
+* Senere kan integreres med en KI-tjeneste.
+* Håndterer ugyldig input.
+* Skiller demonstrasjonsdata fra faktisk generert innhold.
+
+6. Gjennomføring
+
+Følg de relevante BMAD-arbeidsflytene.
+
+Hvis nødvendige arkitektur- eller produktbeslutninger mangler, skal du presentere konkrete alternativer og be om godkjenning før implementasjon.
+
+Når nødvendige beslutninger er avklart, implementer én liten brukerhistorie.
+
+Ikke start flere store funksjoner samtidig.
+
+7. Tester og kvalitet
+
+Bruk pytest.
+
+Kjør eksisterende tester og nye relevante tester.
+
+Kontroller at tidligere funksjonalitet fortsatt fungerer.
+
+Bruk relevant BMAD Code Review dersom arbeidsflyten støtter dette.
+
+Rapporter eventuelle feil og begrensninger.
+
+8. Dokumentasjon
+
+Oppdater:
+
+* Relevante BMAD-artefakter.
+* docs/bmad/WORKFLOW_STATUS.md
+* docs/CODEX_PROMPT_LOG.md
+
+Dokumenter:
+
+* Hvilken BMAD-agent som ble brukt.
+* Hvilken BMAD-arbeidsflyt som ble fulgt.
+* Hvilken brukerhistorie som ble valgt.
+* Akseptansekriterier.
+* Testresultater.
+* Hva som gjenstår.
+
+Ikke lag unødvendige dokumenter.
+
+9. Git og samarbeid
+
+* Ikke endre Git-historikken.
+* Ikke bruk rebase eller amend.
+* Ikke bruk force push.
+* Ikke commit eller push automatisk.
+* Ikke endre andre gruppemedlemmers arbeid.
+* Ikke inkluder hemmeligheter eller virtuelle miljøer.
+* Bevar .memlog.md.
+
+10. Sluttrapport
+
+Rapporter på norsk:
+
+A. BMAD-agent og arbeidsflyt som faktisk ble brukt.
+
+B. Valgt brukerhistorie.
+
+C. Akseptansekriterier.
+
+D. Eventuelle beslutninger som må godkjennes.
+
+E. Implementerte endringer.
+
+F. Tester og resultater.
+
+G. Code Review-resultat.
+
+H. Oppdatert BMAD-status.
+
+I. Git-status.
+
+J. Neste anbefalte brukerhistorie.
+
+Stopp etter rapporten.
+
+Ikke commit eller push.
+```
+
+## PROMPT 024 – Testsporbarhet og dokumentasjon etter PROMPT 021–023
+
+- **Dato:** 2026-10-23.
+- **PR #1-status kontrollert på nytt:** 2026-10-23 kl. 22:35 Europe/Oslo (20:35 UTC): `OPEN`, base `main`, head `feature/023-local-text-processing`, head-SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`, `updatedAt` `2026-10-23T18:46:07Z`. Kontrollert skrivebeskyttet via GitHub CLI.
+- **Oppfølgende PR #1-kontroll:** 2026-10-24 kl. 16:23 Europe/Oslo (14:23 UTC): fortsatt `OPEN`, base `main`, head `feature/023-local-text-processing`, head-SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`; GitHub `updatedAt` fortsatt `2026-10-23T18:46:07Z`. Kontrollert skrivebeskyttet via GitHub CLI.
+- **Full original prompt (gjengitt ordrett):**
+
+Den første `x` i den arkiverte teksten er med i den opprinnelige brukermeldingen og er bevart ordrett.
+
+```text
+xPROMPT 024 – BMAD-story for testsporbarhet og dokumentasjonsoppdatering.
+
+Prosjekt: G27-isum-vijai.
+
+MÅL:
+Bruk installert BMAD Method v6.12.4 til å gjennomføre én liten dokumentasjons-story som gjør testresultater og utviklingshistorikk sporbare.
+
+VIKTIG FØR OPPSTART:
+
+* PR #1 for PROMPT 023 er fortsatt åpen.
+* Ikke endre feature/023-local-text-processing.
+* Ikke endre main.
+* Ikke rør .memlog.md.
+* Undersøk først Git-status og hvilken base som er riktig.
+* Hvis BMAD krever en ren arbeidsmappe, bruk en separat worktree og egen branch for PROMPT 024.
+* Stopp og spør før du oppretter ny worktree eller branch dersom dette krever godkjenning.
+
+BRUK BMAD:
+
+1. Les relevante installerte BMAD-agenter og arbeidsflyter.
+2. Definer en liten story med tydelige akseptansekriterier.
+3. Gjennomfør oppgaven som en dokumentasjons-story.
+4. Kontroller resultatet mot akseptansekriteriene.
+5. Gjennomfør passende BMAD Code Review eller dokumentasjonsreview.
+6. Registrer funn og rettelser.
+
+OPPGAVER:
+
+A. TESTPLAN
+Oppdater docs/testing/TEST_PLAN.md.
+
+* Kartlegg T-001–T-009 mot eksisterende tester.
+* Skill mellom full dekning, delvis dekning og ikke implementert.
+* Ikke erklær hele testtilfeller bestått uten dokumentasjon.
+
+B. TESTLOGG
+Opprett en faktisk testlogg i docs/testing/, men behold TEST_LOG_TEMPLATE.md som mal.
+
+* Registrer den bekreftede kjøringen med 15 beståtte pytest-tester.
+* Oppgi dato, miljø, kommando, relevante testfiler og commit 89ca55b.
+* Skill mellom automatiserte tester og manuelle tester.
+* Ikke påstå at PDF, KI-generering eller andre ikke-implementerte funksjoner er testet.
+
+C. BMAD-SPORBARHET
+
+* Merk historiske mellomstatuser tydelig.
+* Skill mellom 14 tester underveis og 15 tester som sluttresultat.
+* Rydd doble overskrifter i deferred-work.md uten å miste informasjon.
+* Registrer commit 89ca55b og PR #1 i promptloggen.
+* Ikke endre PRD-status fra draft uten gruppebeslutning.
+
+D. PROSJEKTKONTEKST
+Oppdater docs/PROJECT_CONTEXT.md slik at den gjenspeiler PROMPT 021–023.
+
+* Dokumenter Streamlit-prototypen.
+* Dokumenter lokal tekstbehandling uten KI.
+* Dokumenter at quiz fortsatt er demo.
+* Behold uavklarte produktbeslutninger som uavklarte.
+
+E. KVALITETSKONTROLL
+
+* Kontroller alle endringer mot storyens akseptansekriterier.
+* Kjør eksisterende pytest-tester.
+* Kjør git diff --check.
+* Kontroller at ingen hemmeligheter eller midlertidige filer er inkludert.
+
+DOKUMENTASJON:
+
+* Registrer PROMPT 024 ordrett i docs/CODEX_PROMPT_LOG.md.
+* Oppdater docs/bmad/WORKFLOW_STATUS.md.
+* Ikke opprett tomme BMAD-artefakter kun for å fylle en sjekkliste.
+* Ikke registrer uavklarte gruppebeslutninger som vedtatt.
+
+REGLER:
+
+* Ikke endre applikasjonskode.
+* Ikke endre eksisterende tester.
+* Ikke commit, push eller merge.
+* Ikke endre PR #1.
+* Ikke endre originalmappen eller .memlog.md.
+
+RAPPORTER:
+
+1. Hvilke BMAD-arbeidsflyter ble faktisk brukt?
+2. Hvilke filer ble endret eller opprettet?
+3. Hvilke testtilfeller har dokumentert dekning?
+4. Hvor mange tester består?
+5. Hvilke dokumentasjonsgap gjenstår?
+6. Er PROMPT 024 klar for Code Review og senere commit?
+
+Stopp etter rapporten og vent på godkjenning.
+```
+
+- **Godkjent avgrensning:** Etter at oppryddingspunktet ble tatt ut av PROMPT 024, godkjente brukeren at det bare føres som en etter-merge-oppgave i PROMPT 024-dokumentasjonen. Den godkjente spesifikasjonen og denne beslutningen styrer utførelsen; fila er ikke opprettet, kopiert eller endret.
+- **Utførelsesstatus:** Dokumentasjonsarbeidet er utført i samsvar med spesifikasjonen; kvalitetskontroll og gjennomgang er ført i PROMPT 024-seksjonen i [BMAD-status](bmad/WORKFLOW_STATUS.md).
+- **Filer opprettet eller endret:** Seks spesifikasjons-/dokumentasjonsfiler: `_bmad-output/implementation-artifacts/spec-024-test-traceability.md`, `docs/testing/TEST_PLAN.md`, `docs/testing/TEST_LOG.md`, `docs/PROJECT_CONTEXT.md`, `docs/CODEX_PROMPT_LOG.md` og `docs/bmad/WORKFLOW_STATUS.md`. I tillegg ble det lagt til ett nytt dokumentasjonstestmodul: `tests/test_prompt024_traceability_docs.py`. Totalt sju filer.
+- **Etter-merge-oppfølging:** Gjennomgå og rydd opp i `_bmad-output/implementation-artifacts/deferred-work.md` etter PR #1-merge når fila er tilgjengelig i det felles repositoryet. Fila er ikke kopiert, opprettet eller endret i denne oppgaven.
+- **Gjenstående:** Ingen endring av PRD eller DEC-001–DEC-005; deres statuser er bevart.
+
+## PROMPT 025 – Fullføring av PROMPT 024
+
+- **Dato:** 2026-10-24.
+- **Godkjent scope-presisering:** Etter BMAD Build sin Matrix Test Audit godkjente brukeren å beholde I/O-matrisen og legge til kun `tests/test_prompt024_traceability_docs.py`. Appkode og eksisterende tester er uendret.
+- **Dokumentasjonstester:** `test_feature_023_evidence_stays_attributed_to_its_snapshot`, `test_partial_coverage_remains_planned` og `test_missing_manual_evidence_is_not_recast_as_apptest` validerer hver sin matriserad med negative fixtures.
+- **Testresultat:** PROMPT 024-worktree: `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q` ga `9 passed in 0.02s`, exit 0 (6 eksisterende + 3 nye). De historiske 15 PROMPT 023-testene er separat før-commit-evidens, ikke et resultat på denne branchen eller `main`.
+- **Innledende BMAD Code Review:** Build-reviewlagene Blind Hunter, Edge Case Hunter og Verification Gap Reviewer ble kjørt. Blind Hunter fant sju forhold; fem ble rettet, og to forslag om å endre spesifikasjonen ble avvist etter review-regelen. Edge Case Hunter returnerte et gyldig tomt funnsett; Verification Gap Reviewer fant ingen avvik. Disposisjonene står i `spec-024-test-traceability.md`.
+- **PR #1-statuskontroll:** 2026-10-24 kl. 17:25 Europe/Oslo (15:25 UTC): `OPEN`, base `main`, head `feature/023-local-text-processing`, SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`; kontrollert skrivebeskyttet.
+- **Filer opprettet eller endret:** Seks spesifikasjons-/dokumentasjonsfiler og ett nytt dokumentasjonstestmodul, som listet i PROMPT 024-oppføringen. Ingen appkode, eksisterende tester eller PROMPT 023-filer endret.
+- **Historisk mellomstatus:** En tidligere rapport vurderte PROMPT 024 som klar for commit etter den innledende kontrollen. Den senere fullstendige Code Review-en gjenåpnet dokumentasjonsfunn; den mellomstatusen er derfor supersedert og er ikke gjeldende godkjenning.
+- **Git:** Ingen commit, push eller merge ble utført.
+
+### Godkjent håndtering av full Code Review (2026-10-24)
+
+- **F-01–F-06:** Brukeren godkjente retting. PROMPT 025-resultatene er konsolidert uten å fjerne unike historiske opplysninger; T-004/T-007 på PROMPT 023-snapshotet er korrigert til ikke implementert/ingen dekning for henholdsvis notatbasert quizgenerering og quizkildehenvisning; testfilene er lenket til den fulle PROMPT 023-SHA-en; dokumentasjonstestene håndhever de oppgitte 11 + 4 filtestene og lenkemålene; den historiske manuellkontrollen må fortsatt stå som «Ikke registrert».
+- **F-07:** Utsatt etter brukerens valg, med middels alvorlighet. Testplanens navngitte testfunksjonsreferanser kan bli utdaterte uten at pytest fanger det. Oppfølging: utform hermetisk, skrivebeskyttet kontroll mot testdefinisjonene ved `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`, uten å kopiere/endre PROMPT 023-filer eller bruke nettverk; hvis dette ikke er mulig, behold manuell verifikasjon som eksplisitt begrensning.
+- **Testresultat etter retting:** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q` fra `/private/tmp/G27-isum-vijai-prompt024` ga `9 passed in 0.02s`, exit 0, 2026-10-24 kl. 17:39 Europe/Oslo. Dette er seks eksisterende og tre dokumentasjonstester på PROMPT 024-worktree; de 15 historiske PROMPT 023-testene er fortsatt separat før-commit-evidens.
+- **Spesifikasjon og PROMPT 023:** Godkjent intensjon, scope, I/O-matrise og akseptansekriterier er uendret. Spesifikasjonens review-resolusjon og storystatus ble oppdatert etter BMAD-review. Ingen PROMPT 023-filer ble endret, og ingen `deferred-work.md` ble kopiert eller endret.
+- **Oppfølgende testkjøring:** 2026-10-24 kl. 17:42 Europe/Oslo (15:42 UTC), `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q` fra `/private/tmp/G27-isum-vijai-prompt024`: `9 passed in 0.02s`, exit 0. Kjøringen gjelder seks eksisterende og tre nye tester; de 15 historiske PROMPT 023-testene holdes atskilt.
+- **Oppfølgende BMAD Code Review:** Blind Hunter, Edge Case Hunter, Verification Gap Reviewer og Acceptance Auditor ble kjørt på rettelsesdiffet. F-07 ble bekreftet. Reviewen fant også F-08–F-13; brukeren godkjente F-08, F-09 og F-13 rettet, og F-07, F-10, F-11 og F-12 utsatt. Ingen ny full Code Review-runde ble startet; etterfølgende kontroll var avgrenset til de tre godkjente rettelsene.
+- **Sluttkontroll:** F-01–F-06 og F-08, F-09, F-13 er lukket. F-07, F-10, F-11 og F-12 er dokumentert utsatt med begrunnelse, konsekvens og oppgave. Siste testkjøring 2026-10-24 kl. 18:11 Europe/Oslo: `9 passed in 0.01s`, exit 0. `git diff --check` bestod. Storystatus er `in-progress` på grunn av åpne utsatte funn F-07 og F-10. Ingen commit, push eller merge er utført.
+
+### PROMPT 025 – F-07/F-10-verifikasjon (2026-10-25)
+
+- **Full original prompt (gjengitt ordrett fra brukermeldingen):**
+
+```text
+PROMPT 025 – Løs BMAD-blokkeringen og fullfør dokumentasjons-storyen fra PROMPT 024.
+
+Prosjekt: G27-isum-vijai.
+
+Arbeid i:
+/private/tmp/G27-isum-vijai-prompt024
+
+Branch:
+docs/024-test-traceability
+
+MÅL:
+Fullfør PROMPT 024 i samsvar med installert BMAD Method v6.12.4, med dokumenterte tester, Code Review og sporbarhet.
+
+Jeg godkjenner at vi beholder I/O-matrisen og legger til nødvendige dokumentasjonstester.
+
+FØR IMPLEMENTASJON:
+
+1. Les den installerte BMAD Build-arbeidsflyten og gjeldende story-spesifikasjon.
+2. Identifiser hver rad i I/O-matrisen som mangler testbevis.
+3. Foreslå konkrete, automatiserbare tester som kontrollerer dokumentasjonsreglene.
+4. Oppdater story-spesifikasjonen slik at dokumentasjonstester er eksplisitt tillatt, men applikasjonskode og eksisterende tester fortsatt er utenfor omfanget.
+5. Dokumenter denne endringen som en godkjent scope-presisering, ikke som om den alltid var del av den opprinnelige storyen.
+6. Dersom BMAD krever ny godkjenning av den reviderte spesifikasjonen, stopp og be om godkjenning før implementasjon.
+
+IMPLEMENTASJON ETTER NØDVENDIG GODKJENNING:
+
+7. Opprett et minimalt sett automatiserte dokumentasjonstester som gir konkret testbevis for hver relevant I/O-rad.
+8. Ikke skriv tester som bare sjekker at bestemte ord finnes. Kontroller faktiske dokumentasjonsregler der det er praktisk mulig.
+9. Skill mellom de seks eksisterende testene på denne branchen, de 15 historiske testene fra PROMPT 023 og eventuelle nye dokumentasjonstester.
+10. Kjør hele den relevante testsuiten og dokumenter testkommando, resultat og eventuelle begrensninger.
+11. Kjør git diff --check.
+12. Gjennomfør obligatorisk BMAD Code Review.
+13. Dokumenter reviewfunn, rettelser og eventuelt utsatt arbeid.
+14. Oppdater BMAD-status og promptloggen etter faktisk gjennomført arbeid.
+
+VIKTIGE REGLER:
+
+* Ikke endre applikasjonskode.
+* Ikke endre eksisterende tester.
+* Ikke endre main.
+* Ikke endre feature/023-local-text-processing.
+* Ikke endre PR #1.
+* Ikke kopier eller endre deferred-work.md fra PROMPT 023.
+* Ikke rør .memlog.md.
+* Ikke commit, push, merge eller rebase.
+
+GITHUB:
+
+Vi planlegger å bruke Abena sin GitHub-konto ved neste push.
+
+Ikke anta at den kontoen allerede er aktiv.
+
+Ikke endre Git-identitet eller GitHub-innlogging ennå.
+
+Ikke utfør push før riktig konto er eksplisitt verifisert og godkjent.
+
+RAPPORTER:
+
+1. Hvilke BMAD-krav som blokkerte PROMPT 024.
+2. Hvilke tester som foreslås eller ble opprettet.
+3. Hvordan hver I/O-rad får testbevis.
+4. Hvilke filer som ble endret.
+5. Antall beståtte tester.
+6. Status for BMAD Code Review.
+7. Om PROMPT 024 er klar for commit.
+8. Eventuelle gjenstående blokkeringer.
+
+Stopp ved obligatoriske BMAD-godkjenningspunkter og vent på svar.
+```
+
+- **F-07:** Lukket. Dokumentasjonstesten leser PROMPT 023-testkildene ved lokal commit `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503` med `git show`, bruker Python AST til å validere dokumenterte testfunksjonsnavn, tester oppdiktet navn negativt og gir tydelig feil når Git-objekt mangler. Ingen filkopiering eller nettverk.
+- **F-10:** Lukket. Dokumentasjonstesten krever main-referanse til `tests/test_generator.py` ved full SHA `444135e946b5635c812a24d44037c80fbf815e45`, dokumentert antall seks og negative tester for feil SHA/antall. Main-testene ble ikke kjørt på nytt.
+- **Testkjøring:** 2026-10-25 kl. 00:44 Europe/Oslo: `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q` ga `9 passed in 0.14s`, exit 0 (seks eksisterende + tre dokumentasjonstester på PROMPT 024-worktree). De 15 historiske PROMPT 023-testene er ikke del av dette resultatet.
+- **BMAD-review:** Verification Gap Reviewer fant ingen gap, Edge Case Hunter returnerte `[]`, Acceptance Auditor fant ingen avvik. Blind Hunter rapporterte ett lavprioritetsforslag om pytest-discoverability for eventuelle framtidige nøstede testnavn; triagert som ikke blokkerende forbedring siden dagens dokumenterte navn finnes og dette ligger utenfor F-07/F-10-kravet. Blind Hunter oppfylte ikke det konfigurerte minsteantallet på fire funn for 13,6 kB diff og kunne ikke underbygge flere forhold innenfor avgrensningen. Reviewkjøringen dokumenteres derfor som ufullstendig; storystatus beholdes `in-progress`.
+- **Andre reviewstatus:** F-11 og F-12 er fortsatt utsatt. Akseptansekriteriene er ikke endret. Ingen endringer i appkode, eksisterende tester, main, PROMPT 023-branchen, PR #1 eller `.memlog.md`; ingen commit/push/merge.
+
+#### PROMPT 025 – avgrenset BMAD Review (2026-10-25)
+
+- **Prosessbeslutning:** Brukeren godkjente en separat, avgrenset review med relevante installerte BMAD-lag fordi Blind Hunter ikke kunne dokumentere flere enn ett reelt lavprioritetsfunn. Ingen funn ble konstruert. Beslutningen og begrensningen er også ført i beslutningsloggen.
+- **Resultat:** `bmad-review` Verification Gap: ingen gap. `bmad-code-review` Acceptance Auditor: ingen avvik fra de godkjente akseptansekriteriene. F-07/F-10 er lukket; F-11/F-12 er fortsatt utsatt.
+- **Opprinnelig Build-review:** Blind Hunter-instruksen krever minst N «issues to fix or improve»; for ca. 13,6 kB diff var N=4. Den fant ett konkret lavprioritetsforslag og kunne ikke underbygge flere. Dette historiske reviewresultatet står uendret.
+- **Statusbegrensning:** Build Step 04 ber fortsatt om alle aktive lag, uten et innebygd valg av delmengde. Den separate reviewen er ikke registrert som fullført Build Step 04. Storystatus er `in-progress`; å bruke avgrenset review som grunnlag for `done` er bare foreslått, ikke vedtatt.
+- **Testresultat:** 2026-10-25 kl. 00:49 Europe/Oslo: `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q`: `9 passed in 0.13s`, exit 0. `git diff --check` bestod.
+- **Ingen Git-historikkendring:** Ingen commit, push, merge eller rebase.
+
+#### Gjentatt avgrenset review etter prosessbeslutning (2026-10-25)
+
+- `bmad-review` Verification Gap: ingen verifikasjonsgap. Separat `bmad-code-review` Acceptance Auditor: ingen avvik fra akseptansekriteriene. Reviewen omfattet oppdatert endringssett, inkludert prosessnotatet.
+- F-07 og F-10 er fortsatt lukket; F-11 og F-12 er fortsatt utsatt. Den opprinnelige Build Step 04-reviewen er fortsatt dokumentert separat som ufullstendig fordi Blind Hunter fant ett forslag mot kvote fire; ingen funn ble konstruert.
+- Siste testkjøring: 2026-10-25 kl. 00:52 Europe/Oslo, `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q`: `9 passed in 0.14s`, exit 0. `git diff --check` bestod. Dette er PROMPT 024-worktree-resultat; ingen ny kjøring på main.
+- Storystatus forblir `in-progress` fordi den godkjente avgrensede reviewen ikke fullfører Build Step 04s krav om alle aktive lag. Ingen commit, push, merge eller rebase.
+
+### Kontroll av manglende originalprompter – PROMPT 026 (2026-10-25)
+
+- **PROMPT 023:** Den opprinnelige brukermeldingen ble funnet i samtalehistorikken og er arkivert ordrett under PROMPT 023.
+- **PROMPT 025:** Den opprinnelige brukermeldingen ble funnet i samtalehistorikken og er arkivert ordrett under PROMPT 025.
+- **Kontrollgrunnlag:** Sammenligning med de opprinnelige meldingsinnslagene; senere oppfølgingsinstrukser er ikke brukt som erstatning for originalpromptene.
+
+## PROMPT 026 – Dokumentasjons- og utviklingssporbarhet
+
+- **Dato:** 2026-10-25.
+- **Full original prompt:** Arkivert ordrett fra PROMPT 026-startmeldingen nedenfor. Den senere implementasjonsinstruksen er ikke brukt som erstatning for originalprompten.
+- **Originalprompt (gjengitt ordrett fra brukermeldingen):**
+
+```text
+Vi starter nå PROMPT 026 som en separat dokumentasjonsgjennomgang.
+
+Arbeid i:
+/private/tmp/G27-isum-vijai-prompt024
+
+Branch:
+docs/024-test-traceability
+
+PROMPT 024/025 er fortsatt in-progress, fordi Build Step 04 ikke er fullført. Ikke endre denne statusen uten faktisk grunnlag.
+
+MÅL
+
+Kontroller at hele utviklingsprosessen er dokumentert korrekt og etterprøvbart, fra krav og beslutninger til implementasjon, tester, review og GitHub.
+
+FASE 1 – SKRIVEBESKYTTET GJENNOMGANG
+
+Undersøk følgende dokumenter der de finnes:
+
+* docs/decisions/DECISION_LOG.md
+* docs/CODEX_PROMPT_LOG.md
+* docs/bmad/WORKFLOW_STATUS.md
+* docs/testing/TEST_PLAN.md
+* docs/testing/TEST_LOG.md
+* docs/testing/TEST_LOG_TEMPLATE.md
+* docs/CHANGELOG_PROCESS.md
+* docs/PROJECT_CONTEXT.md
+* Relevante BMAD-artefakter
+* README.md
+
+Kontroller særlig:
+
+1. At PROMPT 023, 024 og 025 er dokumentert kronologisk.
+2. At tekniske valg og prosessbeslutninger har begrunnelser.
+3. At DEC-001–DEC-005 fortsatt står som uavklarte.
+4. At main, PROMPT 023 og dokumentasjonsbranchen er tydelig atskilt.
+5. At historiske testresultater ikke fremstilles som nye testkjøringer.
+6. At F-07 og F-10 er lukket, mens F-11 og F-12 er utsatt.
+7. At den ufullstendige Build-reviewen og den avgrensede reviewen er dokumentert separat.
+8. At GitHub-PR #1 ikke fremstilles som merget.
+9. At det finnes sporbarhet mellom krav, beslutninger, BMAD-story, tester, review og commits.
+10. At dokumentasjonen ikke inneholder motstridende opplysninger.
+
+FASE 2 – RAPPORT
+
+Rapporter:
+
+* Hva som allerede er korrekt dokumentert.
+* Hva som mangler.
+* Eventuelle motstridende opplysninger.
+* Hvilke dokumenter som faktisk trenger oppdatering.
+* Om PROMPT 026 bør opprettes som en egen BMAD-story.
+* Om det er nødvendig med nye tester.
+
+Ikke rediger filer i denne fasen.
+
+VIKTIGE REGLER
+
+Ikke endre main, PROMPT 023-branchen eller PR #1.
+
+Ikke endre applikasjonskode eller eksisterende tester.
+
+Ikke rør .memlog.md.
+
+Ikke commit, push, merge eller rebase.
+
+Ikke endre Git-identitet eller GitHub-innlogging.
+
+Stopp etter rapporten og vent på godkjenning.
+```
+- **Utførelsesstatus:** Dokumentendringene og verifikasjonene er gjennomført; status for denne storyen føres i spesifikasjonen og BMAD-statusen.
+- **Sammendrag:** La til prosessloggoppføringer for PROMPT 021–026 med fullstendige Git-referanser der commits finnes og `ingen commit` for ucommittet arbeid; la til PRD-/beslutnings-/test-kryssreferanse uten å oppgradere testcase-status; utvidet testloggmalen; registrerte den faktiske PROMPT 026-kjøringen; daterte prosjekt- og BMAD-status.
+- **Filer opprettet eller endret i PROMPT 026:** `docs/CODEX_PROMPT_LOG.md`, `docs/CHANGELOG_PROCESS.md`, `docs/testing/TEST_PLAN.md`, `docs/testing/TEST_LOG.md`, `docs/testing/TEST_LOG_TEMPLATE.md`, `docs/PROJECT_CONTEXT.md`, `docs/bmad/WORKFLOW_STATUS.md` og `_bmad-output/implementation-artifacts/spec-026-documentation-traceability.md`.
+- **Verifisering:** Pytest og `git diff --check`-resultater står i [testloggen](testing/TEST_LOG.md). PR #1 kontrollert skrivebeskyttet 2026-10-25 kl. 01:00 Europe/Oslo: `OPEN`, base `main`, head `feature/023-local-text-processing`, SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`.
+- **Git:** `ingen commit`; ingen push eller merge.
+- **Begrensninger:** PR #1 er åpen, PROMPT 024/025 er fortsatt `in-progress`, PRD er `draft`, og DEC-001–DEC-005 er fortsatt `Uavklart`.
+
+### PROMPT 026 – BMAD Build Step 04-review og oppfølging (2026-10-25)
+
+- **Reviewlag:** BMM Build Step 04 kjørte Blind Hunter, Edge Case Hunter, Verification Gap Reviewer og Acceptance Auditor mot arbeidsdiffen og PROMPT 026-spesifikasjonen. Blind Hunter oppfylte kvoten med 10 observasjoner for en diff på 126,2 kB; Edge Case Hunter rapporterte to; Verification Gap Reviewer ett; Acceptance Auditor ett.
+- **Rettet dokumentasjon:** Bevislinjen i en PROMPT 024-testlogg ble rettet fra `0.13s` til det dokumenterte `0.14s`, med datert korrigeringsnote. Testplanen sier nå eksplisitt at T-006s poengberegning avhenger av et gruppevedtak under fortsatt uavklarte DEC-001. Testloggmalen ber igjen om «Bevis eller lenke».
+- **Avvist som ikke-funn:** Observasjoner om dupliserte kjøringer, T-009-implementasjon, kilde til T-004-testnavn, NFR-1-kryssreferanse, statuskontrolltidspunkt og påstått PROMPT 026-endring i beslutningsloggen ble kontrollert mot tidsstempler, `app.py`, snapshotlenken og startstatus. De viste ikke feil i PROMPT 026.
+- **Separat PROMPT 024/025-oppfølging:** Reviewen avdekket et eksisterende gap i `tests/test_prompt024_traceability_docs.py`: dokumenterte navn sammenlignes mot unionen av to testfiler i stedet for fila som er oppgitt i testplanen. En observasjon om pytest-samlingsbarhet og den eksisterende escaped-pipe-observasjonen ble også knyttet til PROMPT 024/025. Ingen eksisterende tester eller `deferred-work.md` ble endret; funn og begrensning står i PROMPT 026-spesifikasjonens reviewlogg.
+- **Test og kvalitet:** Siste kjøring 2026-10-25 kl. 01:12 Europe/Oslo: `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q` ga `9 passed in 0.12s`, exit 0; `git diff --check` bestod etter dokumentasjonsendringene. Resultatet gjelder dokumentasjonsbranchen, ikke `main`; de 15 historiske testene fra PROMPT 023 forblir separat evidens.
+- **Status:** PROMPT 026 forblir `in-progress` mens det verifiserbare P024-testgapet venter på godkjent oppfølgingsvei. PROMPT 024/025 forblir separat `in-progress`; PR #1 er fortsatt åpen og ikke merget. Ingen commit, push eller merge.
+- **Build Step 05:** Ikke gjennomført. Den installerte Present-workflowen krever lokal commit i en skitten worktree og status `done`; brukerens no-commit-regel og det uavklarte reviewgapet gjør at PROMPT 026 står `in-progress`.
+
+### PROMPT 024/025 og PROMPT 026 – per-fil-reviewgap og oppfølgende Build-review (2026-10-25)
+
+- **Godkjenning og eierskap:** Brukeren godkjente en avgrenset rettelse i `tests/test_prompt024_traceability_docs.py` for PROMPT 024/025. Tidligere endringer fra begge stories ble bevart; ingen akseptansekriterier ble endret.
+- **Endring:** Testkoden leser AST-definisjoner per SHA-pinnet kildefil, kontrollerer filkvalifiserte referanser mot riktig fil og knytter uqualifiserte navn til filomtaler i samme tabellrad eller krever at kilden er entydig. Negativ fixture viser at feil filtilordning for T-002 avvises. Ingen appkode eller eksisterende funksjonstest ble endret.
+- **Testresultat:** Dokumentasjonstestmodulen: `3 passed in 0.24s`, exit 0. Full suite: `9 passed in 0.23s`, exit 0. `git diff --check` bestod før reviewoppdateringene; sluttkontroll loggføres i testloggen.
+- **PROMPT 024/025 Build Step 04:** Blind Hunter, Edge Case Hunter og Verification Gap Reviewer (alle aktive lag i installert `bmad-build`). Blind Hunter beregnet N=10 for 149 254 byte og leverte 10 observasjoner; Edge Case Hunter returnerte `[]`; Verification Gap Reviewer fant ingen nye gap. Funn og disposisjoner er ført i PROMPT 024-spesifikasjonen. F-11/F-12 er fortsatt godkjent utsatt arbeid.
+- **PROMPT 026 Build Step 04:** De samme tre aktive lagene ble kjørt mot den samlede worktree-diffen og PROMPT 026-spesifikasjonen. Blind Hunter beregnet N=10 for 154 058 byte og leverte 10 observasjoner; Edge Case Hunter leverte én observasjon som ble avvist som feil eierskap; Verification Gap Reviewer fant ingen gap. Den tidligere middels per-fil-observasjonen er lukket i PROMPT 024/025 og resultatet er dokumentert separat i begge storyenes reviewspor.
+- **Status:** PROMPT 024/025 og PROMPT 026 står hver for seg `in-progress`. Build Step 04 er gjennomgått; Build Step 05/lokal commit er ikke kjørt fordi brukeren ikke har godkjent commit ennå. Ingen commit, push, merge eller branch-opprettelse er utført.
+- **Sluttkontroll:** 2026-10-25 kl. 07:53 Europe/Oslo: målrettet dokumentasjonstest `3 passed in 0.29s`, full pytest-suite `9 passed in 0.25s`, begge exit 0; `git diff --check` exit 0. Se den nye testloggoppføringen for kommandoer og terminalbevis.
+
+### Build Step 05 – lokal dokumentasjonscommit (2026-10-25)
+
+- **Godkjenning:** Brukeren godkjente lokal commit på `docs/027-documentation-completion`, og bekreftet engangsidentiteten `Abenagit <abvij0069@himolde.no>`. Identiteten brukes kun via miljøvariabler for denne committen; lokal og global Git-konfigurasjon er uendret.
+- **Konto og tilgang:** `gh api user --jq .login` bekreftet `Abenagit`. Repository er `IBE160-2026/G27-isum-vijai`; API viste `push: true`. GitHub-endepunktet for verifisering av e-post var utilgjengelig med gjeldende token-scope; e-postadressen er derfor bekreftet direkte av brukeren, ikke av GitHub API.
+- **Build Step 05:** Storyene PROMPT 024/025 og PROMPT 026 er `done` hver for seg etter at godkjent lokal commit er opprettet. Akseptansekriterier, reviewhistorikk, PRD `draft` og DEC-001–DEC-005 `Uavklart` er bevart.
+- **Testbevis:** Sluttkontroll før commit: `9 passed in 0.27s`, exit 0; `git diff --check` exit 0. Se siste datostemplede kjøring i `docs/testing/TEST_LOG.md`. Dette er dokumentasjonsbranchens kjøring, ikke main; PROMPT 023s 15 tester er historiske.
+- **Commit:** Opprettet med meldingen `docs: complete test traceability and documentation review`; SHA og forfatter er bekreftet direkte fra commitobjektet. Kun de gjennomgåtte dokumentasjonsfilene og godkjent dokumentasjonstestfil er inkludert.
+- **Avgrensning:** Ingen push eller PR-opprettelse. `main`, PROMPT 023-branchen og PR #1 er uendret; `.memlog.md` er ikke inkludert.
