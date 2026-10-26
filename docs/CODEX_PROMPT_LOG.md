@@ -3053,6 +3053,10 @@ Stopp etter rapporten. Ikke commit eller push.
 - **Testbevis:** PROMPT 023-kjøringen med 15 beståtte tester er beskrevet i [testloggen](testing/TEST_LOG.md). Kjøringen skjedde før commitopprettelsen på arbeidsfila som senere ble denne head-committen.
 - **Historiske mellomresultater:** Tilgjengelig materiale dokumenterer ikke en separat kjøring med 14 tester. Kun sluttresultatet med 15 beståtte tester er registrert; et mellomresultat er derfor ikke lagt til eller rekonstruert.
 - **Full original prompt (gjengitt ordrett fra brukermeldingen):**
+## PROMPT 023 – Lokal tekstbehandling og Code Review
+
+- **Dato:** 2026-10-23.
+- **Full original prompt:** Arkivert ordrett fra den opprinnelige PROMPT 023-meldingen.
 
 ```text
 PROMPT 023 – BMAD og smidig produktutvikling
