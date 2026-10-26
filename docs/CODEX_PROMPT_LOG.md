@@ -3051,7 +3051,7 @@ Stopp etter rapporten. Ikke commit eller push.
 - **Statuskontroll:** 2026-10-23 kl. 22:29 Europe/Oslo (GitHub `updatedAt` for PR: 2026-10-23T18:46:07Z).
 - **PR-status:** PR #1 er `OPEN`, base `main`, head branch `feature/023-local-text-processing`, head SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`. Se [PR #1](https://github.com/IBE160-2026/G27-isum-vijai/pull/1). PROMPT 023-funksjonene er derfor ikke registrert som del av `main`.
 - **Testbevis:** PROMPT 023-kjøringen med 15 beståtte tester er beskrevet i [testloggen](testing/TEST_LOG.md). Kjøringen skjedde før commitopprettelsen på arbeidsfila som senere ble denne head-committen.
-- **Historiske mellomresultater:** Tilgjengelig materiale dokumenterer ikke en separat kjøring med 14 tester. Kun sluttresultatet med 15 beståtte tester er registrert; et mellomresultat er derfor ikke lagt til eller rekonstruert.
+- **Historiske mellomresultater:** PROMPT 023s post-fix Code Review dokumenterer en separat kjøring med 14 beståtte tester; den godkjente oppfølgingen dokumenterer deretter 15 beståtte tester. Begge kjøringene er bevart i oppføringene nedenfor; sluttkjøringen på 15 tester står også i [testloggen](testing/TEST_LOG.md).
 - **Full original prompt (gjengitt ordrett fra brukermeldingen):**
 ## PROMPT 023 – Lokal tekstbehandling og Code Review
 
@@ -3246,6 +3246,66 @@ Stopp etter rapporten.
 
 Ikke commit eller push.
 ```
+
+- **Utførelsesstatus:** Implementert i separat worktree; BMAD Code Review fullført med én reviewer-layer som feilet ved tomt svar. Ingen commit, push, merge eller overføring til opprinnelig prosjektmappe.
+- **BMAD:** Build `bmad-build` one-shot med utviklerrollen Amelia (`bmad-agent-dev`); deretter `bmad-code-review` full-modus med Blind Hunter, Verification Gap Reviewer, Acceptance Auditor og Edge Case Hunter (tomt svar, registrert som feilet).
+- **Valgt historie og kriterier:** Lokal tekstbehandling lager et utdragssammendrag og begreper fra notatene. Sammendrag består av opptil tre innholdsrike originalsetninger; begreper er hyppige kildeord med stabil førsteforekomst ved frekvensties. Tom input avvises. Lokal behandling merkes ikke-KI, mens quiz er demo-data.
+- **Arbeid:** Oppdatert `prototype/generator.py`, `app.py`, `README.md` og `tests/test_generator.py`; lagt til `tests/test_app.py`. La til spec `spec-023-local-text-processing.md` og registrerte videre arbeid i `deferred-work.md`.
+- **Review:** Rangering som kunne påvirkes av gjentatte ord, vanlig fyllord i begrepslisten og manglende UI-regresjonstester ble rettet. To Blind Hunter-funn ble avkreftet. PRD FR-6/AC-4/NFR-1 om quiz generert fra notater gjenstår som egen, utsatt historie fordi denne iterasjonen eksplisitt beholder demoquiz.
+- **Verifisering:** 14 pytest-tester bestod. `compileall`, `git diff --check` og Streamlit AppTest bestod; AppTest kontrollerte lokale resultater, proveniensetiketter, quizdemomerking, tom begrepsliste og tom input. Ingen nye avhengigheter eller KI-nøkler ble lagt til.
+- **Git:** Worktree `/private/tmp/G27-isum-vijai-prompt023`, branch `feature/023-local-text-processing`, utgangspunkt `444135e946b5635c812a24d44037c80fbf815e45`. `.memlog.md` forble urørt i opprinnelig mappe.
+- **Full original prompt for review-fortsettelsen:**
+
+```text
+Jeg bekrefter at du kan fortsette med BMAD Code Review for PROMPT 023.
+
+Bruk de installerte BMAD-reviewarbeidsflytene og reviewer-lagene slik de faktisk er definert i prosjektet.
+
+Gjennomgå implementasjonen opp mot brukerhistorien, akseptansekriteriene og PRD-en.
+
+Kontroller spesielt:
+
+1. At sammendraget faktisk bygger på brukerens tekst.
+2. At begrepene faktisk hentes fra brukerens tekst.
+3. At lokal tekstbehandling ikke feilaktig presenteres som KI.
+4. At demoquizen fortsatt er tydelig merket.
+5. At ugyldig og tom input håndteres.
+6. At eksisterende funksjonalitet ikke er ødelagt.
+7. At alle 9 testene fortsatt består.
+8. At det ikke er introdusert hemmeligheter eller unødvendige avhengigheter.
+
+Følg alle obligatoriske kontrollpunkter i BMAD.
+
+Hvis gjennomgangen avdekker feil, rapporter funnene og foreslå konkrete rettelser. Ikke gjør større endringer uten godkjenning.
+
+Oppdater relevant BMAD-status og promptloggen når gjennomgangen er fullført.
+
+Ikke commit, push, merge eller overfør endringer til den opprinnelige prosjektmappen.
+
+Avslutt med en norsk rapport som viser:
+
+* Hvilke BMAD-reviewarbeidsflyter som faktisk ble gjennomført.
+* Hvilke reviewer-lag som ble brukt.
+* Funn, sortert etter alvorlighetsgrad.
+* Eventuelle rettelser som gjenstår.
+* Testresultater.
+* Git-status og worktree-plassering.
+* Om PROMPT 023 er klar for godkjenning og senere commit.
+
+Stopp etter rapporten.
+```
+
+- **Post-fix Code Review (2026-10-23):** Kjørte alle fire installerte reviewer-lag på oppdatert diff. Blind Hunter, Verification Gap Reviewer og Edge Case Hunter leverte funn; Acceptance Auditor bekreftet at note-basert quiz fortsatt er PRD-gap, men utsatt av den godkjente storyavgrensningen. Edge Case Hunter returnerte tomt svar i første pass og er fortsatt registrert som mislykket lag. Triage registrerte sju patchfunn og avviste ett lavt forslag; detaljene er i storyens `Review Findings`. BMADs påkrevde valgpunkt for patchfunn er nådd, så spesifikasjonen står `in-progress` til brukeren velger hvordan funnene håndteres. Testene ble kjørt fra worktree med originalprosjektets eksisterende `.venv`: 14 bestått. Ingen kode ble endret etter review.
+
+## PROMPT 023 – Oppfølging av godkjente reviewfunn
+
+- **Dato:** 2026-10-23.
+- **Godkjent omfang:** Rettet bare BMAD-funn 1 og 2. Ingen produksjonskode ble endret.
+- **Testendringer:** `tests/test_app.py` verifiserer nå at sammendraget i UI er eksakt satt sammen av kilde-setningene, og at innsending av quizsvar viser forventet poengsum samt riktig/feil tilbakemelding for hvert spørsmål.
+- **Utsatte funn:** Funn 3–7 er registrert som utsatte forbedringer i `spec-023-local-text-processing.md` og `deferred-work.md`; de er ikke implementert.
+- **Verifisering:** Hele pytest-pakken: 15 bestått. `git diff --check` bestod.
+- **BMAD-status:** Godkjente patchfunn er håndtert; storyen er `done` for PROMPT 023-omfanget. Code Review-begrensningen for Edge Case Hunter (tomt svar i første pass) er beholdt i statusrapporten.
+- **Git:** Bare separat worktree er endret; ingen commit, push, merge eller overføring. Opprinnelig `.memlog.md` er urørt.
 
 ## PROMPT 024 – Testsporbarhet og dokumentasjon etter PROMPT 021–023
 
