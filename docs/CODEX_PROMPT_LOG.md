@@ -3045,3 +3045,257 @@ Stopp etter rapporten. Ikke commit eller push.
 - **Filer opprettet eller endret:** `app.py`, `prototype/__init__.py`, `prototype/generator.py`, `prototype/mock_data.py`, `tests/test_generator.py`, `pytest.ini`, `requirements.txt`, `.streamlit/config.toml`, `README.md`, `docs/bmad/WORKFLOW_STATUS.md`, `docs/CODEX_PROMPT_LOG.md` og `_bmad-output/implementation-artifacts/spec-first-working-prototype.md`. Eksisterende `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/.memlog.md` ble ikke endret eller lagt til i Git.
 - **Verifiseringsresultater:** Etter blindgjennomgang og rettinger: `./.venv/bin/pytest -q`: 6 tester bestått. `./.venv/bin/python -m unittest discover -s tests -v`: 6 tester bestått. `compileall` for app, prototype og tester bestod. Streamlit startet på `127.0.0.1:8765`; `curl http://127.0.0.1:8765/_stcore/health` returnerte `ok`. Serveren ble stoppet etter kontroll.
 - **Gjenstående problemer:** PDF-opplasting/-uttrekk og PyMuPDF, ekte KI-generering, lagring og produksjonsarkitektur er ikke implementert. Python/Streamlit er foreløpig prototypestakk; gruppen må fortsatt godkjenne produksjonsvalg i beslutningsloggen.
+
+## PROMPT 023 – Lokal tekstbehandling og Code Review
+
+- **Dato:** 2026-10-23.
+- **Full original prompt:** Arkivert ordrett fra den opprinnelige PROMPT 023-meldingen.
+
+```text
+PROMPT 023 – BMAD og smidig produktutvikling
+
+Prosjekt
+
+IBE160 – G27-isum-vijai
+
+Produkt: Foredragsnotater → Sammendrag & Quizgenerator.
+
+Mål
+
+Fortsette utviklingen av produktet med BMAD Method v6.12.4 og smidig utviklingsmetodikk.
+
+BMAD skal brukes aktivt, ikke bare nevnes i dokumentasjonen.
+
+Vi ønsker korte utviklingssykluser, små oppgaver, fungerende kode, automatiserte tester og jevnlige leveranser.
+
+1. Kontroller prosjektstatus
+
+Les:
+
+* product-brief.md
+* tilbakemelding-product-brief.md
+* PRD-en i _bmad-output/planning-artifacts/prds/
+* docs/PROJECT_CONTEXT.md
+* docs/decisions/DECISION_LOG.md
+* docs/bmad/WORKFLOW_STATUS.md
+* _bmad-output/implementation-artifacts/spec-first-working-prototype.md
+* Eksisterende applikasjonskode og tester.
+
+Kontroller Git-status.
+
+Ikke overskriv eller endre eksisterende arbeid uten grunn.
+
+Den eksisterende .memlog.md skal bevares og ikke inkluderes i Git.
+
+2. Bruk installert BMAD
+
+Finn de faktiske BMAD-agentene og arbeidsflytene som er installert i prosjektet.
+
+Les instruksjonene deres.
+
+Vurder hvilke av følgende som er nødvendige nå:
+
+* Architecture
+* Epics & Stories
+* Sprint Planning
+* Dev / Build
+* Code Review
+* QA
+
+Ikke installer BMAD på nytt.
+
+Ikke finn på BMAD-kommandoer eller arbeidsflyter.
+
+Dokumenter hvilke agenter og arbeidsflyter som faktisk ble brukt.
+
+3. Planlegg neste utviklingssyklus
+
+Målet er å videreutvikle prototypen slik at resultatene kan baseres på brukerens forelesningsnotater.
+
+Undersøk hvilke beslutninger som fortsatt er åpne.
+
+Lag en liten, konkret utviklingsoppgave med:
+
+* Brukerhistorie.
+* Akseptansekriterier.
+* Tekniske oppgaver.
+* Testtilfeller.
+* Definisjon av ferdig (Definition of Done).
+
+Skill mellom:
+
+1. Enkel lokal tekstbehandling.
+2. KI-generert sammendrag og quiz.
+3. Eksisterende demonstrasjonsdata.
+
+Ikke presenter enkel lokal tekstbehandling som ekte KI.
+
+4. Smidig arbeidsmetode
+
+Bruk en enkel iterativ prosess:
+
+1. Velg én liten brukerhistorie.
+2. Avklar nødvendige beslutninger.
+3. Implementer funksjonen.
+4. Kjør automatiserte tester.
+5. Kontroller funksjonen manuelt.
+6. Gjennomfør relevant BMAD Code Review.
+7. Oppdater oppgavestatus.
+8. Klargjør arbeidet for commit og push.
+
+Unngå store endringer som er vanskelige å teste.
+
+5. Teknisk plan
+
+Vurder hvordan eksisterende Streamlit-prototype kan videreutvikles uten unødvendig omskriving.
+
+Bevar fungerende kode og eksisterende tester.
+
+Prioriter en løsning som:
+
+* Er enkel å forstå.
+* Kan testes lokalt.
+* Ikke krever API-nøkkel for grunnleggende tester.
+* Senere kan integreres med en KI-tjeneste.
+* Håndterer ugyldig input.
+* Skiller demonstrasjonsdata fra faktisk generert innhold.
+
+6. Gjennomføring
+
+Følg de relevante BMAD-arbeidsflytene.
+
+Hvis nødvendige arkitektur- eller produktbeslutninger mangler, skal du presentere konkrete alternativer og be om godkjenning før implementasjon.
+
+Når nødvendige beslutninger er avklart, implementer én liten brukerhistorie.
+
+Ikke start flere store funksjoner samtidig.
+
+7. Tester og kvalitet
+
+Bruk pytest.
+
+Kjør eksisterende tester og nye relevante tester.
+
+Kontroller at tidligere funksjonalitet fortsatt fungerer.
+
+Bruk relevant BMAD Code Review dersom arbeidsflyten støtter dette.
+
+Rapporter eventuelle feil og begrensninger.
+
+8. Dokumentasjon
+
+Oppdater:
+
+* Relevante BMAD-artefakter.
+* docs/bmad/WORKFLOW_STATUS.md
+* docs/CODEX_PROMPT_LOG.md
+
+Dokumenter:
+
+* Hvilken BMAD-agent som ble brukt.
+* Hvilken BMAD-arbeidsflyt som ble fulgt.
+* Hvilken brukerhistorie som ble valgt.
+* Akseptansekriterier.
+* Testresultater.
+* Hva som gjenstår.
+
+Ikke lag unødvendige dokumenter.
+
+9. Git og samarbeid
+
+* Ikke endre Git-historikken.
+* Ikke bruk rebase eller amend.
+* Ikke bruk force push.
+* Ikke commit eller push automatisk.
+* Ikke endre andre gruppemedlemmers arbeid.
+* Ikke inkluder hemmeligheter eller virtuelle miljøer.
+* Bevar .memlog.md.
+
+10. Sluttrapport
+
+Rapporter på norsk:
+
+A. BMAD-agent og arbeidsflyt som faktisk ble brukt.
+
+B. Valgt brukerhistorie.
+
+C. Akseptansekriterier.
+
+D. Eventuelle beslutninger som må godkjennes.
+
+E. Implementerte endringer.
+
+F. Tester og resultater.
+
+G. Code Review-resultat.
+
+H. Oppdatert BMAD-status.
+
+I. Git-status.
+
+J. Neste anbefalte brukerhistorie.
+
+Stopp etter rapporten.
+
+Ikke commit eller push.
+```
+
+- **Utførelsesstatus:** Implementert i separat worktree; BMAD Code Review fullført med én reviewer-layer som feilet ved tomt svar. Ingen commit, push, merge eller overføring til opprinnelig prosjektmappe.
+- **BMAD:** Build `bmad-build` one-shot med utviklerrollen Amelia (`bmad-agent-dev`); deretter `bmad-code-review` full-modus med Blind Hunter, Verification Gap Reviewer, Acceptance Auditor og Edge Case Hunter (tomt svar, registrert som feilet).
+- **Valgt historie og kriterier:** Lokal tekstbehandling lager et utdragssammendrag og begreper fra notatene. Sammendrag består av opptil tre innholdsrike originalsetninger; begreper er hyppige kildeord med stabil førsteforekomst ved frekvensties. Tom input avvises. Lokal behandling merkes ikke-KI, mens quiz er demo-data.
+- **Arbeid:** Oppdatert `prototype/generator.py`, `app.py`, `README.md` og `tests/test_generator.py`; lagt til `tests/test_app.py`. La til spec `spec-023-local-text-processing.md` og registrerte videre arbeid i `deferred-work.md`.
+- **Review:** Rangering som kunne påvirkes av gjentatte ord, vanlig fyllord i begrepslisten og manglende UI-regresjonstester ble rettet. To Blind Hunter-funn ble avkreftet. PRD FR-6/AC-4/NFR-1 om quiz generert fra notater gjenstår som egen, utsatt historie fordi denne iterasjonen eksplisitt beholder demoquiz.
+- **Verifisering:** 14 pytest-tester bestod. `compileall`, `git diff --check` og Streamlit AppTest bestod; AppTest kontrollerte lokale resultater, proveniensetiketter, quizdemomerking, tom begrepsliste og tom input. Ingen nye avhengigheter eller KI-nøkler ble lagt til.
+- **Git:** Worktree `/private/tmp/G27-isum-vijai-prompt023`, branch `feature/023-local-text-processing`, utgangspunkt `444135e946b5635c812a24d44037c80fbf815e45`. `.memlog.md` forble urørt i opprinnelig mappe.
+- **Full original prompt for review-fortsettelsen:**
+
+```text
+Jeg bekrefter at du kan fortsette med BMAD Code Review for PROMPT 023.
+
+Bruk de installerte BMAD-reviewarbeidsflytene og reviewer-lagene slik de faktisk er definert i prosjektet.
+
+Gjennomgå implementasjonen opp mot brukerhistorien, akseptansekriteriene og PRD-en.
+
+Kontroller spesielt:
+
+1. At sammendraget faktisk bygger på brukerens tekst.
+2. At begrepene faktisk hentes fra brukerens tekst.
+3. At lokal tekstbehandling ikke feilaktig presenteres som KI.
+4. At demoquizen fortsatt er tydelig merket.
+5. At ugyldig og tom input håndteres.
+6. At eksisterende funksjonalitet ikke er ødelagt.
+7. At alle 9 testene fortsatt består.
+8. At det ikke er introdusert hemmeligheter eller unødvendige avhengigheter.
+
+Følg alle obligatoriske kontrollpunkter i BMAD.
+
+Hvis gjennomgangen avdekker feil, rapporter funnene og foreslå konkrete rettelser. Ikke gjør større endringer uten godkjenning.
+
+Oppdater relevant BMAD-status og promptloggen når gjennomgangen er fullført.
+
+Ikke commit, push, merge eller overfør endringer til den opprinnelige prosjektmappen.
+
+Avslutt med en norsk rapport som viser:
+
+* Hvilke BMAD-reviewarbeidsflyter som faktisk ble gjennomført.
+* Hvilke reviewer-lag som ble brukt.
+* Funn, sortert etter alvorlighetsgrad.
+* Eventuelle rettelser som gjenstår.
+* Testresultater.
+* Git-status og worktree-plassering.
+* Om PROMPT 023 er klar for godkjenning og senere commit.
+
+Stopp etter rapporten.
+```
+
+- **Post-fix Code Review (2026-10-23):** Kjørte alle fire installerte reviewer-lag på oppdatert diff. Blind Hunter, Verification Gap Reviewer og Edge Case Hunter leverte funn; Acceptance Auditor bekreftet at note-basert quiz fortsatt er PRD-gap, men utsatt av den godkjente storyavgrensningen. Edge Case Hunter returnerte tomt svar i første pass og er fortsatt registrert som mislykket lag. Triage registrerte sju patchfunn og avviste ett lavt forslag; detaljene er i storyens `Review Findings`. BMADs påkrevde valgpunkt for patchfunn er nådd, så spesifikasjonen står `in-progress` til brukeren velger hvordan funnene håndteres. Testene ble kjørt fra worktree med originalprosjektets eksisterende `.venv`: 14 bestått. Ingen kode ble endret etter review.
+
+## PROMPT 023 – Oppfølging av godkjente reviewfunn
+
+- **Dato:** 2026-10-23.
+- **Godkjent omfang:** Rettet bare BMAD-funn 1 og 2. Ingen produksjonskode ble endret.
+- **Testendringer:** `tests/test_app.py` verifiserer nå at sammendraget i UI er eksakt satt sammen av kilde-setningene, og at innsending av quizsvar viser forventet poengsum samt riktig/feil tilbakemelding for hvert spørsmål.
+- **Utsatte funn:** Funn 3–7 er registrert som utsatte forbedringer i `spec-023-local-text-processing.md` og `deferred-work.md`; de er ikke implementert.
+- **Verifisering:** Hele pytest-pakken: 15 bestått. `git diff --check` bestod.
+- **BMAD-status:** Godkjente patchfunn er håndtert; storyen er `done` for PROMPT 023-omfanget. Code Review-begrensningen for Edge Case Hunter (tomt svar i første pass) er beholdt i statusrapporten.
+- **Git:** Bare separat worktree er endret; ingen commit, push, merge eller overføring. Opprinnelig `.memlog.md` er urørt.

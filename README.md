@@ -12,7 +12,7 @@ Repoet inneholder gruppens applikasjon og dokumentasjon av utvikling, testing og
 
 ## Prototype: forelesningsnotater til sammendrag og quiz
 
-En liten Streamlit-prototype lar deg lime inn notater, vise et eksempel på sammendrag og sentrale begreper, og svare på en kort quiz. Resultatene er faste lokale demonstrasjonsdata. De er tydelig merket og er **ikke generert fra notatene**. Prototypen bruker ingen KI-tjeneste eller API-nøkkel.
+En liten Streamlit-prototype lar deg lime inn notater, hente et enkelt utdragssammendrag og sentrale begreper fra teksten, og svare på en kort quiz. Sammendraget velger inntil tre innholdsrike originalsetninger, og begrepslisten rangerer hyppige ord fra notatene. Dette er enkel, lokal tekstbehandling — **ikke KI-generering**. Quizspørsmålene er faste demonstrasjonsdata og er ikke laget fra notatene. Prototypen bruker ingen KI-tjeneste eller API-nøkkel.
 
 Dette er et foreløpig prototypvalg for å demonstrere kjerneflyten, ikke en vedtatt produksjonsarkitektur. PDF-opplasting/-uttrekk, ekstern KI, lagring og testmodus som produktfunksjon er ennå ikke implementert. PyMuPDF er ikke nødvendig for denne versjonen.
 
@@ -40,4 +40,4 @@ python -m unittest discover -s tests -v
 pytest -q
 ```
 
-Kjøring med `pytest` krever at avhengighetene i `requirements.txt` er installert. Testene dekker tekstvalidering, mock-struktur, avvisning av ugyldige mockresultater og kontrollert håndtering av uventede generatorfeil.
+Kjøring med `pytest` krever at avhengighetene i `requirements.txt` er installert. Testene dekker lokal behandling av notater, kilde- og demo-merking, tekstvalidering, quizstruktur, avvisning av ugyldige mockresultater og kontrollert håndtering av uventede generatorfeil.
