@@ -2,6 +2,8 @@
 
 Oppdatert: 2026-10-18
 
+> **Historisk øyeblikksbilde:** Opplysningene i dokumentasjonen nedenfor beskriver statusen per 2026-10-18. De er bevart som historikk og er ikke dagens status.
+
 ## Prosjekt
 
 - **Bekreftet:** Prosjektnavnet i produktbriefen er «Foredragsnotater → Sammendrag & Quizgenerator».
@@ -60,3 +62,34 @@ Oppdatert: 2026-10-18
 2. Oppdater produktbriefen med vedtatte valg og målbare suksesskriterier.
 3. Bruk den installerte BMAD-konfigurasjonen til å utarbeide PRD/arkitektur og planlegge stories når gruppen er klar.
 4. Legg til testnotater først når gruppen har laget og godkjent dem; ikke bruk kursbeskyttet materiale uten avklaring.
+
+## Observert status – 2026-10-23
+
+Skrivebeskyttet kontroll gjennomført 2026-10-23 kl. 22:35 Europe/Oslo. PR-status ble kontrollert på nytt via `gh pr view 1 --json state,baseRefName,headRefName,headRefOid,updatedAt,url` kl. 22:35 Europe/Oslo (GitHub `updatedAt`: 2026-10-23T18:46:07Z; [PR #1](https://github.com/IBE160-2026/G27-isum-vijai/pull/1)).
+
+Oppfølgende skrivebeskyttet PR-kontroll gjennomført 2026-10-24 kl. 16:23 Europe/Oslo. PR #1 var fortsatt `OPEN`, base `main`, head `feature/023-local-text-processing`, head-SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`; GitHub `updatedAt` var fortsatt `2026-10-23T18:46:07Z` ([PR #1](https://github.com/IBE160-2026/G27-isum-vijai/pull/1)).
+
+- **`main`:** baseline `444135e946b5635c812a24d44037c80fbf815e45`. På dette snapshotet finnes prototypens seks automatiserte tester i `tests/test_generator.py`; funksjonene og begrensningene per testcase er kartlagt i [testplanen](testing/TEST_PLAN.md).
+- **`main`-prototyp (PROMPT 022):** Streamlit med norsk UI og lokale demonstrasjonsdata; resultatet er ikke ekte KI-generering.
+- **PR #1:** åpen, base `main`, head-branch `feature/023-local-text-processing`, head `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503` ([PR #1](https://github.com/IBE160-2026/G27-isum-vijai/pull/1)). PROMPT 023 legger lokal tekstbehandling uten KI til, mens quiz fortsatt vises som demo. Endringene og de tilhørende 15 testene tilhører dette PR-snapshotet, ikke `main` før merge.
+- **Testbevis:** den dokumenterte 15-testkjøringen fant sted 2026-10-23 før head-committen ble opprettet, på arbeidsfila som senere ble commit `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`. Kommando og arbeidsmappe er ført fra PROMPT 023-samtalehistorikken i [testloggen](testing/TEST_LOG.md). Klokkeslett og separat rå pytest-utskrift er ikke bevart. Ingen separat manuell kontroll er dokumentert.
+- **PRD og beslutninger:** PRD-en forblir `draft`. DEC-001–DEC-005 forblir `Uavklart`; denne statuskontrollen endrer ikke beslutningsstatus.
+- **Etter merge:** gjennomgå og rydde opp i `_bmad-output/implementation-artifacts/deferred-work.md` når fila er tilgjengelig i det felles repositoryet. PROMPT 024 oppretter eller kopierer ikke fila.
+
+## Observert status – 2026-10-25
+
+Skrivebeskyttet kontroll av PR #1 ble gjort 2026-10-25 kl. 01:00 Europe/Oslo (2026-10-24 kl. 23:00 UTC) med `gh pr view 1 --json state,baseRefName,headRefName,headRefOid,updatedAt,url`. Resultat: PR #1 er fortsatt `OPEN`, base `main`, head-branch `feature/023-local-text-processing`, head-SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`; GitHub `updatedAt` er `2026-10-23T18:46:07Z`. PR-en er ikke merget ([PR #1](https://github.com/IBE160-2026/G27-isum-vijai/pull/1)).
+
+- **`main`:** fortsatt knyttet til baseline `444135e946b5635c812a24d44037c80fbf815e45` i den separate main-worktreen. PROMPT 026 har ikke endret `main`.
+- **Dokumentasjonsbranch:** `docs/024-test-traceability` står på samme baseline `444135e946b5635c812a24d44037c80fbf815e45`, med ucommittede PROMPT 024/025-endringer og PROMPT 026-dokumentasjonsendringer. Ingen commit er opprettet.
+- **PROMPT 023:** endringene er fortsatt bare representert av PR #1-headen; de tilhører ikke `main` mens PR-en er åpen.
+- **PRD og beslutninger:** PRD-status er fortsatt `draft`. DEC-001–DEC-005 står fortsatt `Uavklart`; ingen produktbeslutning ble endret.
+- **Testproveniens:** PROMPT 026-kjøringen med ni beståtte tester gjelder dokumentasjonsbranchen og er ført i [testloggen](testing/TEST_LOG.md). De historiske 15 PROMPT 023-testene er fortsatt separat før-commit-evidens.
+
+## Observert status – PROMPT 024/025 og PROMPT 026-ferdigstilling (2026-10-25)
+
+- **Branch:** `docs/027-documentation-completion`, branchen for den lokale dokumentasjonscommitten.
+- **Storystatus:** PROMPT 024/025 og PROMPT 026 er `done` etter BMAD Build Step 05. PRD er fortsatt `draft`; DEC-001–DEC-005 er fortsatt `Uavklart`.
+- **GitHub:** Konto `Abenagit` har push-rettighet til `IBE160-2026/G27-isum-vijai`. Endringene er ikke pushet; ingen separat PR for denne dokumentasjonsbranchen er opprettet.
+- **Uendret referanse:** `main` er fortsatt `444135e946b5635c812a24d44037c80fbf815e45`; PR #1 er fortsatt `OPEN`, base `main`, head `feature/023-local-text-processing` på `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503` (kontrollert 2026-10-25). PROMPT 023 er ikke merget.
+- **Teststatus:** Hele lokale pytest-suiten består med ni tester; historisk PROMPT 023-kjøring på 15 tester er fortsatt separat før-commit-evidens.
