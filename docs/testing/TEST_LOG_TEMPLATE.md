@@ -8,13 +8,16 @@ Kopier denne oppføringen for hver faktisk testkjøring. En planlagt test skal i
 - **Utført av:**
 - **Arbeidsmappe:**
 - **Versjon/commit eller snapshot:**
+- **Branch og base:**
 - **Miljø og testdata:**
-- **Testkommando:**
+- **Kommando(er):**
 - **Forutsetninger:**
 - **Steg:**
   1.
+- **Testomfang/filer:**
 - **Forventet resultat:**
 - **Faktisk resultat:**
+- **Antall bestått/feilet/skippet og warnings:**
 - **Exit-status:**
 - **Status:** PLANLAGT / BESTÅTT / FEILET / BLOKKERT
 - **Bevis eller lenke:**
