@@ -1,5 +1,12 @@
 # BMAD-status
 
+## PROMPT 028 – publisering og ventende PR-gjennomgang (2026-11-15)
+
+- **Fullført:** Den lokale PROMPT 028-integreringen etter PR #2 er kvalitetskontrollert og committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` på `docs/028-product-brief-alignment-post-pr2`.
+- **Publisert:** Committen er pushet og finnes i eksisterende [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Ved kontroll 2026-11-15 kl. 10:09:30 UTC var PR-en `OPEN` og `MERGEABLE`; ingen CI-checks var rapportert. Den er ikke merget.
+- **Gjenstår:** Gruppens PR-gjennomgang og godkjenning, og deretter eventuell merge. Dette markerer ikke hele BMAD-prosessen som fullført.
+- **Ufullført BMAD-/produktarbeid:** Product Brief Validate er ikke fullført; PRD Validate/Update er ikke gjennomført; PRD forblir `draft`; DEC-001–DEC-005 forblir åpne.
+
 ## PROMPT 028 – post-PR #2-integrasjon (2026-11-15)
 
 - **Baseline:** Branch `docs/028-product-brief-alignment-post-pr2` følger `origin/main` SHA `1227fb443e52815f831b3f5720b4f41844f72ad0`. Dette er PR #2-mergecommit med foreldre `35ff46c422948330844f77ff07816ca86c815fc1` og `a5778f25991d9b88fa4c3c186d5b2d2536c36212`; commit-tid `2026-11-14 21:49:15 +01:00`. PR-spesifikk `merged_at` var utilgjengelig fra Codex. PROMPT 028-kildecommit `72c0b67d2ac715f925d6b41a56a4636c97b4b83a` er bevart.

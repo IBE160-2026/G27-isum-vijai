@@ -92,3 +92,9 @@ Dette artefaktet dokumenterer gjennomført, avgrenset Product Brief-validering o
 - **Dokumentasjon:** PR #2s eksisterende logg- og testhistorikk er bevart; unike PROMPT 028-oppføringer er lagt etter den. Denne posten er gjeldende status og overstyrer ikke tidsbundne historiske rapporter.
 - **Verifisering på integrasjonsbranchen:** `python -m pytest -q` ga `18 passed`; `python -m pytest -q tests/test_prompt024_traceability_docs.py` ga `3 passed`; `git diff --check` bestod.
 - **Produkt- og arbeidsstatus:** Ingen applikasjonskode, Product Brief, PRD eller beslutning er endret. PRD forblir `draft`, DEC-001–DEC-005 forblir uavklart. Ingen commit, push, merge, rebase eller PR er opprettet. `.memlog.md` er ikke åpnet.
+
+## Publisering i PR #3 (2026-11-15)
+
+- PROMPT 028-integreringen ble kvalitetskontrollert, committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` og pushet til `docs/028-product-brief-alignment-post-pr2`.
+- Arbeidet er publisert i eksisterende [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Ved siste kontroll 2026-11-15 kl. 10:09:30 UTC var PR-en `OPEN`, `MERGEABLE`, base `main`, head `ec19c95…`; ingen CI-checks var rapportert. PR #3 avventer gjennomgang og er ikke merget.
+- Product Brief Validate er ikke fullført, PRD forblir `draft`, og DEC-001–DEC-005 forblir åpne.

@@ -1,5 +1,12 @@
 # Prosjektkontekst
 
+## Gjeldende status – PROMPT 028 publisert i PR #3 (2026-11-15)
+
+- **Publisert arbeid:** PROMPT 028-integreringen etter PR #2 er committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` på `docs/028-product-brief-alignment-post-pr2` og publisert i [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Dokumentasjonsarbeidet er gjennomført, men PR #3 er ikke merget.
+- **Sist verifiserte PR-status:** 2026-11-15 kl. 10:09:30 UTC: `OPEN`, base `main`, head `ec19c95a63e169ab90174abb2299bbdaba1ed357`, `MERGEABLE`. Ingen automatiske CI-checks var rapportert (`statusCheckRollup: []`). Statusen er fra før denne loggoppdateringen og skal ikke leses som en etterfølgende live-kontroll.
+- **Avventer:** Gruppens gjennomgang og godkjenning før eventuell merge. PR #2 er merget i `1227fb443e52815f831b3f5720b4f41844f72ad0`; PR #3 er fortsatt åpen.
+- **Produkt/BMAD:** Product Brief Validate er ikke fullført. PRD er fortsatt `draft`, og DEC-001–DEC-005 er fortsatt åpne. Bare den lokale PROMPT 028-integreringsoppgaven er fullført; PR-gjennomgang og merge gjenstår.
+
 ## Gjeldende status – PROMPT 028 etter PR #2 (2026-11-15)
 
 - **Bekreftet merge:** `origin/main` peker på PR #2-mergecommit `1227fb443e52815f831b3f5720b4f41844f72ad0`, med foreldre `35ff46c422948330844f77ff07816ca86c815fc1` og PR #2-head `a5778f25991d9b88fa4c3c186d5b2d2536c36212`. Commit-tiden er `2026-11-14 21:49:15 +01:00`; PR-ens GitHub `merged_at`-felt ble ikke hentet fra Codex-miljøet.

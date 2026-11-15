@@ -505,3 +505,15 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Antall bestått/feilet/skippet og warnings:** Full suite 18/0/0; målrettet modul 3/0/0; ingen warnings.
 - **Status:** BESTÅTT for integrasjonsbranchens app-, regresjons- og dokumentasjonstester.
 - **Begrensning:** Dette er automatiske prototypetester, ikke en manuell brukertest eller verifikasjon av alle produktkrav T-001–T-009.
+
+## PROMPT 028 – lokal sluttest før publiseringslogg (2026-11-15)
+
+- **Arbeidsmappe/branch:** `/private/tmp/G27-isum-vijai-prompt028-post-pr2`, `docs/028-product-brief-alignment-post-pr2`; baseline `1227fb443e52815f831b3f5720b4f41844f72ad0`.
+- **Kommandoer:** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q`; `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`; `git diff --check`.
+- **Faktiske resultater:** Ved siste kjøring etter at publiseringsstatusen var føyd til: full suite `18 passed in 0.77s`; dokumentasjonssporbarhet `3 passed in 0.21s`; `git diff --check origin/main` bestod. Testene hadde exit 0; ingen feil eller warnings ble rapportert. De tre målrettede testene inngår i fullsuite-tallet.
+- **Status:** Bestått på den oppdaterte lokale dokumentasjonsbranchen.
+
+## PR #3 – GitHub-kontroll, ikke CI-test (2026-11-15)
+
+- **Kontrolltid:** `gh pr view 3 --repo IBE160-2026/G27-isum-vijai --json state,baseRefName,headRefName,headRefOid,mergeable,statusCheckRollup,url,updatedAt` returnerte kl. 10:09:30 UTC `OPEN`, base `main`, head `ec19c95a63e169ab90174abb2299bbdaba1ed357`, `MERGEABLE` og `statusCheckRollup: []`.
+- **CI-status:** Ingen automatiske kontroller var rapportert i dette PR-resultatet. Dette er ikke en kjøring eller bestått CI-test. Statusen gjelder kontrolltidspunktet før publiseringsloggens oppdatering.
