@@ -3652,3 +3652,15 @@ Stopp etter rapporten og vent på godkjenning.
 - **Testbevis:** Sluttkontroll før commit: `9 passed in 0.27s`, exit 0; `git diff --check` exit 0. Se siste datostemplede kjøring i `docs/testing/TEST_LOG.md`. Dette er dokumentasjonsbranchens kjøring, ikke main; PROMPT 023s 15 tester er historiske.
 - **Commit:** Opprettet med meldingen `docs: complete test traceability and documentation review`; SHA og forfatter er bekreftet direkte fra commitobjektet. Kun de gjennomgåtte dokumentasjonsfilene og godkjent dokumentasjonstestfil er inkludert.
 - **Avgrensning:** Ingen push eller PR-opprettelse. `main`, PROMPT 023-branchen og PR #1 er uendret; `.memlog.md` er ikke inkludert.
+
+## MVP-001 – PDF-opplasting og tekstuttrekk (2026-11-15)
+
+- **Kilde:** Implementasjonsoppdraget for `spec-mvp-001-pdf-ingestion.md` i isolert worktree `/private/tmp/G27-isum-vijai-mvp-001-pdf`.
+- **Utførelsesstatus:** Implementert; spesifikasjonens status, oppgaver og verifikasjonsresultat er oppdatert etter faktisk arbeid.
+- **Endringer:** La til lokal `pypdf`-basert PDF-inputadapter med minnebehandling og grenser, PDF-valg/opplasting i Streamlit, tester og bruk-/prosessdokumentasjon. Generatorens tekstlogikk er uendret.
+- **Beslutningsstatus:** `pypdf` er dokumentert som avgrenset delbeslutning under DEC-005. DEC-001–DEC-004 og øvrig DEC-005 er fortsatt åpne; PRD er fortsatt `draft`.
+- **Sluttverifisering:** Isolert Python 3.12-miljø /private/tmp/G27-isum-vijai-mvp001-venv: full suite 33 bestått på 1.58s; målrettede PDF-/UI-tester 19 bestått på 1.09s; git diff --check origin/main bestod. Ingen testfeil i sluttkjøringene.
+- **Feil rettet under utvikling:** To AppTest-forventninger feilet etter at formatvalg ble lagt til, og en manglende-fil-test feilet mens radiofeltet lå i Streamlit-formen. Testindekser ble oppdatert, formatvalget flyttet utenfor formen; sluttkjøringene består.
+- **Build Step 04-review og rettelser:** Blind Hunter beregnet 7 som minsteantall og leverte 7 observasjoner; Edge Case Hunter leverte 2; Verification Gap Reviewer fant ingen gap. Triagering og bevis finnes i spesifikasjonens Review Triage Log. Rettet visning av gammelt resultat ved formatbytte, stoppet tekstuttrekk ved tegn-grensen via pypdf-besøker, og la til norsk tegnsett-fixture. Den eldre kjøringen med 26 tester er merket som mellomkjøring.
+- **Sluttverifisering etter reviewrettelser:** Isolert Python 3.12-miljø: full pytest-suite `35 passed in 1.65s`; målrettede PDF-/UI-tester `21 passed in 1.43s`; `git diff --check origin/main` bestod. Ingen feil i sluttkjøringene.
+- **Git:** Én lokal commit opprettet etter brukerens særskilte godkjenning. Ingen push eller merge.

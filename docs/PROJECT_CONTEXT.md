@@ -2,6 +2,13 @@
 
 Oppdatert: 2026-10-18
 
+## Observert status – MVP-001 PDF-opplasting (2026-11-15)
+
+- PDF-opplasting i Streamlit sender lokalt uttrekket tekst til uendret `generate_result`-flyt. `pypdf` leser filen i minnet; tekstgrensen håndheves under uttrekk. Bytte mellom tekst/PDF fjerner tidligere resultat. OCR, ekstern PDF-behandling og varig lagring er ikke implementert.
+- Avvisningsgrenser: 10 MiB input, 200 sider og 1 000 000 uttrekkstegn. Passordbeskyttede, ugyldige, tomme og teksttomme PDF-er får brukerrettet feilmelding uten interne parserdetaljer.
+- `pypdf` er godkjent som avgrenset PDF-verktøy under DEC-005; øvrige teknologivalg i DEC-005 står åpne. DEC-001–DEC-004 er fortsatt uavklart; PRD forblir `draft`.
+- Implementasjonen og testene er i isolert worktree `/private/tmp/G27-isum-vijai-mvp-001-pdf`, branch `feature/mvp-001-pdf-ingestion`, og er lokalt committet etter review. Endringen er ikke pushet. Reviewrettelser er verifisert med fullsuite 35 bestått og 21 målrettede PDF/UI-tester; se spesifikasjonen og testloggen. PR #3-arbeid og opprinnelig arbeidsmappe er holdt utenfor.
+
 > **Historisk øyeblikksbilde:** Opplysningene i dokumentasjonen nedenfor beskriver statusen per 2026-10-18. De er bevart som historikk og er ikke dagens status.
 
 ## Prosjekt

@@ -342,3 +342,33 @@ Faktiske kjøringer føres her. `TEST_LOG_TEMPLATE.md` er fortsatt malen.
 - **Bevis:** Terminalutskrift `......... [100%]` og `9 passed in 0.27s`.
 - **Avgrensning:** Dette er en ny kjøring på PROMPT 024/025/026-dokumentasjonsbranchen. Den er ikke en testkjøring på `main`. De 15 testene fra PROMPT 023 er fortsatt historisk evidens fra SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`, ikke del av denne kjøringen.
 - **Diff-kontroll:** `git diff --check` kjørt samme tidspunkt, ingen feilutskrift, exit-status `0`.
+
+## MVP-001 PDF-uttrekk – mellomkjøring før AppTest-rettelser (2026-11-15)
+
+- **Arbeidsmappe:** `/private/tmp/G27-isum-vijai-mvp-001-pdf`.
+- **Miljø:** Prosjektets Python 3.12-venv; `pypdf 6.21.4` ble installert etter at den godkjente avhengigheten ble lagt til i `requirements.txt`.
+- **Kommando:** `python -m pytest -q`.
+- **Forventet resultat:** PDF-uttrekk/feilhåndtering og eksisterende regresjonstester består.
+- **Faktisk resultat:** `26 passed in 0.86s`; exit-status `0`.
+- **Status:** Mellomresultat, senere erstattet av sluttkjøringene under etter at ytterligere UI-testscenarioer ble lagt til.
+- **Dekning i denne kjøringen:** En gyldig maskinlesbar PDF med tekst, tom/teksttom PDF, ugyldig PDF, kryptering, alle tre fil-/side-/tekstgrenser, eksisterende tekstbasert UI-flyt og generatorregresjoner. Hele testcase-scenarioene T-001–T-009 er ikke erklært fullført; statusene står `PLANLAGT`.
+- **Diff-kontroll:** `git diff --check` kjørt i samme kommando etter pytest; exit-status `0`.
+- **Begrensning:** Ingen manuell nettleserkontroll; PDF-inputen er verifisert med målrettede tester. Ingen OCR eller ekstern behandling ble brukt.
+
+## MVP-001 – sluttkjøring etter AppTest-rettelser (2026-11-15)
+
+- **Isolert miljø:** `/private/tmp/G27-isum-vijai-mvp001-venv`, Python 3.12, Streamlit og pytest fra prosjektets `requirements.txt`; pypdf 6.21.4.
+- **Kommandoer:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q`; `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q tests/test_pdf_ingestion.py tests/test_app.py`; `git diff --check origin/main`.
+- **Faktisk sluttresultat etter whitespace- og UI-test for teksttom PDF:** Full suite `33 passed in 1.58s`; målrettet PDF-/UI-dekning `19 passed in 1.09s`; begge pytest-kommandoene exit 0, ingen feil eller warnings. `git diff --check origin/main` bestod. Målrettede tester inngår i fullsuite-tallet.
+- **Midlertidige feil og rettelser:** En tidligere fullsuite-kjøring ga 2 feilede og 20 beståtte tester fordi to UI-tester hadde gamle radioindekser. Neste kjøring ga 1 feilet og 23 beståtte fordi AppTest ikke fanget radioendring mens formatvelgeren lå inne i formen. Indekser ble oppdatert og formatvelgeren flyttet utenfor formen; sluttkjøringene over består.
+- **Testmiljø-avvik og opprydding:** De to mellomkjøringene brukte opprinnelig prosjektvenv, der pypdf 6.21.4 ble midlertidig installert for kjøringen. Pakken ble senere avinstallert fra originalens venv; sluttkjøringene over brukte bare det isolerte miljøet under `/private/tmp`. Ingen prosjektfiler i den opprinnelige worktreen ble endret.
+- **Dekning:** Gyldig maskinlesbar én- og flersiders PDF, siderekkefølge, whitespace-normalisering, tekst til eksisterende generator, tom/teksttom og korrupt PDF, faktisk kryptert PDF, fil-/side-/tekstgrenser, UI-feil for manglende/ugyldig/teksttom opplasting og fortsatt tekstinput. Ingen ekte studentdata ble brukt eller loggført.
+- **Avgrensning:** Ingen nettleserbasert manuell test eller varig lagring. Brede T-001–T-009-statusverdier forblir `PLANLAGT`.
+
+## MVP-001 – sluttkjøring etter Build Step 04-review (2026-11-15)
+
+- **Arbeidsmappe og miljø:** `/private/tmp/G27-isum-vijai-mvp-001-pdf`; isolert `/private/tmp/G27-isum-vijai-mvp001-venv`, Python 3.12, pypdf 6.21.4.
+- **Kommandoer:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q`; `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q tests/test_pdf_ingestion.py tests/test_app.py`; `git diff --check origin/main`.
+- **Faktisk resultat:** Full suite `35 passed in 1.65s`; målrettede parser-/UI-tester `21 passed in 1.43s`; begge pytest-prosessene exit 0. Diff-kontrollen bestod. Målrettede tester inngår i fullsuite-tallet.
+- **Reviewoppfølging:** La til test for norsk tekst i syntetisk PDF, avbrøt tekstuttrekk ved tegn-grensen og fjernet gammelt resultat ved formatbytte. Oppdaterte testloggen til å merke 26-testkjøringen som mellomkjøring. Reviewfunn og triagering står i MVP-001-spesifikasjonen.
+- **Avgrensning:** Ingen manuell nettlesertest, OCR, ekstern PDF-behandling, varig lagring, commit, push eller PR. Ingen ekte studentdata ble brukt eller loggført.

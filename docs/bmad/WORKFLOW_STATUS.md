@@ -1,5 +1,12 @@
 # BMAD-status
 
+## MVP-001 PDF-opplasting (2026-11-15)
+
+- Implementasjonen og Build Step 04-reviewen er gjennomført i isolert worktree; reviewrettelsene er testet. Denne avgrensede PDF-ingestion-storyen er `done` etter Build Step 05 og den godkjente lokale committen. Ingen bredere BMAD-story- eller produktstatus er markert fullført.
+- Sluttverifisering etter reviewrettelser i isolert miljø: full suite 35 bestod på 1.65s; 21 målrettede PDF-/AppTest-tester bestod på 1.43s; `git diff --check origin/main` bestod. Ingen manuell nettlesertest er utført.
+- PRD forblir `draft`. `pypdf` er en godkjent delbeslutning under DEC-005; DEC-001–DEC-004 og resterende DEC-005-valg står åpne.
+- Testplanens T-001–T-009-status er fortsatt `PLANLAGT`; se testloggen for den målrettede MVP-001-kjøringen.
+
 Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene før installasjon; PROMPT 007-oppdateringen dokumenterer den senere installasjonen.
 
 ## Før installasjon
