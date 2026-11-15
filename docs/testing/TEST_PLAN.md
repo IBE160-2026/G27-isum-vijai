@@ -1,5 +1,9 @@
 # Testplan
 
+## MVP-002 Gemini – målrettet prototypdekning
+
+Automatiserte tester i `tests/test_gemini_service.py` bruker syntetiske notater og mock-klient; de dekker strukturert svar, normaliserte sitatbevis mot notatene for sammendrag, begreper, quizspørsmål, riktig svar og forklaring, utilstrekkelig antall spørsmål, ugyldig JSON/struktur, dupliserte alternativer (også etter trim/case-folding), manglende nøkkel, Secrets-fallback, modellvalg, timeout, rate limit og saniterte tjenestefeil. Sitatkontrollen sjekker tekstlig samsvar; den kan ikke garantere at et sitat semantisk beviser påstanden eller at alt innhold er feilfritt. `tests/test_app.py` kontrollerer samtykke, PDF→lokalt uttrekk→generering, at svar skjules før innsending, valggrenser/defaults og at resultat/quizfeedback ryddes når notattekst, PDF eller modus endres. Ingen test foretar ekte Gemini-kall. Den bredere T-001–T-009-statusen nedenfor forblir PLANLAGT.
+
 Alle T-001–T-009 står fortsatt **PLANLAGT** som testtilfeller: ingen av dem har dokumentert dekning av samtlige planlagte underkasus. Matrisene viser implementasjon og delvis kode-/testdekning på to ulike snapshots, ikke godkjenning av et helt scenario. `Implementasjon` gjelder atferden som er spesifisert for det aktuelle testtilfellet; `Full` / `Delvis` / `Ingen` beskriver testdekningen.
 
 Dette er fortsatt status for de komplette produktkontrollene T-001–T-009. Prototypens automatiserte regresjonstester dekker delmengder av tekstinput, lokal ekstraksjon, UI-merking, demoquiz og tom input; de gjør ikke et produkt-testtilfelle fullført. Se [`TEST_LOG.md`](TEST_LOG.md) for PROMPT 028-kjøringene og `tests/test_generator.py` / `tests/test_app.py` for testene.
@@ -24,16 +28,16 @@ Dette er en indeks mellom PRD-krav, åpne beslutninger og testtilfeller; den dok
 |---|---|---|---|
 | FR-1 tekstinput | DEC-005 (teknologistakk) | T-002 | T-002 er delvis dekket; formateringsvarianter gjenstår. |
 | FR-2 PDF-input | DEC-005 (PDF-verktøy delbeslutning godkjent; resten åpen) | T-001, T-008 | PDF-uttrekk og avgrensede parserfeil er implementert med pypdf; bred testcase-status PLANLAGT. |
-| FR-3 sammendragslengde | DEC-005 (teknologistakk) | T-003 | Valg av lengde er ikke særskilt dekket. |
-| FR-4 quizinnstillinger | DEC-001 (quizinteraksjon, fortsatt uavklart), DEC-005 (teknologistakk, fortsatt uavklart) | T-004, T-006 | Genereringsinnstillinger, antall og vanskelighetsgrad mangler full dekning; poengberegning i T-006 er betinget av et gruppevedtak under DEC-001. |
-| FR-5 sammendrag og begrepsliste | DEC-003 (KI-tjeneste) | T-003 | Strukturelle/deterministiske kontroller finnes, men godkjent fasitbasert kvalitetsdekning mangler. |
-| FR-6 quiz og fasit fra notater | DEC-003 (KI-tjeneste), DEC-005 (teknologistakk) | T-004, T-007 | Quizgenerering fra notatene og kildebinding er ikke implementert/dekket; demoquiz er ikke bevis for kravet. |
+| FR-3 sammendragslengde | DEC-005 (teknologistakk, fortsatt uavklart) | T-003 | Gemini-modus tilbyr kort/middels/lang og sender valget; generert kvalitet mot godkjent fasit er ikke kontrollert. T-003-statusen forblir PLANLAGT. |
+| FR-4 quizinnstillinger | DEC-001 (quizbeslutning fortsatt uavklart), DEC-005 (teknologistakk fortsatt uavklart) | T-004, T-006 | Gemini-modus sender lett/middels/vanskelig og 1–10 spørsmål; mocktester kontrollerer valg og responsgrenser. T-004/T-006 forblir PLANLAGT fordi brede krav/fasitdekning mangler. |
+| FR-5 sammendrag og begrepsliste | DEC-003 (KI-tjeneste fortsatt uavklart) | T-003 | Gemini-modus returnerer AI-sammendrag og forklarte begreper med tekstlige kildesitater; semantisk kvalitet og korrekthet mot godkjent fasit er ikke verifisert. T-003 forblir PLANLAGT. |
+| FR-6 quiz og fasit fra notater | DEC-003 (KI-tjeneste fortsatt uavklart), DEC-005 (teknologistakk fortsatt uavklart) | T-004, T-007 | Gemini-modus genererer quiz, fasit og forklaring med sitater kontrollert mot kildeteksten. Sitatsjekk beviser ikke semantisk støtte; T-004/T-007 forblir PLANLAGT inntil godkjente testnotater/fasit og bredere kildebinding er vurdert. |
 | FR-7 oversiktlig resultatvisning | DEC-001 (quizinteraksjon) | T-005, T-009 | Automatisert UI-dekning er delvis; veiledningsfri brukertest mangler. |
-| FR-8 forståelige feilbeskjeder | DEC-003 (KI-tjeneste), DEC-005 (PDF-behandling) | T-001, T-008 | Input-/generatorfeil har delvis dekning; PDF- og ekstern tjenestefeil mangler. |
-| NFR-1 kildebinding | DEC-003 (KI-tjeneste) | T-003, T-004, T-007 | Ingen godkjente testnotater/fasit; full kildebinding er ikke dokumentert. |
+| FR-8 forståelige feilbeskjeder | DEC-003 (KI-tjeneste), DEC-005 (PDF-behandling) | T-001, T-008 | Lokal PDF-feil og Gemini ugyldig svar/rate limit/timeout er mocktestet, men bredere T-008-matrise står PLANLAGT. |
+| NFR-1 kildebinding | DEC-003 (KI-tjeneste) | T-003, T-004, T-007 | Sitatstrenger kontrolleres mot notatene, men semantisk støtte og kvalitet er ikke garantert. Ingen godkjent fasit finnes; direkte teststatus står PLANLAGT. |
 | NFR-2 korrekthetsforbehold | — | Ingen direkte testcase | Manglende direkte testdekning. |
 | NFR-3 veiledningsfri arbeidsflyt | DEC-004 (testmodus) | T-009 | Automatisert AppTest er ikke en veiledningsfri brukertest. |
-| NFR-4 hemmeligheter og feildetaljer | DEC-003 (KI-tjeneste/nøkkel) | T-008 | Delvis feilhåndtering; ekstern tjenestefeil er ikke dekket. |
+| NFR-4 hemmeligheter og feildetaljer | DEC-003 (KI-tjeneste/nøkkel) | T-008 | Nøkkel fra miljø/Secrets og saniterte Gemini-feil er mocktestet. Bredere T-008-status står PLANLAGT. |
 | NFR-5 begrenset lagring | DEC-002 (lagring) | Ingen direkte testcase | Manglende direkte testdekning. |
 | NFR-6 kursmateriale ved lagring | DEC-002 (lagring) | Ingen direkte testcase | Manglende direkte testdekning. |
 | NFR-7 ekstern databehandling/oppbevaring | DEC-003 (KI-tjeneste/dataflyt) | Ingen direkte testcase | Manglende direkte testdekning. |

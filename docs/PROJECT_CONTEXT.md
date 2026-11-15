@@ -1,5 +1,15 @@
 # Prosjektkontekst
 
+## Gjeldende status – MVP SPRINT 002 (2026-11-15)
+
+- **Git-baseline:** Brukeren bekreftet PR #3 MERGED på `73fafcc0443019bf58ab69aaece503d17010c754` og PR #4 MERGED på `f528b5179aef03e0fe0eec6f9cb7f7eb819281a9` (2026-11-15T12:48:19Z). Denne isolerte worktreen og `origin/main`-referansen brukt ved oppstart står på `f528b5179aef03e0fe0eec6f9cb7f7eb819281a9`.
+- **Arbeidskopi:** Sprint 002 er lokalt committet på `feature/mvp-002-gemini-ai`, `/private/tmp/G27-isum-vijai-mvp-002-gemini`, med `feat: add Gemini AI summaries and grounded quizzes`. Ingen push eller PR; `main` og `origin/main` er uendret.
+- **Funksjon:** Valgfri Gemini-modus genererer sammendrag, begreper med forklaring og notatbasert flervalgquiz. Lokal modus er standard. Eksisterende pypdf-uttrekk skjer lokalt; Gemini-kall skjer først etter genereringshandling og aktiv samtykkebekreftelse.
+- **Sikkerhet/personvern:** Nøkkel hentes fra `GEMINI_API_KEY` eller Streamlit Secrets og sendes eksplisitt til klienten; modell `GEMINI_MODEL` kan overstyres. Appen lagrer ikke notater varig. Free Tier behandles som ekstern behandling med produktforbedringsvilkår og synlig advarsel.
+- **Begrensninger:** Sitatsjekk viser ordrett tekststøtte, men beviser ikke semantisk korrekthet. Ingen maksimalgrense for innlimt tekst er valgt. Ingen ekte Gemini-kall eller manuell nettlesertest er utført.
+- **Kvalitet:** Siste QA: fullsuite 63 bestått (`2.05s`); målrettet Gemini/UI/PDF 49 (`1.81s`); dokumentasjonstest 3 (`0.25s`). Nytt isolert miljø installerte alle `requirements.txt`-avhengigheter, inkludert `google-genai 1.75.0`; adapterimport bestod. Streamlit health-check svarte `ok` med Gemini-nøkkelvariabler fjernet; `git diff --check` mot baseline bestod. Ingen ekte Gemini-kall.
+- **Beslutninger:** Gemini og UI-valgene er foreløpige brukeroppgitte implementeringsvalg, ikke dokumentert formelt gruppevedtak. DEC-001–DEC-005 forblir åpne; PRD er `draft`; Product Brief Validate og hele MVP-en er ikke fullført.
+
 ## Gjeldende status – Git Integration 002 (2026-11-15)
 
 - **PR #3:** Brukeren bekreftet at PR #3 er merget 2026-11-15T12:08:00Z med merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`. `git fetch origin main` bekreftet at `origin/main` peker på denne SHA-en.

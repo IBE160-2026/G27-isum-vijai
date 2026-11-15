@@ -1,3 +1,4 @@
 streamlit>=1.40,<2
 pytest>=8,<10
 pypdf>=5,<7
+google-genai>=1,<2

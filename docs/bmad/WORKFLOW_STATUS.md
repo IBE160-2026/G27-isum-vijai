@@ -1,5 +1,14 @@
 # BMAD-status
 
+## MVP SPRINT 002 – Gemini AI-flyt (2026-11-15)
+
+- **Baseline:** Separat `feature/mvp-002-gemini-ai`-worktree startet rent fra PR #4-merge-baseline `f528b5179aef03e0fe0eec6f9cb7f7eb819281a9`; PR #3-merge-SHA er `73fafcc0443019bf58ab69aaece503d17010c754`.
+- **Gjennomført:** Gemini-adapter, valgfri UI-flyt, personvern/samtykke, tekst- og PDF-integrasjon, strukturert responsvalidering, feiltilfeller, mocktester og relevante logger. Lokal modus og PDF-funksjon er bevart.
+- **Review:** Blind Hunter, Edge Case Hunter og Verification Gap Reviewer er triagert i `spec-mvp-002-gemini-ai.md`; bekreftede funn er rettet og testet. Tekststørrelsesgrense er utsatt fordi produktgrense/kvoter må avklares.
+- **Verifisering:** Siste final QA: full pytest `63 passed in 2.05s`; målrettet Gemini/UI/PDF `49 passed in 1.81s`; dokumentasjonstest `3 passed in 0.25s`; `git diff --check f528b5179aef03e0fe0eec6f9cb7f7eb819281a9` exit 0. Alle deklarerte krav ble installert i nytt isolert venv; Gemini-adapterimport bestod med `google-genai 1.75.0`. Lokal Streamlit health-check svarte `ok` uten Gemini-nøkler i miljøet. Ingen ekte Gemini-kall. Detaljert bevis står i `docs/testing/TEST_LOG.md`.
+- **Status:** Sprintens implementerings-, review- og lokale commitoppgave er dokumentert `done`; commit er opprettet etter særskilt godkjenning. Ingen push/PR. Dette markerer ikke hele MVP-en eller BMM-produktarbeidet som fullført.
+- **Åpent:** DEC-001–DEC-005 står fortsatt åpne; Gemini og quizvalgene er foreløpige implementeringsvalg, ikke formelle gruppevedtak. PRD `draft`, Product Brief Validate ufullført; produksjonsgodkjenning, kostnadsansvar, dataflyt og semantisk kildeverifikasjon gjenstår.
+
 ## GIT INTEGRATION 002 – PR #3 merge og PDF-branch (2026-11-15)
 
 - PR #3 ble merget ifølge brukerens GitHub-kontroll: merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`, `MergedAt 2026-11-15T12:08:00Z`. Fetch bekreftet samme SHA som `origin/main`.

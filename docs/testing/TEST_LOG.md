@@ -556,3 +556,60 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Faktiske resultater:** Fullsuite `35 passed in 1.74s`; målrettet PDF/UI/dokumentasjonsmodul `24 passed in 1.71s`; begge pytest-kommandoer exit 0. `git diff --check` bestod etter dokumentkonfliktene var løst. De målrettede testene inngår i fullsuite-tallet.
 - **Konfliktspor:** De fire konfliktfilene var `docs/CHANGELOG_PROCESS.md`, `docs/CODEX_PROMPT_LOG.md`, `docs/bmad/WORKFLOW_STATUS.md` og `docs/testing/TEST_LOG.md`. Begge greners historiske seksjoner ble beholdt. Ingen appkode ble endret av konfliktløsningen.
 - **Status/begrensninger:** Ingen manuell nettlesertest, ingen test av hele produkt-MVP-en, ingen push eller PR #4-merge. Ingen ekte studentdata ble brukt.
+# MVP-002 Gemini – implementeringskjøring (2026-11-15)
+
+- **Miljø:** Isolert Python-miljø `/private/tmp/G27-isum-vijai-mvp001-venv`; pytest.
+- **Testdata:** Syntetiske testnotater; Gemini SDK-klient mockes i tjenestetestene. Ingen ekte API-kall eller studentdata.
+- **Kommando:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q`.
+- **Faktisk resultat:** `46 passed in 1.33s`; 0 feil.
+- **Dekning:** Eksisterende generator/PDF/UI-regresjoner, servicevalidering og sikker feiltekst, UI-samtykke og manglende nøkkel, og PDF-opplasting alene starter ikke generering. Ingen manuell nettlesertest eller ekte Gemini-kall.
+- **Status:** BESTÅTT for automatisk prototypdekning. T-001–T-009 forblir PLANLAGT; dette erklærer ikke produktmessig kvalitets-/brukertest fullført.
+
+## MVP-002 Gemini – oppfølgingsverifikasjon (2026-11-15)
+
+- **Årsak:** UI-inspeksjon av Gemini-resultatet avdekket at lokal demoquiz-merknad også ble vist under notatbasert Gemini-quiz.
+- **Endring:** Merknaden vises nå bare for lokal demoquiz; AppTest dekker bekreftet tekstgenerering, resultatrendering og melding ved færre spørsmål enn ønsket.
+- **Kommandoer:** Full pytest-suite og målrettet Gemini/UI/PDF-suite.
+- **Faktiske resultater:** `47 passed in 1.47s`; målrettet suite `33 passed in 1.10s`; `git diff --check` exit 0.
+- **Begrensninger:** Kun syntetiske notater og mock; ingen ekte Gemini-kall eller manuell nettlesertest.
+
+## MVP-002 Gemini – PDF-integrasjonstest (2026-11-15)
+
+- **Endring:** La til AppTest som sender syntetiske PDF-notater gjennom lokal pypdf-ekstraksjon og verifiserer at mockgenerering kun skjer etter aktivt samtykke.
+- **Kommandoer:** Full pytest-suite, målrettet Gemini/UI/PDF-suite og `git diff --check` mot baseline.
+- **Faktiske resultater:** `48 passed in 1.37s`; målrettet suite `34 passed in 1.14s`; diff-check exit 0.
+- **Begrensninger:** Ingen ekte Gemini-kall eller manuell nettlesertest.
+
+## MVP-002 Gemini – gjennomgangsrettelser og sluttverifikasjon (2026-11-15)
+
+- **Gjennomgangsrettelser:** Avklarte PDF-hjelpeteksten, skjulte fasit frem til quizen er sendt inn, tømte resultat ved modusbytte og avviste dupliserte alternativer. La til tester for Streamlit Secrets, modelloverstyring og disse UI-/valideringskantene.
+- **Kildebinding:** Gemini må returnere ordrette sitater fra notatene for begrepsterm/-forklaring og quizspørsmål, svar og forklaring. Tjenesten avviser sitater som ikke finnes som eksakte delstrenger. Dette hindrer ikke at et sitat brukes feil eller at annet generert innhold er feil; UI viser denne begrensningen.
+- **Kommandoer:** Full pytest-suite, målrettet Gemini/UI/PDF-suite og `git diff --check` mot baseline.
+- **Faktiske resultater:** `59 passed in 1.66s`; målrettet suite `45 passed in 1.27s`; diff-check exit 0.
+- **Begrensninger:** Ingen ekte Gemini-kall eller manuell nettlesertest. Tekstnotater har ingen egen størrelsesgrense; avklares senere med hensyn til leverandørkvoter.
+
+### Endelig kjøring etter dokumentasjonsoppdatering
+
+- **Resultater:** Full pytest-suite `59 passed in 1.72s`; målrettet Gemini/UI/PDF-suite `45 passed in 1.32s`; `git diff --check` mot baseline exit 0.
+
+## MVP-002 Gemini – avsluttende timeout-, kildebevis- og dokumentasjonskontroll (2026-11-15)
+
+- **Arbeidsmappe/branch:** `/private/tmp/G27-isum-vijai-mvp-002-gemini`, `feature/mvp-002-gemini-ai`; baseline og `origin/main` lokalt `f528b5179aef03e0fe0eec6f9cb7f7eb819281a9`.
+- **Miljø:** Isolert prosjektmiljø `/private/tmp/G27-isum-vijai-mvp001-venv`; automatiserte Gemini-kall var mockede og brukte syntetiske notater.
+- **Kommandoer:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q`; `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q tests/test_gemini_service.py tests/test_app.py tests/test_pdf_ingestion.py`; `git diff --check f528b5179aef03e0fe0eec6f9cb7f7eb819281a9`.
+- **Faktiske resultater:** Full suite `60 passed in 1.73s`; målrettet Gemini/UI/PDF-suite `46 passed in 1.33s`; diff-check exit 0. Målrettede tester inngår i fullsuite.
+- **Dokumentasjonstest:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`: `3 passed in 0.24s`. Deretter `git diff --check f528b5179aef03e0fe0eec6f9cb7f7eb819281a9` bestod.
+- **Omfang:** Etter siste reviewrettelser er eksplisitt 30 sekunders SDK-timeout testet. Normaliserte sitater må finnes i kilden også for sammendraget; tester avviser manglende/ikke-støttede sitater. AppTest dekker eksplisitt samtykke, PDF-uttrekk før Gemini, ingen kall ved opplasting alene, svarskjuling og modusbytte.
+- **Begrensninger:** Ingen ekte Gemini-kall, studentnotater eller manuell nettlesertest. Sitater gir bare tekstlig støtte og garanterer ikke semantisk riktighet. Maksimal tekststørrelse gjenstår som utsatt beslutning. DEC-003 og produksjonsgodkjenning/kostnadsansvar/dataflyt er fortsatt åpne.
+
+## MVP SPRINT 002 – Final QA i fullt isolert avhengighetsmiljø (2026-11-15)
+
+- **Arbeidsmappe/branch/base:** `/private/tmp/G27-isum-vijai-mvp-002-gemini`, `feature/mvp-002-gemini-ai`, baseline `f528b5179aef03e0fe0eec6f9cb7f7eb819281a9`.
+- **Miljø/dependencies:** Nytt venv `/private/tmp/G27-isum-vijai-mvp002-final-qa-venv` med Python 3.12.12. `uv pip install -r requirements.txt` installerte 54 pakker, inkludert `google-genai 1.75.0`, Streamlit, pytest og pypdf. Første sandbox-forsøk nådde ikke PyPI; installasjonen ble deretter gjennomført etter godkjenning i et eget miljø. Eksisterende venv ble ikke endret.
+- **Importkontroll:** `google-genai` og `prototype.gemini_service` importert; `types.HttpOptions(timeout=30000)` opprettet. Ingen API-nøkkel ble brukt, og ingen Gemini-request ble sendt.
+- **Testkommandoer:** `/private/tmp/G27-isum-vijai-mvp002-final-qa-venv/bin/python -m pytest -q`; målrettet `... -m pytest -q tests/test_gemini_service.py tests/test_app.py tests/test_pdf_ingestion.py`; `... -m pytest -q tests/test_prompt024_traceability_docs.py`.
+- **Resultater:** Siste kjøring: fullsuite `63 passed in 2.05s`; målrettet Gemini/UI/PDF `49 passed in 1.81s`; dokumentasjonstest `3 passed in 0.25s`. Målrettede moduler inngår i fullsuite.
+- **Lokal smoke-test:** `streamlit run app.py --server.headless true --server.address 127.0.0.1 --server.port 8767`, med `GEMINI_API_KEY` og `GOOGLE_API_KEY` fjernet fra prosessmiljøet. `curl -fsS http://127.0.0.1:8767/_stcore/health` returnerte `ok`. Ingen Gemini-kall.
+- **QA-rettelser:** Flyttet notatkontroller ut av Streamlit-formen og la til `on_change`-rydding, så nytt tekstinnhold og ny PDF fjerner gammelt resultat før ny generering. La til test for dette, normalisert duplikatkontroll for svaralternativer og UI-test for lengdevalg, vanskelighetsgrader og quizantall/defaults.
+- **Personvern/sikkerhet:** Tester brukte syntetiske notater og mocker. Ingen ekte studentdata eller API-nøkler. Ingen API-/notatinnhold logges. Free Tier er ekstern behandling og krever fortsatt personvernvurdering; ingen betalt bruk ble aktivert.
+- **Begrensninger:** Kildesitater kan ikke bevise semantisk korrekthet; fri tekst har ingen besluttet størrelsesgrense. Produktvalgene er foreløpige, PRD `draft`, Product Brief Validate ufullført og DEC-001–DEC-005 åpne.
