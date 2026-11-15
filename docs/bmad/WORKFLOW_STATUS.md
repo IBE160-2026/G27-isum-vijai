@@ -6,6 +6,27 @@
 - Sluttverifisering etter reviewrettelser i isolert miljø: full suite 35 bestod på 1.65s; 21 målrettede PDF-/AppTest-tester bestod på 1.43s; `git diff --check origin/main` bestod. Ingen manuell nettlesertest er utført.
 - PRD forblir `draft`. `pypdf` er en godkjent delbeslutning under DEC-005; DEC-001–DEC-004 og resterende DEC-005-valg står åpne.
 - Testplanens T-001–T-009-status er fortsatt `PLANLAGT`; se testloggen for den målrettede MVP-001-kjøringen.
+## PROMPT 028 – publisering og ventende PR-gjennomgang (2026-11-15)
+
+- **Fullført:** Den lokale PROMPT 028-integreringen etter PR #2 er kvalitetskontrollert og committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` på `docs/028-product-brief-alignment-post-pr2`.
+- **Publisert:** Committen er pushet og finnes i eksisterende [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Ved kontroll 2026-11-15 kl. 10:09:30 UTC var PR-en `OPEN` og `MERGEABLE`; ingen CI-checks var rapportert. Den er ikke merget.
+- **Gjenstår:** Gruppens PR-gjennomgang og godkjenning, og deretter eventuell merge. Dette markerer ikke hele BMAD-prosessen som fullført.
+- **Ufullført BMAD-/produktarbeid:** Product Brief Validate er ikke fullført; PRD Validate/Update er ikke gjennomført; PRD forblir `draft`; DEC-001–DEC-005 forblir åpne.
+
+## PROMPT 028 – post-PR #2-integrasjon (2026-11-15)
+
+- **Baseline:** Branch `docs/028-product-brief-alignment-post-pr2` følger `origin/main` SHA `1227fb443e52815f831b3f5720b4f41844f72ad0`. Dette er PR #2-mergecommit med foreldre `35ff46c422948330844f77ff07816ca86c815fc1` og `a5778f25991d9b88fa4c3c186d5b2d2536c36212`; commit-tid `2026-11-14 21:49:15 +01:00`. PR-spesifikk `merged_at` var utilgjengelig fra Codex. PROMPT 028-kildecommit `72c0b67d2ac715f925d6b41a56a4636c97b4b83a` er bevart.
+- **Endring:** PROMPT 028s unike dokumentasjons- og testlogginnhold er integrert etter PR #2-oppføringene. Eksisterende PR #2-historikk og testbevis er bevart; gjeldende status er ført separat.
+- **Verifisering:** `python -m pytest -q` ga 18 bestått; målrettet `tests/test_prompt024_traceability_docs.py` ga 3 bestått; `git diff --check` bestod.
+- **Produkt og beslutninger:** Applikasjonskode, Product Brief og PRD er ikke endret. PRD forblir `draft`, DEC-001–DEC-005 er `Uavklart`.
+- **Utførelse:** Ingen commit, push, merge, rebase eller PR. `.memlog.md` er ikke lest eller endret.
+
+## Historisk PROMPT 028 Product Brief-kontroll (2026-10-26)
+
+- **Gjennomført:** Avgrenset, kildebasert Product Brief- og implementasjonskartlegging på daværende main-baselines `16a34ed…` og `120bb90…`. Den historiske kravmatrisen, tester og konklusjoner er bevart i PROMPT 028-artefaktet og loggene.
+- **Begrensning:** Full BMM Product Brief Validate ble ikke erklært fullført fordi `.memlog.md` ikke skulle leses. PRD Validate/Update ble ikke kjørt; PRD forble `draft`.
+- **Åpne forhold:** DEC-001–DEC-005 og produktspørsmål om quiz, lagring/personvern, KI-dataflyt, PDF/OCR, testmodus og kildebinding forble uavklart. Ingen beslutning ble tatt i denne dokumentasjonsrunden.
+- **Status ved den daterte kontrollen:** PR #2 var åpen 2026-10-26. Den senere merge-statusen står i den gjeldende post-merge-oppføringen øverst.
 
 Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene før installasjon; PROMPT 007-oppdateringen dokumenterer den senere installasjonen.
 

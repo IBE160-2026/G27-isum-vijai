@@ -343,6 +343,180 @@ Faktiske kjøringer føres her. `TEST_LOG_TEMPLATE.md` er fortsatt malen.
 - **Avgrensning:** Dette er en ny kjøring på PROMPT 024/025/026-dokumentasjonsbranchen. Den er ikke en testkjøring på `main`. De 15 testene fra PROMPT 023 er fortsatt historisk evidens fra SHA `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`, ikke del av denne kjøringen.
 - **Diff-kontroll:** `git diff --check` kjørt samme tidspunkt, ingen feilutskrift, exit-status `0`.
 
+## PROMPT 028 – historiske testkjøringer før PR #2
+
+Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprinnelige snapshots og tidspunkt; de er ikke tester på gjeldende integrasjonsbranch.
+
+## PROMPT 028 – pytest-regresjon på dokumentasjonsbranch
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 15:32 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** Base `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`; ingen kodeendringer i PROMPT 028.
+- **Branch og base:** `docs/028-product-brief-alignment` fra `main`/`origin/main`.
+- **Miljø og testdata:** Python 3.12.12 i prosjektets `.venv`, pytest. Ufølsomme testnotater innebygd i testene; ingen KI-tjeneste eller API-nøkkel.
+- **Forutsetninger:** Lokal main var oppdatert og uten sporede endringer før branch-opprettelse. `.memlog.md` forble ustaget og urørt.
+- **Kommando(er):** `./.venv/bin/python -m pytest -q`; deretter `git diff --check`.
+- **Testomfang/filer:** Hele pakken på main-koden: `tests/test_generator.py` (11 tester) og `tests/test_app.py` (4 Streamlit AppTest-tester).
+- **Forventet resultat:** Alle eksisterende automatiske regresjonstester består.
+- **Faktisk resultat:** `15 passed in 0.69s`; 0 feilet. Pytest rapporterte ingen warnings. `git diff --check` returnerte exit 0 uten funn.
+- **Antall bestått/feilet/skippet og warnings:** 15 / 0 / 0; 0 pytest-warnings.
+- **Status:** BESTÅTT for prototyperegresjon på angitt basecommit. Dette gjør ikke produkt-testtilfellene T-001–T-009 fullført.
+- **Bevis eller lenke:** Terminalutskrift `15 passed in 0.69s`; testfiler på basecommit `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`.
+- **Avvik/oppfølging:** Ingen applikasjonskode endret. Nettleserbasert manuell UI-test ble ikke utført.
+
+## PROMPT 028 – Streamlit AppTest-smoke med to notatsett
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 15:33 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** App-koden på `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`.
+- **Branch og base:** `docs/028-product-brief-alignment` fra main-SHA `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`.
+- **Miljø og testdata:** Python 3.12.12, `streamlit.testing.v1.AppTest`; ufølsomme notater om fotosyntese og demokrati.
+- **Forutsetninger:** AppTest startet Streamlit-appen lokalt uten nettleser.
+- **Kommando(er):**
+
+  ```bash
+  ./.venv/bin/python -c 'from streamlit.testing.v1 import AppTest; run=lambda n:(lambda a:((a.text_area[0].set_value(n),a.button[0].click(),a.run()),([x.value for x in a.markdown],[x.value for x in a.error]))[1])(AppTest.from_file("app.py").run()); print(run("Fotosyntese oppstår. Glukose dannes i planter. Glukose gir energi.")); print(run("Demokrati fordeler makt. Valg gir innbyggerne politisk innflytelse. Parlamentet vedtar lover."))'
+  ```
+
+- **Testomfang/filer:** Interaktiv AppTest av `app.py`; ikke en separat pytest-test.
+- **Forventet resultat:** Sammendrag og begreper følger hvert notatsett; UI viser ingen app-feil.
+- **Faktisk resultat:** Fotosyntese-input ga sammendrag fra kildesetningene og begrepene `glukose`, `fotosyntese`, `oppstår`, `dannes`, `planter`. Demokrati-input ga sammendrag fra de tre demokrati-setningene og begrepene `demokrati`, `fordeler`, `makt`, `valg`, `innbyggerne`. Begge kjøringene hadde tom feilliste. Eksisterende test bekrefter at quizspørsmålene forblir de samme på tvers av ulik input.
+- **Antall bestått/feilet/skippet og warnings:** 2 inputkjøringer uten app-feil. Streamlit skrev ut to `missing ScriptRunContext`-warnings fra bare-mode AppTest; dette var ikke pytest-warnings.
+- **Status:** BESTÅTT for lokal input-/resultat-smoke. Ikke manuell nettlesertest og ikke produktmessig AI-/quizgenereringstest.
+- **Bevis eller lenke:** Terminalutskrift 2026-10-26 kl. 15:33 CET.
+- **Avvik/oppfølging:** Ingen manuell nettleser var tilgjengelig. Manuelle steg er oppgitt i PROMPT 028-artefaktet.
+
+## PROMPT 028 – eksisterende dokumentasjonstest i PR #2-worktree
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 15:32 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** `72ebf2cff969d435a00187aac3b342375930c80b` på `docs/027-documentation-completion`.
+- **Branch og base:** Separat worktree `/private/tmp/G27-isum-vijai-prompt024`; ikke PROMPT 028-branchen eller main.
+- **Miljø og testdata:** Prosjektets Python 3.12.12 `.venv`; lokale dokumentasjonsfixtures.
+- **Forutsetninger:** Kjøring mot PR #2-worktree.
+- **Kommando(er):** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`.
+- **Testomfang/filer:** `tests/test_prompt024_traceability_docs.py` på PR #2-worktree.
+- **Forventet resultat:** Dokumentasjonstestene i den worktree-en består.
+- **Faktisk resultat:** `3 passed in 0.35s`; 0 feilet.
+- **Antall bestått/feilet/skippet og warnings:** 3 / 0 / 0; ingen warnings.
+- **Status:** BESTÅTT for angitt PR #2-commit. Resultatet validerer ikke PROMPT 028-dokumentene på denne branchen.
+- **Bevis eller lenke:** Terminalutskrift `3 passed in 0.35s`.
+- **Avvik/oppfølging:** PR #2 var fortsatt `OPEN`; testen og dokumentasjonsendringene er derfor ikke del av main eller denne branchen.
+
+## PROMPT 028 – sluttkjøring etter dokumentasjonsendringer
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 15:36 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** App- og testkode fra `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`; dokumentasjonsbranch `docs/028-product-brief-alignment`.
+- **Miljø:** Python 3.12.12, prosjektets `.venv`.
+- **Kommando(er):** `./.venv/bin/python -m pytest -q && git diff --check`.
+- **Testomfang/filer:** Hele pytest-pakken (`tests/test_generator.py`, `tests/test_app.py`) og whitespace-/konfliktmarkørkontroll av arbeidsdiffen.
+- **Faktisk resultat:** `15 passed in 0.63s`; 0 feilet. `git diff --check` returnerte exit 0 uten funn.
+- **Antall bestått/feilet/skippet og warnings:** 15 / 0 / 0; 0 pytest-warnings.
+- **Status:** BESTÅTT.
+- **Bevis eller lenke:** Terminalutskrift 2026-10-26 kl. 15:36 CET.
+- **Avvik/oppfølging:** Testene dekker prototypen. De verifiserer ikke manglende filopplasting, AI-generering, valgbare innstillinger eller produktmessig ende-til-ende-flyt.
+
+## PROMPT 028 – sluttkontroll etter ferdig loggføring
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 15:37 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** App- og testkode fra `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`; dokumentasjonsbranch `docs/028-product-brief-alignment`.
+- **Miljø:** Python 3.12.12, prosjektets `.venv`.
+- **Kommando(er):** `./.venv/bin/python -m pytest -q && git diff --check`.
+- **Testomfang/filer:** Hele pytest-pakken og arbeidsdiffen etter PROMPT 028-dokumentasjonsendringene.
+- **Faktisk resultat:** `15 passed in 0.66s`; 0 feilet. `git diff --check` returnerte exit 0 uten funn.
+- **Antall bestått/feilet/skippet og warnings:** 15 / 0 / 0; ingen pytest-warnings.
+- **Status:** BESTÅTT.
+- **Bevis eller lenke:** Terminalutskrift 2026-10-26 kl. 15:37 CET.
+- **Avvik/oppfølging:** Ingen produktkode eller tester er endret.
+
+## PROMPT 028 – siste regresjonskontroll etter promptarkiv
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 15:40 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** App- og testkode fra `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`; branch `docs/028-product-brief-alignment`.
+- **Miljø:** Python 3.12.12, prosjektets `.venv`.
+- **Kommando(er):** `./.venv/bin/python -m pytest -q && git diff --check`.
+- **Testomfang/filer:** Hele pytest-pakken; `git diff --check` av dokumentasjonsdiffen etter at PROMPT 028-kildetekst og godkjenning var arkivert.
+- **Faktisk resultat:** `15 passed in 0.64s`; 0 feilet. `git diff --check` returnerte exit 0 uten funn.
+- **Antall bestått/feilet/skippet og warnings:** 15 / 0 / 0; ingen pytest-warnings.
+- **Status:** BESTÅTT.
+- **Bevis eller lenke:** Terminalutskrift 2026-10-26 kl. 15:40 CET.
+- **Avvik/oppfølging:** Endringene etter forrige kjøring var kun dokumentasjon.
+
+## PROMPT 028 – regresjon etter overføring til oppdatert main
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 20:36 CET.
+- **Utført av:** Codex.
+- **Versjon/commit:** `120bb9052b7d477698fc4510ba302d11f4480c4e` (`origin/main`).
+- **Branch og worktree:** `docs/028-product-brief-alignment-integrated`, `/private/tmp/G27-isum-vijai-prompt028-integrated`.
+- **Miljø:** Python 3.12.12 fra prosjektets `.venv` i opprinnelig arbeidsmappe; pytest.
+- **Kommando:** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q`.
+- **Testomfang:** Hele pytest-pakken på integrasjonsbasisen: `tests/test_generator.py` og `tests/test_app.py`.
+- **Faktisk resultat:** `15 passed in 0.61s`; 0 feilet, 0 skippet, ingen pytest-warnings.
+- **Status:** BESTÅTT for applikasjons- og testkoden på `120bb905…`. De to commits siden `16a34ed…` endrer ikke app-/testkode.
+- **Begrensning:** Dette er pytest på oppdatert main-baseline før de ucommittede PROMPT 028-dokumentene. Det finnes ingen PROMPT 028-spesifikk automatisk dokumentasjonstest i main.
+- **Sluttkjøring etter loggoppdateringene:** Samme kommando på samme commit ga `15 passed in 0.55s`, 0 feilet og ingen pytest-warnings kl. 20:38 CET.
+
+## Eksisterende dokumentasjonstest i PR #2-worktree – ny kjøring
+
+- **Dato og tidspunkt:** 2026-10-26 kl. 20:36 CET.
+- **Versjon/commit:** Lokal worktree-commit `72ebf2cff969d435a00187aac3b342375930c80b` på `docs/027-documentation-completion`.
+- **Worktree:** `/private/tmp/G27-isum-vijai-prompt024`; separat fra PROMPT 028-integrasjonen.
+- **Kommando:** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`.
+- **Faktisk resultat:** `3 passed in 0.22s`; 0 feilet, ingen warnings.
+- **Status og begrensning:** BESTÅTT for den lokale PR #2-worktree-commiten. Dette validerer ikke PROMPT 028-dokumentene eller gjeldende PR #2-head.
+
+## PROMPT 028 – formateringskontroll etter overføring
+
+- **Dato:** 2026-10-26.
+- **Versjon/branch:** Integrasjonsworktree på `120bb9052b7d477698fc4510ba302d11f4480c4e` med ucommittede PROMPT 028-dokumenter.
+- **Kommando:** `git diff --check`; i tillegg bytesjekk for trailing whitespace og avsluttende linjeskift i alle 11 nye/overførte PROMPT 028-filer.
+- **Resultat:** `git diff --check` bestod; bytesjekken fant ingen trailing whitespace eller manglende avsluttende linjeskift. `.memlog.md` ble utelatt.
+- **Status:** BESTÅTT.
+
+## PROMPT 028 – verifisering etter PR #2-integrasjon
+
+- **Dato og tidspunkt:** 2026-11-15 kl. 09:59 Europe/Oslo.
+- **Utført av:** Codex.
+- **Versjon/commit:** `1227fb443e52815f831b3f5720b4f41844f72ad0` (`origin/main`); dokumentasjonsendringer i arbeidsfila.
+- **Branch og base:** `docs/028-product-brief-alignment-post-pr2`, basert direkte på `origin/main`.
+- **Miljø og testdata:** Prosjektets Python-miljø, pytest; lokale testfixtures.
+- **Kommando(er):** `python -m pytest -q`; `python -m pytest -q tests/test_prompt024_traceability_docs.py`; `git diff --check`.
+- **Testomfang/filer:** Hele pytest-suiten; målrettet PROMPT 024-sporbarhetstest; arbeidsdiff.
+- **Faktisk resultat:** Full suite `18 passed in 0.80s`; målrettet modul `3 passed in 0.21s`; `git diff --check` uten funn.
+- **Antall bestått/feilet/skippet og warnings:** Full suite 18/0/0, målrettet modul 3/0/0; ingen warnings rapportert.
+- **Status:** BESTÅTT for angitt integrasjonsbranch og gjeldende arbeidsdiff.
+- **Avvik/oppfølging:** Resultatene gjelder den nye dokumentasjonsbasisen og endringene i arbeidsfila. Ingen produktkode eller testkode er endret.
+
+## PROMPT 028 – uavhengig sluttkjøring etter historikkfletting
+
+- **Dato og tidspunkt:** 2026-11-15 kl. 10:35 Europe/Oslo.
+- **Utført av:** Codex.
+- **Arbeidsmappe:** `/private/tmp/G27-isum-vijai-prompt028-post-pr2`.
+- **Versjon/commit eller snapshot:** Baseline `1227fb443e52815f831b3f5720b4f41844f72ad0`; kun dokumentasjonsendringer i arbeidsfila.
+- **Branch og base:** `docs/028-product-brief-alignment-post-pr2` fra `origin/main`.
+- **Miljø og testdata:** Python fra prosjektets `.venv`, pytest og eksisterende lokale fixtures.
+- **Kommando(er):** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q`; deretter `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`.
+- **Testomfang/filer:** Full pakke, inkludert `tests/test_generator.py`, `tests/test_app.py` og `tests/test_prompt024_traceability_docs.py`; deretter separat kjøring av dokumentasjonssporbarhetsmodulen.
+- **Faktisk resultat:** Full suite `18 passed in 0.99s`; målrettet modul `3 passed in 0.25s`. Begge exit 0, ingen warnings rapportert. De tre målrettede testene inngår allerede i fullsuite-tallet.
+- **Diff- og dokumentasjonskontroll:** `git diff --check origin/main` bestod uten funn. Kontroll av trailing whitespace og avsluttende linjeskift på de 12 endrede/tilførte Markdown-filene bestod.
+- **Antall bestått/feilet/skippet og warnings:** Full suite 18/0/0; målrettet modul 3/0/0; ingen warnings.
+- **Status:** BESTÅTT for integrasjonsbranchens app-, regresjons- og dokumentasjonstester.
+- **Begrensning:** Dette er automatiske prototypetester, ikke en manuell brukertest eller verifikasjon av alle produktkrav T-001–T-009.
+
+## PROMPT 028 – lokal sluttest før publiseringslogg (2026-11-15)
+
+- **Arbeidsmappe/branch:** `/private/tmp/G27-isum-vijai-prompt028-post-pr2`, `docs/028-product-brief-alignment-post-pr2`; baseline `1227fb443e52815f831b3f5720b4f41844f72ad0`.
+- **Kommandoer:** `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q`; `/Users/sobanrajathurai/Downloads/G27-isum-vijai/.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`; `git diff --check`.
+- **Faktiske resultater:** Ved siste kjøring etter at publiseringsstatusen var føyd til: full suite `18 passed in 0.77s`; dokumentasjonssporbarhet `3 passed in 0.21s`; `git diff --check origin/main` bestod. Testene hadde exit 0; ingen feil eller warnings ble rapportert. De tre målrettede testene inngår i fullsuite-tallet.
+- **Status:** Bestått på den oppdaterte lokale dokumentasjonsbranchen.
+
+## PR #3 – GitHub-kontroll, ikke CI-test (2026-11-15)
+
+- **Kontrolltid:** `gh pr view 3 --repo IBE160-2026/G27-isum-vijai --json state,baseRefName,headRefName,headRefOid,mergeable,statusCheckRollup,url,updatedAt` returnerte kl. 10:09:30 UTC `OPEN`, base `main`, head `ec19c95a63e169ab90174abb2299bbdaba1ed357`, `MERGEABLE` og `statusCheckRollup: []`.
+- **CI-status:** Ingen automatiske kontroller var rapportert i dette PR-resultatet. Dette er ikke en kjøring eller bestått CI-test. Statusen gjelder kontrolltidspunktet før publiseringsloggens oppdatering.
 ## MVP-001 PDF-uttrekk – mellomkjøring før AppTest-rettelser (2026-11-15)
 
 - **Arbeidsmappe:** `/private/tmp/G27-isum-vijai-mvp-001-pdf`.

@@ -33,7 +33,7 @@ Ved første kontroll manglet `streamlit` og `pytest` i utviklingsmiljøets stand
 
 ### Tester
 
-Testene i `tests/test_generator.py` er kompatible med pytest og bruker også `unittest`, slik at logikken kan testes med standardbiblioteket:
+Testene i `tests/test_generator.py` er kompatible med pytest og bruker også `unittest`, slik at logikken kan testes med standardbiblioteket. Pytest kjører i tillegg Streamlit UI-regresjonstestene i `tests/test_app.py` med AppTest:
 
 ```bash
 python -m unittest discover -s tests -v
