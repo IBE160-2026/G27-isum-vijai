@@ -1,5 +1,15 @@
 # BMAD-status
 
+## MVP SPRINT 002 – Gemini AI-flyt (2026-11-15)
+
+- **Baseline:** Separat `feature/mvp-002-gemini-ai`-worktree startet rent fra PR #4-merge-baseline `f528b5179aef03e0fe0eec6f9cb7f7eb819281a9`; PR #3-merge-SHA er `73fafcc0443019bf58ab69aaece503d17010c754`.
+- **Gjennomført:** Gemini-adapter, valgfri UI-flyt, personvern/samtykke, tekst- og PDF-integrasjon, strukturert responsvalidering, feiltilfeller, mocktester og relevante logger. Lokal modus og PDF-funksjon er bevart.
+- **Review:** Blind Hunter, Edge Case Hunter og Verification Gap Reviewer er triagert i `spec-mvp-002-gemini-ai.md`; bekreftede funn er rettet og testet. Tekststørrelsesgrense er utsatt fordi produktgrense/kvoter må avklares.
+- **Verifisering:** Siste final QA: full pytest `63 passed in 2.05s`; målrettet Gemini/UI/PDF `49 passed in 1.81s`; dokumentasjonstest `3 passed in 0.25s`; `git diff --check f528b5179aef03e0fe0eec6f9cb7f7eb819281a9` exit 0. Alle deklarerte krav ble installert i nytt isolert venv; Gemini-adapterimport bestod med `google-genai 1.75.0`. Lokal Streamlit health-check svarte `ok` uten Gemini-nøkler i miljøet. Ingen ekte Gemini-kall. Detaljert bevis står i `docs/testing/TEST_LOG.md`.
+- **Status:** Sprintens implementerings-, review- og lokale commitoppgave er dokumentert `done`; commit er opprettet etter særskilt godkjenning. Ingen push/PR. Dette markerer ikke hele MVP-en eller BMM-produktarbeidet som fullført.
+- **Åpent:** DEC-001–DEC-005 står fortsatt åpne; Gemini og quizvalgene er foreløpige implementeringsvalg, ikke formelle gruppevedtak. PRD `draft`, Product Brief Validate ufullført; produksjonsgodkjenning, kostnadsansvar, dataflyt og semantisk kildeverifikasjon gjenstår.
+- **Commit og Secrets-status:** Sprint 002 er lokalt committet som `875a8f57205467d30b9b81f9a31084cc80b6bf5f`; ingen push/PR. Brukeren opplyste at Gemini-nøkkel ligger i Streamlit Secrets, men lokal vs. Community Cloud er ukjent. Nøkkelen ble ikke lest/testet. Git-ignore-kontroll fant ingen regel for `secrets.toml`; lokal `.streamlit/secrets.toml` var fraværende. Dette er oppfølgingsgap, ikke bekreftet API-tilkobling.
+
 ## GIT INTEGRATION 002 – PR #3 merge og PDF-branch (2026-11-15)
 
 - PR #3 ble merget ifølge brukerens GitHub-kontroll: merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`, `MergedAt 2026-11-15T12:08:00Z`. Fetch bekreftet samme SHA som `origin/main`.
@@ -184,3 +194,72 @@ Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene fø
 - **Commit:** Lokal commit opprettet med `docs: complete test traceability and documentation review`; SHA er verifiserbar i Git-loggen. Ingen push, PR-opprettelse, merge eller rebase.
 - **Kvalitet:** Hele pytest-suiten og `git diff --check` bestod før commit; eksakte resultater står i `docs/testing/TEST_LOG.md`.
 - **Avgrensning:** `main` står på baseline `444135e946b5635c812a24d44037c80fbf815e45`. PROMPT 023 står på `89ca55b40c26eac602e56e4d1b2c2e8ff1d0a503`; PR #1 er fortsatt åpen og ikke merget. `.memlog.md`, appkode og eksisterende funksjonstester er ikke inkludert.
+
+## MVP-002 Gemini – feildiagnose (2026-11-15)
+
+- **Status:** Brukeren rapporterte at Streamlit og Gemini-UI fungerer lokalt, men første manuelle generering feilet med en generell melding. Ekte Gemini-integrasjon er ikke verifisert.
+- **Implementasjon:** Adapteren skiller nå sikre brukermeldinger for manglende/avvist nøkkel, modelltilgang, rate limit, kvote, timeout, nettverksfeil, ugyldig/tomt providersvar og appens egen respons-/kildevalidering. SDK-detaljer eksponeres ikke.
+- **Sikkerhet:** Lokal `.streamlit/secrets.toml` finnes og er ignorert av Git. Nøkkelverdien er ikke lest eller testet. Mocktester er isolert fra lokal Secrets.
+- **Avvik:** Før testisolering kunne både manglende-nøkkel-testen og UI-testen forsøke nettverk etter å ha funnet lokal Secret. De ga nettverksfeil med bare syntetiske notater; om Gemini mottok forespørslene kan ikke bekreftes. Ingen studentnotater ble sendt.
+- **Teststatus:** Adapterens 28 tester og fullsuite 72 tester bestod; `git diff --check` bestod. Detaljene står i `docs/testing/TEST_LOG.md`.
+- **Rotårsak presisert:** Reservefeilen lå i adapterens brede `except Exception` → `_provider_error_message()`-fallback, vist direkte av `app.py`. Dette kunne skjule programmeringsfeil. Manuell exception-type mangler, så ekstern rotårsak er ikke bestemt.
+- **SDK-kontroll:** Installert `google-genai 1.75.0`; klient-/genereringssignatur, standard `v1beta`, timeout og JSON-schema-konfigurasjon sjekket lokalt. Ingen Gemini-request ble gjort.
+- **Oppdatert status:** Kjente feil klassifiseres etter SDK-`APIError` statusfelt og trygge exception-typer; ukjent feil får `GEMINI-UNKNOWN`. Secrets-lesefeil skilles fra manglende secret. Se nyeste resultater i `docs/testing/TEST_LOG.md`.
+- **Sluttverifisering:** Målrettet Gemini/UI `51 passed in 2.69s`; siste full pytest etter dokumentasjonsoppdatering `77 passed in 2.95s`; `git diff --check` bestod. Mocktester, ingen ekte API-kall.
+
+## Sprint 002 – prompt-historikkontroll (2026-11-15)
+
+- **Status:** Undersøkt i angitt worktree/branch før dokumentendringer. Ingen commit, push, PR eller merge.
+- **Funn:** 30 nummererte overskrifter, 27 unike ID-er (001–026 og 028); PROMPT 027 mangler. `docs/027-documentation-completion` er en branchreferanse for PROMPT 024–026-arbeid, ikke bevis på et prompt med nummer 027. Flere senere PDF-/Gemini-/integrasjonsoppdrag har bare samtidige sammendrag; disse er identifisert som rekonstruerte der originaltekst ikke er gjenfunnet.
+- **Kilder:** `CODEX_PROMPT_LOG.md`, `docs/prompts/`, CHANGELOG, prosjekt-/test-/BMAD-/beslutningsdokumentasjon, implementasjonsartefakter, lokale branches og Git-objekter. PROMPT 028s ANALYSIS/APPROVAL ble kontrollert. Ingen trygg mekanisme for prompt-only innsyn i Codex-sessionlogger var tilgjengelig; loggene ble ikke åpnet. `.memlog.md` og Secrets ble ikke lest.
+- **Arkiv:** To oppdrag i gjeldende samtale er bevart ordrett i egne unummererte kilder. Fullt gap-/proveniensregister: `docs/prompts/PROMPT_HISTORY_GAPS.md`.
+- **Git:** PR #3-/PR #4-mergeobjekter, PDF-relaterte commits og Sprint 002 lokal commit finnes. Sprint 002 er ikke verifisert pushet eller i en PR.
+- **Verifisering:** Kjøringer og endelig status loggføres i `docs/testing/TEST_LOG.md` etter tester og diff-kontroll.
+- **Gemini-modellstatus for neste steg:** Ingen `GEMINI_MODEL` var satt i prosessmiljøet; gjeldende standardmodell er dermed `gemini-2.5-flash`. `google-genai 1.75.0` og Developer API-/JSON-schema-bruk ble lokalt kontrollert. Offisiell dokumentasjon bekrefter at stabil `gemini-3.5-flash-lite` støtter structured outputs og har Free Tier-pris, men tilgang for brukerens nøkkel er ukjent. `GEMINI-MODEL` er observert, ikke bekreftet rotårsak. `models.list()` krever særskilt brukerens godkjenning før eksternt kall; ingen diagnosetjeneste eller generering ble kalt.
+- **Avslutning:** Siste pytest etter alle loggtillegg: `77 passed in 4.42s`; målrettet dokumentasjonstest før siste loggtillegg `3 passed in 0.46s`; `git diff --check` bestod etter alle dokumentendringer. Sprint 002-prompt-/modellarbeid forblir uferdig til nøkkeltilgangen er kontrollert og oppfølgingsarbeidet er godkjent.
+
+## Sprint 002 – GEMINI-MODEL-oppfølging (2026-11-15)
+
+- **Funn:** I Codex-prosessmiljøet var `GEMINI_MODEL` unset; effektiv modell etter gjeldende kode er `gemini-2.5-flash`. En separat Streamlit-/Cloud-prosess er ikke inspisert. Secrets er ikke lest.
+- **SDK/API:** Worktree-venv bruker `google-genai 1.75.0`. Koden bruker Gemini Developer API; lokal SDK-kilde bekrefter API-key-base URL `generativelanguage.googleapis.com`, `v1beta` og `Models.list()` med `Model.name`/`supported_actions`. Kun lokal introspeksjon.
+- **Diagnostikkverktøy:** `prototype.gemini_diagnostics` lister modell-ID-er/handlinger etter eksplisitte flagg `--list-models --confirm-external-call`. Ingen automatisk `generate_content` eller `models.list()`; ekstern listing krever brukerbekreftelse og er ikke utført.
+- **Kandidat:** Googles dokumentasjon beskriver `gemini-3.5-flash-lite` som stabil Flash-Lite med structured outputs og Free Tier-pris. Tilgang for brukerens nøkkel er uavklart; modellen er ikke satt som standard.
+- **Status:** `GEMINI-MODEL` er observert, ikke bekreftet rotårsak. Lokal modus, PDF og samtykke er uendret. Testresultater føres i `docs/testing/TEST_LOG.md`.
+- **Verifisering:** Siste full pytest `83 passed in 4.38s` (inkludert seks nye mocktester for diagnostikken); `git diff --check` exit 0. Ingen reell Gemini-request.
+- **Godkjent nøkkelmodelliste:** Én `Models.list()`-diagnostikk returnerte både `gemini-2.5-flash` og `gemini-3.5-flash-lite` med `generateContent`. Relevante Flash-ID-er og test-/forbeholdsdetaljer står i `docs/testing/TEST_LOG.md`. Ingen generering eller flere eksterne kall.
+- **Anbefaling/status:** `gemini-3.5-flash-lite` er tilgjengelig for nøkkelen og dokumentert med strukturert output og Free Tier-prising; anbefalt alternativ. Behold standard uendret inntil bruker godkjenner modellendring. `[GEMINI-MODEL]` er fortsatt observert feil; årsaken er ikke bekreftet.
+- **Lokal prøveoverstyring:** Brukeren godkjente en separat Streamlit-prosess på port 8503 med prosessvariabel `GEMINI_MODEL=gemini-3.5-flash-lite`. Kun modellvariabelen ble lest tilbake; hemmeligheter ble ikke vist eller endret. Port 8502 ble latt urørt. Ingen `generate_content`-kall; vellykket generering venter på brukerens manuelle test.
+- **Regresjon:** Fullsuite `83 passed in 3.01s`, inkludert lokal modus, PDF og aktivt samtykke. Se datert testlogg.
+
+
+### Gemini Sprint 002 – manuell tekstgenerering (2026-11-15)
+
+- **Status:** Tekstbasert manuell generering er brukerbekreftet med midlertidig `gemini-3.5-flash-lite`: relevant sammendrag, tre begreper og tre relevante MCQ med fire alternativer fra syntetiske notater. Sprinten er ikke fullstendig godkjent.
+- **Quizantall:** Appen ba om fem. Prompten tillater færre hvis kildeteksten ikke støtter flere; validering/UI forkaster ikke gyldige spørsmål, men merker og viser utilstrekkelig antall. Ingen hardkodet grense på tre funnet. Uten responsopptak er det ikke mulig å bevise hvorfor akkurat denne genereringen leverte tre. Bevar kildevalidering; ikke fyll opp med udokumenterte spørsmål.
+- **Åpne manuelle tester:** Quizretting og poengberegning; PDF-uttrekk til Gemini-generering etter samtykke. Se `docs/testing/TEST_LOG.md`.
+
+
+### Gemini Sprint 002 – sluttkontroll (2026-11-15)
+
+- **Manuelle tester rapportert av bruker:** Tekstgenerering med `gemini-3.5-flash-lite` ga relevante ressurser og 4/4 riktige i siste tekstquiz (fire spørsmål av fem ønsket). En tidligere 0/4 er ikke etterprøvbar fordi svarvalgene mangler. PDF `testnotater_informasjonssystemer_databaser.pdf` ble lastet opp og tekstuttrukket lokalt; Gemini-resultatet var relevant, tre begreper og tre spørsmål, quiz 1/3 med fasit/forklaringer som ifølge bruker samsvarte med notatene.
+- **Avgrensning:** Resultatene er brukerbekreftede, ikke uavhengig reprodusert i sluttkontrollen. Quizgeneratoren kan returnere færre enn fem når grounding-instruksen tilsier det. Ingen etterfølgende bortfiltrering ble funnet.
+- **Modellvalg:** Kildekodens fallback er fortsatt `gemini-2.5-flash`; `gemini-3.5-flash-lite` ble brukt gjennom lokal `GEMINI_MODEL`-overstyring i port 8503-prosessen. Ingen standardendring.
+- **Verifisering:** Full pytest 83 bestått; `git diff --check` bestod.
+- **Vurdering:** Funksjonelle manuelle akseptpunkter for sammendrag, begreper, quiz, poengberegning og PDF→Gemini er rapportert bestått. PR #5 kan vurderes etter vanlig review av den samlede, ucommittede diffen. Åpent: brukervalgte svar for tidligere 0/4 kan ikke diagnostiseres; få spørsmål enn ønsket er tilsiktet dersom notatene ikke gir nok kildebelegg.
+
+
+### Dokumentasjonsstatus – sammenligning av promptlogger (2026-11-15)
+
+- Gemini-worktreets CODEX_PROMPT_LOG bevarer PROMPT 001–026 og 028 (27 unike ID-er). PROMPT 027 er ikke dokumentert, og er fortsatt åpent hull.
+- 26 nummererte ID-er har full originaltekst i tilgjengelig logg/arkiv; PROMPT 019 er personvernredigert. PROMPT 009s manglende Codex-svar er et separat resultatgap. To tidligere unummererte promptarkiver suppleres med åtte eksakte brukerbeskjeder i `docs/prompts/PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-15.md`.
+- Fire grupper av senere aktiviteter står fortsatt bare som rekonstruerte sammendrag: PR #3/integrasjon; PDF Sprint 001; initial Gemini-implementering; og eldre Secrets-/API-nøkkel-/feilsøkings-/testisolering. Enkelte grupper kan representere flere meldinger, antallet er ukjent.
+- Originalmappens PROMPT 028-kilder er sammenlignet skrivebeskyttet; ingen unik original prompttekst manglet i Gemini-arkivet. Den eldre Sprint 002-seksjonen der er en statusoppsummering, ikke prompttranskripsjon. `.memlog.md` og Secrets er ikke lest; originalmappen er uendret. Se `PROMPT_HISTORY_GAPS.md`.
+- Status: komplett for tilgjengelige og trygt undersøkte kilder; ikke bevist komplett for alle Codex-sessioner.
+
+
+### Sprint 002 – modellstandard og tilstands-/valideringsherding (2026-11-16)
+
+- **Status:** Implementert i isolert Gemini-worktree. `gemini-3.5-flash-lite` er ny fallback; modellargument og `GEMINI_MODEL`-overstyring er bevart.
+- **Kvalitetsrettelser:** Inputendring fjerner AI-resultat/feedback og krever nytt samtykke; endrede AI-innstillinger og ny generering fjerner gammelt resultat/feedback/svarvalg. Adapteren avviser tom quiz og tekst over felles 1 000 000-tegnsgrense før provider-kall.
+- **Historikk/personvern:** PROMPT 001–026 og 028 beholdt, PROMPT 027 står som uavklart gap, rekonstruerte sammendrag forblir merket. `PROMPT_HISTORY_GAPS.md`, lokal modus, PDF-uttrekksgrenser og personvernadvarsel er bevart. DEC-003 står fortsatt uavklart.
+- **Verifisering:** Målrettet Gemini/UI/PDF/dokumentasjon 79 bestått; dokumentasjonstester 5 bestått; full pytest 99 bestått; ingen ekte Gemini-kall.

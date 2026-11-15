@@ -67,6 +67,19 @@ Registrer beslutninger først etter at gruppen har tatt dem. Forslag i produktbr
 - **Avgrenset delbeslutning (2026-11-15):** Gruppen har godkjent `pypdf` som PDF-verktøy for lokalt tekstuttrekk fra maskinlesbare PDF-er i MVP-ens eksisterende Streamlit-app. Ingen OCR eller ekstern PDF-behandlingstjeneste inngår i denne funksjonen. **Kilde:** Brukerens eksplisitte opplysning og godkjenning i MVP SPRINT 001-instruksjonen 2026-11-15. Ingen møtereferat, deltakere eller tidligere godkjenningstidspunkt er oppgitt.
 - **Status:** Delbeslutningen om PDF-verktøy er godkjent; DEC-005 som helhet forblir `Uavklart` for øvrige språk-, rammeverk- og teknologistakkvalg.
 
+## Foreløpige implementeringsvalg – MVP SPRINT 002 (2026-11-15)
+
+Brukeren oppga følgende valg for implementeringen i denne sprinten. Kilden er brukerens instruksjon 2026-11-15; dette dokumenterer ikke et formelt gruppevedtak eller møtereferat:
+
+- Gemini Developer API med `google-genai`; modell konfigurerbar. Dette er et foreløpig teknologivalg, og ikke en avslutning av DEC-003. Kostnadsansvar og tillatt dataflyt må avklares før produksjonsbruk.
+- Sammendragslengde kort/middels/lang; quizantall 1–10 med standard 5; vanskelighetsgrad lett/middels/vanskelig med standard middels.
+- Quizformat i implementeringsprototypen: flervalg med nøyaktig fire alternativer, ett riktig svar, fasit og kort forklaring. Spørsmål, svar og forklaringer skal være forankret i notatene; ved utilstrekkelig grunnlag skal appen varsle i stedet for å finne på innhold.
+- Eksterne Gemini-kall krever synlig personverninformasjon og aktiv bekreftelse; automatiserte tester bruker mocks og ingen ekte studentnotater. Resultatets sammendrag, begreper, spørsmål, svar og forklaringer må inkludere tekstlige sitater fra notatene som valideres før visning.
+
+**Status:** Foreløpige valg for implementering, ikke formelt gruppevedtak. DEC-001–DEC-005 beholder eksisterende status; DEC-003 forblir uavklart om leverandørgodkjenning, kostnad, dataflyt og oppbevaring. PRD forblir `draft`.
+
+**Implementeringsspor (2026-11-15):** Prototypen bruker Gemini Developer API gjennom Googles offisielle `google-genai` SDK. SDK-bruk og strukturert JSON-utdata følger [Google Gen AI SDK-dokumentasjonen](https://googleapis.github.io/python-genai/) og [Gemini structured output-dokumentasjonen](https://ai.google.dev/gemini-api/docs/structured-output). Dette er implementasjon av det foreløpige brukeroppgitte valget, ikke gruppevedtak. Modellnavn kan settes med `GEMINI_MODEL`; nøkkel leses fra `GEMINI_API_KEY` eller Streamlit Secrets. DEC-003 forblir åpen om produksjonsgodkjenning, kostnadsansvar og dataflyt.
+
 ## Prosessbeslutning – PROMPT 024/025-avgrenset review (2026-10-25)
 
 - **Problemstilling:** Den installerte Build Step 04-reviewen ber om alle aktive lag, og Blind Hunter-instruksen har en beregnet funnkvote. For F-07/F-10-diffen fant Blind Hunter ett reelt lavprioritetsforslag, men kunne ikke dokumentere flere uten spekulasjon.

@@ -8,26 +8,47 @@ from prototype.generator import (
     generate_result,
 )
 from prototype.pdf_ingestion import PdfIngestionError, extract_pdf_text
+from prototype.gemini_service import GeminiServiceError, generate_gemini_result
 
 
 st.set_page_config(page_title="Notater til sammendrag og quiz", page_icon="📚")
 st.title("Foredragsnotater → Sammendrag & Quizgenerator")
 st.write("Lim inn tekst eller last opp en PDF med forelesningsnotater.")
-st.warning(
-    "Sammendrag og begreper velges direkte fra notatene med lokal tekstbehandling. "
-    "Dette er ikke KI-generering. Quizzen er demo-data, og ingen KI-tjeneste brukes."
-)
 
 def _clear_previous_result():
     st.session_state.pop("prototype_result", None)
     st.session_state.pop("quiz_feedback", None)
+    for key in list(st.session_state):
+        if key.startswith("answer_"):
+            st.session_state.pop(key, None)
 
+
+def _clear_input_dependent_state():
+    _clear_previous_result()
+    st.session_state["gemini_consent"] = False
+
+
+def _clear_setting_dependent_state():
+    _clear_previous_result()
+
+
+generation_mode = st.selectbox("Genereringsmodus", ["Lokal", "Gemini AI"], on_change=_clear_input_dependent_state)
+if generation_mode == "Lokal":
+    st.warning(
+        "Sammendrag og begreper velges direkte fra notatene med lokal tekstbehandling. "
+        "Dette er ikke KI-generering. Quizzen er demo-data, og ingen KI-tjeneste brukes."
+    )
+if generation_mode == "Gemini AI":
+    st.warning("Ved generering sendes notatteksten til Google Gemini for ekstern behandling. Free Tier-data kan brukes til å forbedre Googles produkter. KI-resultater kan være feil. Del aldri sensitive eller fortrolige notater.")
+    summary_length = st.selectbox("Sammendragslengde", ["kort", "middels", "lang"], index=1, key="summary_length", on_change=_clear_setting_dependent_state)
+    difficulty = st.selectbox("Quizvanskelighetsgrad", ["lett", "middels", "vanskelig"], index=1, key="difficulty", on_change=_clear_setting_dependent_state)
+    question_count = st.slider("Antall quizspørsmål", 1, 10, 5, key="question_count", on_change=_clear_setting_dependent_state)
 
 input_mode = st.radio(
     "Notatformat",
     ["Tekst", "PDF"],
     horizontal=True,
-    on_change=_clear_previous_result,
+    on_change=_clear_input_dependent_state,
 )
 if input_mode == "PDF":
     st.caption(
@@ -35,57 +56,92 @@ if input_mode == "PDF":
         "skannede PDF-er og OCR støttes ikke. Filen lagres ikke."
     )
 
-with st.form("notes_form"):
-    if input_mode == "Tekst":
-        notes = st.text_area(
-            "Forelesningsnotater",
-            placeholder="Lim inn notatene dine her …",
-            height=220,
-        )
-        uploaded_pdf = None
-    else:
-        uploaded_pdf = st.file_uploader(
-            "Last opp forelesningsnotater",
-            type=["pdf"],
-            help="Maks 10 MiB. PDF-en behandles lokalt og blir ikke lagret.",
-        )
-        notes = None
-    generate_clicked = st.form_submit_button("Lag sammendrag og begreper")
+if input_mode == "Tekst":
+    notes = st.text_area(
+        "Forelesningsnotater",
+        placeholder="Lim inn notatene dine her …",
+        height=220,
+        on_change=_clear_input_dependent_state,
+    )
+    uploaded_pdf = None
+else:
+    uploaded_pdf = st.file_uploader(
+        "Last opp forelesningsnotater",
+        type=["pdf"],
+        help=("Maks 10 MiB. Teksten trekkes ut lokalt og sendes til Gemini først etter at du starter generering og bekrefter samtykke."
+              if generation_mode == "Gemini AI" else "Maks 10 MiB. PDF-en behandles lokalt og blir ikke lagret."),
+        on_change=_clear_input_dependent_state,
+    )
+    notes = None
+consent = st.checkbox(
+    "Jeg forstår at notatene sendes til Google Gemini for behandling.",
+    key="gemini_consent",
+) if generation_mode == "Gemini AI" else False
+generate_clicked = st.button("Generer læringsressurser")
 
 if generate_clicked:
-    st.session_state.pop("prototype_result", None)
-    st.session_state.pop("quiz_feedback", None)
+    _clear_previous_result()
     try:
         if input_mode == "PDF":
             if uploaded_pdf is None:
                 raise PdfIngestionError("Velg en PDF-fil før du genererer.")
             notes = extract_pdf_text(uploaded_pdf.getvalue())
-        st.session_state.prototype_result = generate_result(notes)
+        if generation_mode == "Gemini AI":
+            if not consent:
+                st.error("Bekreft personverninformasjonen før Gemini-generering.")
+            else:
+                st.session_state.prototype_result = generate_gemini_result(
+                    notes, length=summary_length, difficulty=difficulty, question_count=question_count
+                )
+        else:
+            st.session_state.prototype_result = generate_result(notes)
     except PdfIngestionError as exc:
         st.error(str(exc))
     except InputValidationError as exc:
         st.error(str(exc))
     except ResultGenerationError:
         st.error("Resultatet kunne ikke genereres. Prøv igjen.")
+    except GeminiServiceError as exc:
+        st.error(str(exc))
     except Exception:
         st.error("Det oppstod en uventet feil. Prøv igjen.")
 
 result = st.session_state.get("prototype_result")
 if result:
+    is_ai = "questions" in result and "sources" not in result
+    if is_ai and not result["questions"]:
+        st.error("KI-tjenesten returnerte ingen quizspørsmål. Prøv igjen med andre notater.")
+        _clear_previous_result()
+        st.stop()
     st.divider()
-    st.caption("SAMMENDRAG OG BEGREPER · LOKAL TEKSTBEHANDLING · IKKE KI")
+    st.caption("SAMMENDRAG · BEGREPER · QUIZ · GEMINI AI" if is_ai else "SAMMENDRAG OG BEGREPER · LOKAL TEKSTBEHANDLING · IKKE KI")
+    if is_ai:
+        st.caption(result.get("grounding_notice", "Innholdet er kontrollert mot sitater fra notatene, men kontrollen garanterer ikke at alt er feilfritt."))
 
     st.header("Sammendrag")
     st.write(result["summary"])
 
     st.header("Sentrale begreper")
     if result["concepts"]:
-        st.write(" · ".join(result["concepts"]))
+        if is_ai:
+            for concept in result["concepts"]:
+                st.markdown(f"**{concept['term']}** — {concept['explanation']}")
+        else:
+            st.write(" · ".join(result["concepts"]))
     else:
         st.info("Fant ingen tydelige begreper i teksten.")
 
-    st.header("Quiz · demonstrasjonsdata")
-    st.caption("Disse faste quizspørsmålene er ikke laget fra notatene.")
+    if is_ai:
+        st.header("Quiz")
+        for i, question in enumerate(result["questions"], 1):
+            st.markdown(f"**{i}. {question['question']}**")
+            st.write(" · ".join(question["options"]))
+        if result["insufficient_questions"]:
+            st.info(f"Notatene ga grunnlag for {len(result['questions'])} av {question_count} ønskede spørsmål.")
+    else:
+        st.header("Quiz · demonstrasjonsdata")
+    if not is_ai:
+        st.caption("Disse faste quizspørsmålene er ikke laget fra notatene.")
     with st.form("quiz_form"):
         answers = {}
         for index, question in enumerate(result["questions"]):
@@ -108,10 +164,10 @@ if result:
         submitted_answers, score = feedback
         st.subheader(f"Resultat: {score} av {len(result['questions'])} riktige")
         for index, question in enumerate(result["questions"]):
-            if submitted_answers[index] == question["answer"]:
+            if is_ai:
+                status = "Riktig" if submitted_answers[index] == question["answer"] else "Ikke riktig"
+                st.info(f"Spørsmål {index + 1}: {status}. Fasit: {question['answer']}. {question['explanation']}")
+            elif submitted_answers[index] == question["answer"]:
                 st.success(f"Spørsmål {index + 1}: Riktig. {question['explanation']}")
             else:
-                st.info(
-                    f"Spørsmål {index + 1}: Fasit: {question['answer']}. "
-                    f"{question['explanation']}"
-                )
+                st.info(f"Spørsmål {index + 1}: Fasit: {question['answer']}. {question['explanation']}")
