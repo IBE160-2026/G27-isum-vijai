@@ -57,3 +57,31 @@ Andre sporbare aktiviteter etter PROMPT 028 finnes i `docs/CODEX_PROMPT_LOG.md` 
 `prototype/gemini_diagnostics` og mocktester er lagt til som oppfølging. Kommandoen krever `--list-models --confirm-external-call`; den ble ikke kjørt med godkjenningsflagget. Modellstandarden er uendret. PROMPT 027 og historikkforbeholdene over står uendret.
 
 Etter brukerens godkjenning ble kommandoen kjørt én gang. Den returnerte blant annet `gemini-2.5-flash` og `gemini-3.5-flash-lite` med `generateContent`. Ingen nøkkel eller respons-body ble lagret. Se modelltilgangsresultatet i `docs/testing/TEST_LOG.md`; PROMPT 027 og alle historikkforbehold er uendret.
+
+
+## Oppdatering etter sammenligning med originalmappen (2026-11-15)
+
+Denne oppdateringen er append-only. Den tidligere kontrollteksten over er bevart; den beskrev kildetilstanden på kontrolltidspunktet. I denne oppfølgingen ble de angitte dokumentasjonsfilene i originalmappen lest skrivebeskyttet. Originalmappen er ikke endret. `.memlog.md`, Secrets og andre sensitive filer ble ikke åpnet.
+
+### Nummererte og ordrette kilder
+
+- Gemini-loggen inneholder fortsatthistorikken for PROMPT 001–026 og PROMPT 028: 27 unike nummererte ID-er. PROMPT 027 er ikke gjenfunnet og skal ikke opprettes uten kildebevis.
+- For 26 av de 27 dokumenterte nummererte ID-ene finnes full original prompttekst i loggen eller tilknyttede originalkilder. PROMPT 019 er uttrykkelig personvernredigert og regnes ikke som fullstendig ordrett. PROMPT 009s manglende Codex-resultat er ikke et manglende originalprompt. PROMPT 028s to originalkilder er bevart i `PROMPT_028_ANALYSIS.md` og `PROMPT_028_APPROVAL.md`.
+- Sammenligningen fant ingen unik ordrett prompttekst i originalmappen som ikke allerede var representert i Gemini-worktreens eldre promptarkiv. Originalens PROMPT 028-analyse har samme ordrette prompt som Gemini-filen, mens Gemini-filen har et senere verifiseringstillegg. Den eldre Sprint 002-seksjonen i originalens CODEX_PROMPT_LOG er en statusoppsummering, ikke en original brukerprompt.
+
+### Senere, ordrett tilgjengelige beskjeder
+
+I tillegg til de allerede arkiverte unummererte GEMINI-MODEL- og historikkontrollpromptene er åtte senere brukerbeskjeder fra samtalen bevart ordrett i [`PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-15.md`](PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-15.md). De gjelder status, godkjenninger, modellisting, lokal overstyring, quizantall, manuell sluttkontroll, PR-forberedelse og denne historikkontrollen. De er ikke gitt nye PROMPT-numre.
+
+### Fortsatt manglende originalprompter
+
+Fire grupper av senere historiske aktiviteter står fortsatt som rekonstruerte sammendrag fordi originaltekst ikke er funnet: PR #3/Git-integrasjonsarbeid; PDF Sprint 001 implementering/review/integrering; den opprinnelige Gemini-implementeringsinstruksen; og eldre Gemini Secrets-/API-nøkkel-, feilsøkings- og testisoleringsoppdrag. Gruppene kan inneholde flere opprinnelige meldinger, og kildene gir ikke et verifiserbart antall enkeltprompter. Ikke presenter sammendragene som ordrette. PROMPT 027 er et separat, uavklart nummereringshull.
+
+### Kildebegrensning og status
+
+Originalmappens dokumentasjon er kontrollert uten endringer. Ingen Codex-sessionlogg ble åpnet; derfor kan det finnes flere prompttekster utenfor repoet. Loggen er komplett for kildene som kunne trygt undersøkes, men ikke bevist fullstendig for alle historiske Codex-økter.
+
+
+### Avkortet historikkmelding
+
+Den første meldingen som innledet denne sammenligningen var synlig avkuttet etter ordet «GEMINI». Den separat mottatte fortsettelses-/godkjenningsmeldingen finnes ordrett i oppfølgingsarkivet. Manglende tekst fra den avkuttede meldingen er ikke gjenfunnet eller rekonstruert og telles ikke som en full originalprompt. Dette er et eget kildehull, adskilt fra det nummererte PROMPT 027-hullet og de fire eldre aktivitetsgruppene.

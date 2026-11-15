@@ -700,3 +700,11 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Git/sikkerhet:** Branch `feature/mvp-002-gemini-ai`. Ingen commit, push, PR eller merge. `git status --short`/`git diff --name-only` viste ikke `.memlog.md`, Secret-filer eller nøkkelmateriale; `.memlog.md` og Secrets ble ikke åpnet. `PROMPT_HISTORY_GAPS.md` beholdes.
 - **Endelig fullsuite etter denne sluttkontrollen:** `./.venv/bin/python -m pytest -q`: `83 passed in 3.04s`, exit 0.
 - **PR-klargjøring, ny kjøring:** `./.venv/bin/python -m pytest -q`: `83 passed in 3.01s`, exit 0.
+
+
+## Dokumentasjonstest – promptloggkontroll (2026-11-15)
+
+- **Kjøring:** `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`: `3 passed in 0.23s`, exit 0.
+- **Diff-kontroll:** `git diff --check` bestod etter oppdateringene. Ingen applikasjonskode eller Gemini-API ble brukt.
+- **Kildeavgrensning:** Originalmappens relevante dokumenter ble bare lest; ingen filer der ble endret. `.memlog.md` og Secrets ble ikke lest.
+- **Gjennomført på nytt etter siste append:** `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`: `3 passed in 0.24s`, exit 0; `git diff --check` bestod.

@@ -246,3 +246,12 @@ Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene fø
 - **Modellvalg:** Kildekodens fallback er fortsatt `gemini-2.5-flash`; `gemini-3.5-flash-lite` ble brukt gjennom lokal `GEMINI_MODEL`-overstyring i port 8503-prosessen. Ingen standardendring.
 - **Verifisering:** Full pytest 83 bestått; `git diff --check` bestod.
 - **Vurdering:** Funksjonelle manuelle akseptpunkter for sammendrag, begreper, quiz, poengberegning og PDF→Gemini er rapportert bestått. PR #5 kan vurderes etter vanlig review av den samlede, ucommittede diffen. Åpent: brukervalgte svar for tidligere 0/4 kan ikke diagnostiseres; få spørsmål enn ønsket er tilsiktet dersom notatene ikke gir nok kildebelegg.
+
+
+### Dokumentasjonsstatus – sammenligning av promptlogger (2026-11-15)
+
+- Gemini-worktreets CODEX_PROMPT_LOG bevarer PROMPT 001–026 og 028 (27 unike ID-er). PROMPT 027 er ikke dokumentert, og er fortsatt åpent hull.
+- 26 nummererte ID-er har full originaltekst i tilgjengelig logg/arkiv; PROMPT 019 er personvernredigert. PROMPT 009s manglende Codex-svar er et separat resultatgap. To tidligere unummererte promptarkiver suppleres med åtte eksakte brukerbeskjeder i `docs/prompts/PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-15.md`.
+- Fire grupper av senere aktiviteter står fortsatt bare som rekonstruerte sammendrag: PR #3/integrasjon; PDF Sprint 001; initial Gemini-implementering; og eldre Secrets-/API-nøkkel-/feilsøkings-/testisolering. Enkelte grupper kan representere flere meldinger, antallet er ukjent.
+- Originalmappens PROMPT 028-kilder er sammenlignet skrivebeskyttet; ingen unik original prompttekst manglet i Gemini-arkivet. Den eldre Sprint 002-seksjonen der er en statusoppsummering, ikke prompttranskripsjon. `.memlog.md` og Secrets er ikke lest; originalmappen er uendret. Se `PROMPT_HISTORY_GAPS.md`.
+- Status: komplett for tilgjengelige og trygt undersøkte kilder; ikke bevist komplett for alle Codex-sessioner.

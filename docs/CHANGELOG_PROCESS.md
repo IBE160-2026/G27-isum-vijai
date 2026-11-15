@@ -40,3 +40,6 @@ Loggfør vesentlige endringer i plan, dokumentasjon, KI-støttet arbeid og utvik
 
 
 | 2026-11-15 | MVP Sprint 002 sluttkontroll – brukerbekreftet tekstquiz og PDF→Gemini | Lokalt, ucommittet | Tekst: fire av fem spørsmål, 4/4; tidligere 0/4 uten svarvalg. PDF: opplasting/uttrekk ok, Gemini-resultat relevant, tre av fem spørsmål, 1/3 med samsvarende fasit/forklaring ifølge bruker. Standard `gemini-2.5-flash` beholdt; `gemini-3.5-flash-lite` var lokal override. Full pytest 83 bestått, diff-check bestod. Ingen nye eksterne kall. Se TEST_LOG og BMAD-status. |
+
+
+| 2026-11-15 | Promptlogg sammenlignet med originalmappen, senere samtaleprompter arkivert | Gemini-worktree, ucommittet | PROMPT 001–026 og 028 bevart; PROMPT 027 beholdt som hull. Åtte eksakte, unummererte oppfølgingsbeskjeder arkivert; fire grupper av historiske sammendrag mangler fortsatt originaltekst. Originalmappen kun lest, ikke endret. Se `PROMPT_HISTORY_GAPS.md`. |
