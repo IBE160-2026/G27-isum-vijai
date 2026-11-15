@@ -96,3 +96,7 @@ Baseline er `origin/main` `1227fb443e52815f831b3f5720b4f41844f72ad0` i isolert w
 | Blind Hunter: `strict=True` kan avvise PDF-er med strukturelle avvik. | false — Ingen akseptert krav lover støtte for feilformede PDF-er; oppdraget ber uttrykkelig om forståelig avvisning av ugyldige/korrupt PDF-er. Ingen konkret gyldig PDF som feiler ble påvist. | Avvist — Streng parsingsfeil følger oppgitt feilbehandling. |
 
 Verification Gap Reviewer: ingen verifikasjonsgap funnet.
+
+## Post-PR #3-integrasjon (2026-11-15)
+
+PR #3-mergecommit `73fafcc0443019bf58ab69aaece503d17010c754` ble hentet som `origin/main` og integrert i PDF-branchen med mergecommit `ef834cd2a49383940ed1739a6654feb8a4a9672c`. PDF-commit `967d48abd1372beea239db7db576e0de2f5f7daf` er bevart som første forelder. Fire dokumentasjonskonflikter ble løst ved å beholde begge historikkdelene; applikasjonskode krevde ingen konfliktløsning. Etter integreringen bestod full pytest-suite med 35 tester, målrettede PDF/UI-/dokumentasjonstester med 24 tester, og `git diff --check`. PR #4 ble ikke pushet eller merget. Dette endrer ikke PDF-storyens opprinnelige baseline eller beslutningsstatus.

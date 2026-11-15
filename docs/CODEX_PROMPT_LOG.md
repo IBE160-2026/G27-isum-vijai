@@ -3699,3 +3699,12 @@ Stopp etter rapporten og vent på godkjenning.
 - **Build Step 04-review og rettelser:** Blind Hunter beregnet 7 som minsteantall og leverte 7 observasjoner; Edge Case Hunter leverte 2; Verification Gap Reviewer fant ingen gap. Triagering og bevis finnes i spesifikasjonens Review Triage Log. Rettet visning av gammelt resultat ved formatbytte, stoppet tekstuttrekk ved tegn-grensen via pypdf-besøker, og la til norsk tegnsett-fixture. Den eldre kjøringen med 26 tester er merket som mellomkjøring.
 - **Sluttverifisering etter reviewrettelser:** Isolert Python 3.12-miljø: full pytest-suite `35 passed in 1.65s`; målrettede PDF-/UI-tester `21 passed in 1.43s`; `git diff --check origin/main` bestod. Ingen feil i sluttkjøringene.
 - **Git:** Én lokal commit opprettet etter brukerens særskilte godkjenning. Ingen push eller merge.
+
+## GIT INTEGRATION 002 – PR #3 først, PDF-branch oppdatert (2026-11-15)
+
+- **GitHub-status:** Brukeren bekreftet PR #3 (`IBE160-2026/G27-isum-vijai#3`) `MERGED`, merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`, `MergedAt 2026-11-15T12:08:00Z`, og `origin/main` på samme SHA. Lokal `git fetch origin main` hentet denne main-refsituasjonen. PR #4s sist oppgitte status er `OPEN` og `MERGEABLE`; Codex gjorde ingen ny live PR #4-kontroll i denne økten.
+- **Integrasjon:** På ren `feature/mvp-001-pdf-ingestion` i `/private/tmp/G27-isum-vijai-mvp-001-pdf` ble `origin/main` integrert med vanlig merge. Mergecommit `ef834cd2a49383940ed1739a6654feb8a4a9672c` har foreldre PDF-commit `967d48abd1372beea239db7db576e0de2f5f7daf` og PR #3-merge `73fafcc0443019bf58ab69aaece503d17010c754`.
+- **Konfliktløsning:** `docs/CHANGELOG_PROCESS.md`, `docs/CODEX_PROMPT_LOG.md`, `docs/bmad/WORKFLOW_STATUS.md` og `docs/testing/TEST_LOG.md` hadde append-/statushistorikk på begge grener. Begge sidene ble bevart i kronologisk rekkefølge. Ingen applikasjonskodekonflikt eller uavklart produktvalg.
+- **Verifisering etter integrering:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q`: `35 passed in 1.74s`; målrettet PDF/UI-/dokumentasjonstest: `24 passed in 1.71s`. `git diff --check` bestod etter konfliktløsning. Kjøringene er loggført i testloggen.
+- **PR #4:** PDF-commit `967d48a…` og PR #3-dokumentasjonen finnes i den lokale branchen. Branch er ikke pushet etter merge; PR #4 er ikke merget eller gjenopprettet som ny PR.
+- **Produkt/BMAD:** PRD forblir `draft`; DEC-005 er kun delvis avklart for pypdf; øvrige teknologivalg og MVP-funksjoner står åpne. PDF-ingestion-storyen er fullført, ikke hele MVP-en.

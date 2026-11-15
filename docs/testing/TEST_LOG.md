@@ -546,3 +546,13 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Faktisk resultat:** Full suite `35 passed in 1.65s`; målrettede parser-/UI-tester `21 passed in 1.43s`; begge pytest-prosessene exit 0. Diff-kontrollen bestod. Målrettede tester inngår i fullsuite-tallet.
 - **Reviewoppfølging:** La til test for norsk tekst i syntetisk PDF, avbrøt tekstuttrekk ved tegn-grensen og fjernet gammelt resultat ved formatbytte. Oppdaterte testloggen til å merke 26-testkjøringen som mellomkjøring. Reviewfunn og triagering står i MVP-001-spesifikasjonen.
 - **Avgrensning:** Ingen manuell nettlesertest, OCR, ekstern PDF-behandling, varig lagring, commit, push eller PR. Ingen ekte studentdata ble brukt eller loggført.
+
+## GIT INTEGRATION 002 – testkjøringer etter PR #3-merge (2026-11-15)
+
+- **Arbeidsmappe/branch:** `/private/tmp/G27-isum-vijai-mvp-001-pdf`, `feature/mvp-001-pdf-ingestion`.
+- **Git-baseline:** `origin/main` PR #3-merge `73fafcc0443019bf58ab69aaece503d17010c754`; lokal mergecommit `ef834cd2a49383940ed1739a6654feb8a4a9672c`.
+- **Miljø:** Isolert `/private/tmp/G27-isum-vijai-mvp001-venv`, Python 3.12, pypdf 6.21.4.
+- **Kommandoer:** `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q`; `/private/tmp/G27-isum-vijai-mvp001-venv/bin/python -m pytest -q tests/test_pdf_ingestion.py tests/test_app.py tests/test_prompt024_traceability_docs.py`; `git diff --check`.
+- **Faktiske resultater:** Fullsuite `35 passed in 1.74s`; målrettet PDF/UI/dokumentasjonsmodul `24 passed in 1.71s`; begge pytest-kommandoer exit 0. `git diff --check` bestod etter dokumentkonfliktene var løst. De målrettede testene inngår i fullsuite-tallet.
+- **Konfliktspor:** De fire konfliktfilene var `docs/CHANGELOG_PROCESS.md`, `docs/CODEX_PROMPT_LOG.md`, `docs/bmad/WORKFLOW_STATUS.md` og `docs/testing/TEST_LOG.md`. Begge greners historiske seksjoner ble beholdt. Ingen appkode ble endret av konfliktløsningen.
+- **Status/begrensninger:** Ingen manuell nettlesertest, ingen test av hele produkt-MVP-en, ingen push eller PR #4-merge. Ingen ekte studentdata ble brukt.
