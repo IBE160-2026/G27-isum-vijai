@@ -63,8 +63,9 @@ Registrer beslutninger først etter at gruppen har tatt dem. Forslag i produktbr
 - **Beslutning:** Ikke besluttet.
 - **Begrunnelse:** Tilbakemeldingen bekrefter at briefen ikke har teknologivalg.
 - **Konsekvenser:** Uavklart.
-- **Dato:** Ikke besluttet.
-- **Status:** Uavklart.
+- **Dato for øvrige valg:** Ikke besluttet.
+- **Avgrenset delbeslutning (2026-11-15):** Gruppen har godkjent `pypdf` som PDF-verktøy for lokalt tekstuttrekk fra maskinlesbare PDF-er i MVP-ens eksisterende Streamlit-app. Ingen OCR eller ekstern PDF-behandlingstjeneste inngår i denne funksjonen. **Kilde:** Brukerens eksplisitte opplysning og godkjenning i MVP SPRINT 001-instruksjonen 2026-11-15. Ingen møtereferat, deltakere eller tidligere godkjenningstidspunkt er oppgitt.
+- **Status:** Delbeslutningen om PDF-verktøy er godkjent; DEC-005 som helhet forblir `Uavklart` for øvrige språk-, rammeverk- og teknologistakkvalg.
 
 ## Prosessbeslutning – PROMPT 024/025-avgrenset review (2026-10-25)
 

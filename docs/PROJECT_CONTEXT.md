@@ -1,11 +1,19 @@
 # Prosjektkontekst
 
-## Gjeldende status – PROMPT 028 publisert i PR #3 (2026-11-15)
+## Gjeldende status – Git Integration 002 (2026-11-15)
+
+- **PR #3:** Brukeren bekreftet at PR #3 er merget 2026-11-15T12:08:00Z med merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`. `git fetch origin main` bekreftet at `origin/main` peker på denne SHA-en.
+- **PDF-branch:** `feature/mvp-001-pdf-ingestion` inneholder nå main via mergecommit `ef834cd2a49383940ed1739a6654feb8a4a9672c`, med PDF-commit `967d48abd1372beea239db7db576e0de2f5f7daf` og PR #3-merge som foreldre. PROMPT 028-artefakter og logger er med.
+- **Konflikter og tester:** Fire dokumentlogger ble sammenflettet ved å bevare begge historikkdelene. Etter merge: full pytest-suite 35 bestått; målrettede PDF/UI-/dokumentasjonstester 24 bestått; `git diff --check` bestod.
+- **PR #4:** Sist bekreftet av brukeren som `OPEN` og `MERGEABLE`; dette er ikke en ny live-kontroll. Ingen push er utført etter lokal merge, og PR #4 er ikke merget.
+- **Produktstatus:** PDF-ingestion-storyen er fullført. PRD forblir `draft`; Product Brief Validate er ikke fullført; pypdf er en delbeslutning under DEC-005, og resten av DEC-005 samt DEC-001–DEC-004 står åpne. Hele MVP-en er ikke fullført.
+
+## Historisk status – PROMPT 028 publisert før PR #3-merge (2026-11-15)
 
 - **Publisert arbeid:** PROMPT 028-integreringen etter PR #2 er committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` på `docs/028-product-brief-alignment-post-pr2` og publisert i [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Dokumentasjonsarbeidet er gjennomført, men PR #3 er ikke merget.
 - **Sist verifiserte PR-status:** 2026-11-15 kl. 10:09:30 UTC: `OPEN`, base `main`, head `ec19c95a63e169ab90174abb2299bbdaba1ed357`, `MERGEABLE`. Ingen automatiske CI-checks var rapportert (`statusCheckRollup: []`). Statusen er fra før denne loggoppdateringen og skal ikke leses som en etterfølgende live-kontroll.
-- **Avventer:** Gruppens gjennomgang og godkjenning før eventuell merge. PR #2 er merget i `1227fb443e52815f831b3f5720b4f41844f72ad0`; PR #3 er fortsatt åpen.
-- **Produkt/BMAD:** Product Brief Validate er ikke fullført. PRD er fortsatt `draft`, og DEC-001–DEC-005 er fortsatt åpne. Bare den lokale PROMPT 028-integreringsoppgaven er fullført; PR-gjennomgang og merge gjenstår.
+- **Avventer ved kontrolltidspunktet:** Gruppens gjennomgang og godkjenning før eventuell merge. PR #2 var merget i `1227fb443e52815f831b3f5720b4f41844f72ad0`; PR #3 ble senere merget som dokumentert ovenfor.
+- **Produkt/BMAD:** Product Brief Validate er ikke fullført. PRD er fortsatt `draft`, og DEC-001–DEC-005 er fortsatt åpne. PROMPT 028-integreringsoppgaven er fullført; statusopplysningen om ventende PR #3-merge er historisk.
 
 ## Gjeldende status – PROMPT 028 etter PR #2 (2026-11-15)
 
@@ -22,6 +30,13 @@ Den daterte PROMPT 028-analysen ble laget mot `main` `16a34ed30aca147e1b79a0a98e
 Backup-filen som ble rapportert 2026-10-26 (`/private/tmp/prompt028-backup.UiRvpw/PROMPT_028_changes.tgz`, SHA-256 `dfc32820421a48f1360d18d70fa0fbb155d35a40049fdf57167c8d6ad335b2df`) ble ikke funnet ved den skrivebeskyttede kontrollen 2026-11-15. Ingen backup eller worktree ble slettet i denne oppgaven; arbeidskopien i opprinnelig worktree og commit `72c0b67…` står fortsatt som egne kilder.
 
 Oppdatert: 2026-10-18
+
+## Observert status – MVP-001 PDF-opplasting (2026-11-15)
+
+- PDF-opplasting i Streamlit sender lokalt uttrekket tekst til uendret `generate_result`-flyt. `pypdf` leser filen i minnet; tekstgrensen håndheves under uttrekk. Bytte mellom tekst/PDF fjerner tidligere resultat. OCR, ekstern PDF-behandling og varig lagring er ikke implementert.
+- Avvisningsgrenser: 10 MiB input, 200 sider og 1 000 000 uttrekkstegn. Passordbeskyttede, ugyldige, tomme og teksttomme PDF-er får brukerrettet feilmelding uten interne parserdetaljer.
+- `pypdf` er godkjent som avgrenset PDF-verktøy under DEC-005; øvrige teknologivalg i DEC-005 står åpne. DEC-001–DEC-004 er fortsatt uavklart; PRD forblir `draft`.
+- Implementasjonen og testene er i isolert worktree `/private/tmp/G27-isum-vijai-mvp-001-pdf`, branch `feature/mvp-001-pdf-ingestion`, og er lokalt committet etter review. Endringen er ikke pushet. Reviewrettelser er verifisert med fullsuite 35 bestått og 21 målrettede PDF/UI-tester; se spesifikasjonen og testloggen. PR #3-arbeid og opprinnelig arbeidsmappe er holdt utenfor.
 
 > **Historisk øyeblikksbilde:** Opplysningene i dokumentasjonen nedenfor beskriver statusen per 2026-10-18. De er bevart som historikk og er ikke dagens status.
 

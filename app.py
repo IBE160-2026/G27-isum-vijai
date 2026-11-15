@@ -7,32 +7,62 @@ from prototype.generator import (
     ResultGenerationError,
     generate_result,
 )
+from prototype.pdf_ingestion import PdfIngestionError, extract_pdf_text
 
 
 st.set_page_config(page_title="Notater til sammendrag og quiz", page_icon="📚")
 st.title("Foredragsnotater → Sammendrag & Quizgenerator")
-st.write(
-    "Lim inn notater for et enkelt, lokalt utdragssammendrag og begreper. "
-    "Quizspørsmålene er fortsatt faste demonstrasjonsdata."
-)
+st.write("Lim inn tekst eller last opp en PDF med forelesningsnotater.")
 st.warning(
     "Sammendrag og begreper velges direkte fra notatene med lokal tekstbehandling. "
     "Dette er ikke KI-generering. Quizzen er demo-data, og ingen KI-tjeneste brukes."
 )
 
-with st.form("notes_form"):
-    notes = st.text_area(
-        "Forelesningsnotater",
-        placeholder="Lim inn notatene dine her …",
-        height=220,
+def _clear_previous_result():
+    st.session_state.pop("prototype_result", None)
+    st.session_state.pop("quiz_feedback", None)
+
+
+input_mode = st.radio(
+    "Notatformat",
+    ["Tekst", "PDF"],
+    horizontal=True,
+    on_change=_clear_previous_result,
+)
+if input_mode == "PDF":
+    st.caption(
+        "PDF behandles lokalt i minnet. Bare maskinlesbar tekst støttes; "
+        "skannede PDF-er og OCR støttes ikke. Filen lagres ikke."
     )
+
+with st.form("notes_form"):
+    if input_mode == "Tekst":
+        notes = st.text_area(
+            "Forelesningsnotater",
+            placeholder="Lim inn notatene dine her …",
+            height=220,
+        )
+        uploaded_pdf = None
+    else:
+        uploaded_pdf = st.file_uploader(
+            "Last opp forelesningsnotater",
+            type=["pdf"],
+            help="Maks 10 MiB. PDF-en behandles lokalt og blir ikke lagret.",
+        )
+        notes = None
     generate_clicked = st.form_submit_button("Lag sammendrag og begreper")
 
 if generate_clicked:
     st.session_state.pop("prototype_result", None)
     st.session_state.pop("quiz_feedback", None)
     try:
+        if input_mode == "PDF":
+            if uploaded_pdf is None:
+                raise PdfIngestionError("Velg en PDF-fil før du genererer.")
+            notes = extract_pdf_text(uploaded_pdf.getvalue())
         st.session_state.prototype_result = generate_result(notes)
+    except PdfIngestionError as exc:
+        st.error(str(exc))
     except InputValidationError as exc:
         st.error(str(exc))
     except ResultGenerationError:

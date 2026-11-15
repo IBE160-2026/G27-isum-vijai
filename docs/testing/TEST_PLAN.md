@@ -6,7 +6,7 @@ Dette er fortsatt status for de komplette produktkontrollene T-001–T-009. Prot
 
 | ID | Område | Planlagt kontroll | Forventet resultat | Status |
 |---|---|---|---|---|
-| T-001 | PDF-opplasting | Last opp en gyldig PDF med testnotater; kontroller også ugyldig filtype og tom fil. | Gyldig fil godtas/behandles; ugyldige filer gir forståelig feilmelding. | PLANLAGT |
+| T-001 | PDF-opplasting | Last opp en gyldig maskinlesbar PDF; kontroller ugyldig/korrupt innhold, tom eller teksttom PDF, kryptering og grensene på 10 MiB, 200 sider og 1 000 000 uttrekkstegn. Bytt mellom tekst/PDF etter resultat. | Gyldig tekst behandles; ubehandlelige filer og grensebrudd gir forståelig feilmelding uten OCR-påstand; gammelt resultat vises ikke under et nytt format. | PLANLAGT |
 | T-002 | Tekstbehandling | Send inn limt tekst, tom tekst og tekst med linjeskift/uvanlig formatering. | Tekst behandles uten at tomt eller ugyldig input gir skjult feil. | PLANLAGT |
 | T-003 | Sammendrag | Bruk faste testnotater og kontroller at sammendraget dekker avtalte hovedpoeng og respekterer valgt lengde så langt løsningen støtter det. | Resultatet vurderes mot en godkjent fasit/sjekkliste. | PLANLAGT |
 | T-004 | Quizgenerering | Generer avtalt antall spørsmål på flere vanskelighetsgrader fra kjente testnotater. | Spørsmål har fasit, følger valgt antall/grad og kan spores til kildematerialet. | PLANLAGT |
@@ -23,7 +23,7 @@ Dette er en indeks mellom PRD-krav, åpne beslutninger og testtilfeller; den dok
 | PRD-krav | Relaterte beslutninger (ikke vedtatt) | Relevante testtilfeller | Avgrensning / manglende dekning |
 |---|---|---|---|
 | FR-1 tekstinput | DEC-005 (teknologistakk) | T-002 | T-002 er delvis dekket; formateringsvarianter gjenstår. |
-| FR-2 PDF-input | DEC-005 (PDF-verktøy) | T-001, T-008 | PDF-støtte og PDF-feil er ikke implementert/testet. |
+| FR-2 PDF-input | DEC-005 (PDF-verktøy delbeslutning godkjent; resten åpen) | T-001, T-008 | PDF-uttrekk og avgrensede parserfeil er implementert med pypdf; bred testcase-status PLANLAGT. |
 | FR-3 sammendragslengde | DEC-005 (teknologistakk) | T-003 | Valg av lengde er ikke særskilt dekket. |
 | FR-4 quizinnstillinger | DEC-001 (quizinteraksjon, fortsatt uavklart), DEC-005 (teknologistakk, fortsatt uavklart) | T-004, T-006 | Genereringsinnstillinger, antall og vanskelighetsgrad mangler full dekning; poengberegning i T-006 er betinget av et gruppevedtak under DEC-001. |
 | FR-5 sammendrag og begrepsliste | DEC-003 (KI-tjeneste) | T-003 | Strukturelle/deterministiske kontroller finnes, men godkjent fasitbasert kvalitetsdekning mangler. |
@@ -37,6 +37,10 @@ Dette er en indeks mellom PRD-krav, åpne beslutninger og testtilfeller; den dok
 | NFR-5 begrenset lagring | DEC-002 (lagring) | Ingen direkte testcase | Manglende direkte testdekning. |
 | NFR-6 kursmateriale ved lagring | DEC-002 (lagring) | Ingen direkte testcase | Manglende direkte testdekning. |
 | NFR-7 ekstern databehandling/oppbevaring | DEC-003 (KI-tjeneste/dataflyt) | Ingen direkte testcase | Manglende direkte testdekning. |
+
+## MVP-001 PDF-implementasjon
+
+Implementasjonen er lagt til, men testcase-statusene T-001–T-009 forblir `PLANLAGT` fordi de brede scenarioene ikke er fullstendig verifisert. Den nye målrettede dekningen kontrollerer pypdf-adapterens tekstretur (inkludert norske tegn), tom/ugyldig/teksttom input, kryptering og fil-/side-/tekstgrenser, samt at tekstflyt fortsatt virker og gammelt resultat ryddes ved formatbytte i AppTest. Se den daterte kjøringen i [TEST_LOG.md](TEST_LOG.md).
 
 ## Dekning på `main`
 

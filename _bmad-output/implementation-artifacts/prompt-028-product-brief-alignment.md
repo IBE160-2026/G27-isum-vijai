@@ -98,3 +98,7 @@ Dette artefaktet dokumenterer gjennomført, avgrenset Product Brief-validering o
 - PROMPT 028-integreringen ble kvalitetskontrollert, committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` og pushet til `docs/028-product-brief-alignment-post-pr2`.
 - Arbeidet er publisert i eksisterende [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Ved siste kontroll 2026-11-15 kl. 10:09:30 UTC var PR-en `OPEN`, `MERGEABLE`, base `main`, head `ec19c95…`; ingen CI-checks var rapportert. PR #3 avventer gjennomgang og er ikke merget.
 - Product Brief Validate er ikke fullført, PRD forblir `draft`, og DEC-001–DEC-005 forblir åpne.
+
+## Senere status – PR #3 merge (2026-11-15)
+
+Brukeren bekreftet at PR #3 ble merget 2026-11-15T12:08:00Z med merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`. Dette erstatter ikke den tidsbundne publiseringskontrollen ovenfor, der PR #3 ennå var `OPEN`/`MERGEABLE`. PRD forblir `draft`; Product Brief Validate er ikke fullført; DEC-001–DEC-005 forblir åpne.

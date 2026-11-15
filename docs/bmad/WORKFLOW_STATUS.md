@@ -1,6 +1,20 @@
 # BMAD-status
 
-## PROMPT 028 – publisering og ventende PR-gjennomgang (2026-11-15)
+## GIT INTEGRATION 002 – PR #3 merge og PDF-branch (2026-11-15)
+
+- PR #3 ble merget ifølge brukerens GitHub-kontroll: merge-SHA `73fafcc0443019bf58ab69aaece503d17010c754`, `MergedAt 2026-11-15T12:08:00Z`. Fetch bekreftet samme SHA som `origin/main`.
+- PDF-branchen integrerte main i vanlig mergecommit `ef834cd2a49383940ed1739a6654feb8a4a9672c`; PDF-commit `967d48a…` og PR #3-merge er foreldre.
+- Fire dokumentkonflikter ble løst ved å beholde både PDF- og PROMPT 028-historikken. Fullsuite: 35 bestått; målrettet PDF/UI/dokumentasjonsdekning: 24 bestått; `git diff --check` bestod.
+- PR #4 er ikke pushet etter integreringen. Sist oppgitte GitHub-status fra brukeren var `OPEN`/`MERGEABLE`; ingen ny live-status ble hentet i denne økten. Ingen PR #4-merge.
+- PDF-ingestion-storyen forblir avgrenset og fullført. Product Brief Validate og bredere MVP/BMAD-aktiviteter er fortsatt ufullført; PRD `draft`; DEC-005 delvis avklart for pypdf, øvrige beslutninger åpne.
+
+## MVP-001 PDF-opplasting (2026-11-15)
+
+- Implementasjonen og Build Step 04-reviewen er gjennomført i isolert worktree; reviewrettelsene er testet. Denne avgrensede PDF-ingestion-storyen er `done` etter Build Step 05 og den godkjente lokale committen. Ingen bredere BMAD-story- eller produktstatus er markert fullført.
+- Sluttverifisering etter reviewrettelser i isolert miljø: full suite 35 bestod på 1.65s; 21 målrettede PDF-/AppTest-tester bestod på 1.43s; `git diff --check origin/main` bestod. Ingen manuell nettlesertest er utført.
+- PRD forblir `draft`. `pypdf` er en godkjent delbeslutning under DEC-005; DEC-001–DEC-004 og resterende DEC-005-valg står åpne.
+- Testplanens T-001–T-009-status er fortsatt `PLANLAGT`; se testloggen for den målrettede MVP-001-kjøringen.
+## PROMPT 028 – status ved PR #3-publisering før merge (2026-11-15)
 
 - **Fullført:** Den lokale PROMPT 028-integreringen etter PR #2 er kvalitetskontrollert og committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` på `docs/028-product-brief-alignment-post-pr2`.
 - **Publisert:** Committen er pushet og finnes i eksisterende [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). Ved kontroll 2026-11-15 kl. 10:09:30 UTC var PR-en `OPEN` og `MERGEABLE`; ingen CI-checks var rapportert. Den er ikke merget.
