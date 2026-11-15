@@ -182,3 +182,13 @@ Skrivebeskyttet kontroll av PR #1 ble gjort 2026-10-25 kl. 01:00 Europe/Oslo (20
 
 
 - **Prompt-historikkontroll (2026-11-15):** PROMPT-loggene er sammenlignet skrivebeskyttet mellom originalmappen og Gemini-worktreen. Den aktive Gemini-loggen inneholder PROMPT 001–026 og 028; PROMPT 027 er fortsatt udokumentert. 26 nummererte ID-er har full tekst i tilgjengelige arkiver, mens PROMPT 019 er personvernredigert. Åtte senere ordrette brukerbeskjeder er lagt i unummerert arkiv. Fire grupper av eldre post-028 arbeid mangler fortsatt originalprompter og står som rekonstruerte sammendrag. Ingen unik original PROMPT 028-tekst manglet i Gemini-kopien. Originalmappen ble ikke endret; `.memlog.md` og Secrets ble ikke åpnet. Historikken er komplett bare for tilgjengelige og kontrollerte kilder. Detaljer: `docs/prompts/PROMPT_HISTORY_GAPS.md`.
+
+
+### MVP Sprint 002 – modellstandard og tilstandsherding (2026-11-16)
+
+- Gemini-adapterens fallback er `gemini-3.5-flash-lite`; `GEMINI_MODEL` og eksplisitt modellargument overstyrer fortsatt standarden. Ingen nøkkel eller Secret er endret eller lest.
+- Gemini-notater begrenses til samme 1 000 000 tegn som lokalt PDF-uttrekk. Tomme quizresponser avvises; Streamlit har i tillegg en trygg tom-quizvakt.
+- Notat-/PDF- og modusendringer tømmer resultat og quizfeedback og nullstiller Gemini-samtykke. Lengde-, vanskelighets- og antallsendringer tømmer resultat, quizfeedback og svarvalg; ny generering rydder også forrige quiztilstand.
+- Lokal modus, PDF-grensene, kildebevisvalidering og personvernadvarselen består. Ingen eksternt kall ble gjort.
+- PROMPT 001–026 og 028 er bevart, PROMPT 027 forblir gap, og `PROMPT_HISTORY_GAPS.md` er uendret. DEC-003 er fortsatt uavklart om godkjenning, kostnad, dataflyt og oppbevaring.
+- Verifisering: målrettet suite 79 bestått; dokumentasjonstester 5 bestått; full pytest 99 bestått; `git diff --check` bestod.

@@ -708,3 +708,17 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Diff-kontroll:** `git diff --check` bestod etter oppdateringene. Ingen applikasjonskode eller Gemini-API ble brukt.
 - **Kildeavgrensning:** Originalmappens relevante dokumenter ble bare lest; ingen filer der ble endret. `.memlog.md` og Secrets ble ikke lest.
 - **Gjennomført på nytt etter siste append:** `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py`: `3 passed in 0.24s`, exit 0; `git diff --check` bestod.
+
+
+## MVP Sprint 002 – Gemini-modellstandard og regresjonsherding (2026-11-16)
+
+- **Endringer verifisert:** Fallbackmodellen er `gemini-3.5-flash-lite`; mocktester bekrefter standard, `GEMINI_MODEL`-overstyring og eksplisitt modellparameter. Adapteren avviser tekst over `MAX_EXTRACTED_CHARACTERS` (1 000 000) før nøkkeloppslag/provider-kall og avviser tom quiz.
+- **UI-regresjoner:** AppTest dekker samtykke som nullstilles etter tekst- og PDF-endring, at gamle resultater/feedback/svarvalg tømmes ved ny generering og endring av sammendragslengde, vanskelighetsgrad eller quizantall, og at tom quiz ikke gir 0-av-0-visning. Eksisterende lokale tekst-/PDF-tester beholdes.
+- **Promptarkiv:** Ny `tests/test_prompt_history_inventory_docs.py` kontrollerer PROMPT 001–026 og 028, fravær av PROMPT 027 som oppføring, gapmerking og tydelig merking av rekonstruerte sammendrag. `PROMPT_HISTORY_GAPS.md` er bevart uendret.
+- **Målrettet kjøring:** `./.venv/bin/python -m pytest -q tests/test_gemini_service.py tests/test_app.py tests/test_pdf_ingestion.py tests/test_prompt_history_inventory_docs.py` ga 79 bestått.
+- **Dokumentasjonstester:** `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py` ga 5 bestått.
+- **Full kjøring:** `./.venv/bin/python -m pytest -q` ga 99 bestått. Ingen ekte Gemini-kall, Secrets-lesing eller studentdata.
+- **Forbehold:** Tekstlig kildebevis gir ikke semantisk garanti. DEC-003 forblir åpen. Tidligere, bruker-godkjent `models.list()` og brukerrapporterte manuelle tekst-/PDF-genereringer med `gemini-3.5-flash-lite` står dokumentert ovenfor; denne endringen utførte ingen nye eksterne kall.
+
+
+**Reviewoppfølging Sprint 002 (2026-11-16):** Regressjonene kontrollerer promptinventar, rekkefølge og rekonstruerte grupper, PDF-/innstillingsendringer og tømming av quizfeedback/svarvalg ved ny generering. Tom-quiz-vakten kjøres før resultatvisning. Målrettet Gemini/UI/PDF/dokumentasjonssuite: 79 bestått; dokumentasjonstester: 5 bestått; full pytest: 99 bestått; `git diff --check` bestod. DEC-003 forblir uavklart. Ingen nye Gemini-kall eller Secrets-lesing.

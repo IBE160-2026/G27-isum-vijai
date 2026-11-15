@@ -43,3 +43,5 @@ Loggfør vesentlige endringer i plan, dokumentasjon, KI-støttet arbeid og utvik
 
 
 | 2026-11-15 | Promptlogg sammenlignet med originalmappen, senere samtaleprompter arkivert | Gemini-worktree, ucommittet | PROMPT 001–026 og 028 bevart; PROMPT 027 beholdt som hull. Åtte eksakte, unummererte oppfølgingsbeskjeder arkivert; fire grupper av historiske sammendrag mangler fortsatt originaltekst. Originalmappen kun lest, ikke endret. Se `PROMPT_HISTORY_GAPS.md`. |
+
+| 2026-11-16 | MVP Sprint 002 modellstandard og UI-/valideringsherding | `prototype/gemini_service.py`, `app.py`, regresjonstester og append-only statusfiler; lokal worktree | Standard satt til `gemini-3.5-flash-lite`; `GEMINI_MODEL` beholdt. Tom quiz og Gemini-notater over felles grense på 1 000 000 tegn avvises; inputendring nullstiller resultat/samtykke og innstillingsendring nullstiller resultat/feedback. Promptinventar og gap er testet uten å endre `PROMPT_HISTORY_GAPS.md`. Full pytest 99 bestått, målrettet suite 79 bestått, dokumentasjonstester 5 bestått. DEC-003 forblir åpen. Ingen ekte API-kall, Secrets-lesing, commit eller push |

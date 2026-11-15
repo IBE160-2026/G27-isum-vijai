@@ -18,9 +18,21 @@ st.write("Lim inn tekst eller last opp en PDF med forelesningsnotater.")
 def _clear_previous_result():
     st.session_state.pop("prototype_result", None)
     st.session_state.pop("quiz_feedback", None)
+    for key in list(st.session_state):
+        if key.startswith("answer_"):
+            st.session_state.pop(key, None)
 
 
-generation_mode = st.selectbox("Genereringsmodus", ["Lokal", "Gemini AI"], on_change=_clear_previous_result)
+def _clear_input_dependent_state():
+    _clear_previous_result()
+    st.session_state["gemini_consent"] = False
+
+
+def _clear_setting_dependent_state():
+    _clear_previous_result()
+
+
+generation_mode = st.selectbox("Genereringsmodus", ["Lokal", "Gemini AI"], on_change=_clear_input_dependent_state)
 if generation_mode == "Lokal":
     st.warning(
         "Sammendrag og begreper velges direkte fra notatene med lokal tekstbehandling. "
@@ -28,15 +40,15 @@ if generation_mode == "Lokal":
     )
 if generation_mode == "Gemini AI":
     st.warning("Ved generering sendes notatteksten til Google Gemini for ekstern behandling. Free Tier-data kan brukes til å forbedre Googles produkter. KI-resultater kan være feil. Del aldri sensitive eller fortrolige notater.")
-    summary_length = st.selectbox("Sammendragslengde", ["kort", "middels", "lang"], index=1)
-    difficulty = st.selectbox("Quizvanskelighetsgrad", ["lett", "middels", "vanskelig"], index=1)
-    question_count = st.slider("Antall quizspørsmål", 1, 10, 5)
+    summary_length = st.selectbox("Sammendragslengde", ["kort", "middels", "lang"], index=1, key="summary_length", on_change=_clear_setting_dependent_state)
+    difficulty = st.selectbox("Quizvanskelighetsgrad", ["lett", "middels", "vanskelig"], index=1, key="difficulty", on_change=_clear_setting_dependent_state)
+    question_count = st.slider("Antall quizspørsmål", 1, 10, 5, key="question_count", on_change=_clear_setting_dependent_state)
 
 input_mode = st.radio(
     "Notatformat",
     ["Tekst", "PDF"],
     horizontal=True,
-    on_change=_clear_previous_result,
+    on_change=_clear_input_dependent_state,
 )
 if input_mode == "PDF":
     st.caption(
@@ -49,7 +61,7 @@ if input_mode == "Tekst":
         "Forelesningsnotater",
         placeholder="Lim inn notatene dine her …",
         height=220,
-        on_change=_clear_previous_result,
+        on_change=_clear_input_dependent_state,
     )
     uploaded_pdf = None
 else:
@@ -58,15 +70,17 @@ else:
         type=["pdf"],
         help=("Maks 10 MiB. Teksten trekkes ut lokalt og sendes til Gemini først etter at du starter generering og bekrefter samtykke."
               if generation_mode == "Gemini AI" else "Maks 10 MiB. PDF-en behandles lokalt og blir ikke lagret."),
-        on_change=_clear_previous_result,
+        on_change=_clear_input_dependent_state,
     )
     notes = None
-consent = st.checkbox("Jeg forstår at notatene sendes til Google Gemini for behandling.") if generation_mode == "Gemini AI" else False
+consent = st.checkbox(
+    "Jeg forstår at notatene sendes til Google Gemini for behandling.",
+    key="gemini_consent",
+) if generation_mode == "Gemini AI" else False
 generate_clicked = st.button("Generer læringsressurser")
 
 if generate_clicked:
-    st.session_state.pop("prototype_result", None)
-    st.session_state.pop("quiz_feedback", None)
+    _clear_previous_result()
     try:
         if input_mode == "PDF":
             if uploaded_pdf is None:
@@ -94,8 +108,12 @@ if generate_clicked:
 
 result = st.session_state.get("prototype_result")
 if result:
-    st.divider()
     is_ai = "questions" in result and "sources" not in result
+    if is_ai and not result["questions"]:
+        st.error("KI-tjenesten returnerte ingen quizspørsmål. Prøv igjen med andre notater.")
+        _clear_previous_result()
+        st.stop()
+    st.divider()
     st.caption("SAMMENDRAG · BEGREPER · QUIZ · GEMINI AI" if is_ai else "SAMMENDRAG OG BEGREPER · LOKAL TEKSTBEHANDLING · IKKE KI")
     if is_ai:
         st.caption(result.get("grounding_notice", "Innholdet er kontrollert mot sitater fra notatene, men kontrollen garanterer ikke at alt er feilfritt."))

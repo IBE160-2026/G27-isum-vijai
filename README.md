@@ -20,7 +20,9 @@ Lokal modus er fortsatt standard og bruker enkel lokal tekstbehandling — **ikk
 
 Gemini-resultatet ber også om sitater fra notatene for sammendrag, begreper, spørsmål, svar og forklaringer. Appen avviser svar der disse sitatene ikke finnes i kildeteksten etter normalisering av store/små bokstaver og whitespace. Denne tekstkontrollen kan ikke garantere at sitatene semantisk underbygger innholdet eller at resultatet er feilfritt.
 
-Gemini-nøkkel konfigureres som `GEMINI_API_KEY` i miljøet eller Streamlit Secrets. Valgfri modell konfigureres med `GEMINI_MODEL` (standard `gemini-2.5-flash`). Appen foretar ikke Gemini-kall ved opplasting alene. Bruk bare notater du har lov til å sende til ekstern behandling.
+Gemini-nøkkel konfigureres som `GEMINI_API_KEY` i miljøet eller Streamlit Secrets. Valgfri modell konfigureres med `GEMINI_MODEL` (standard `gemini-3.5-flash-lite`). Appen foretar ikke Gemini-kall ved opplasting alene. Bruk bare notater du har lov til å sende til ekstern behandling.
+
+Samtykke bekreftes før Gemini-generering og nullstilles når du endrer notatene, PDF-filen eller genereringsmodus. Du må bekrefte på nytt før nye notater sendes.
 
 ### Starte lokalt
 

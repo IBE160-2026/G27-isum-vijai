@@ -4,6 +4,8 @@ import json
 import os
 from typing import Any
 
+from prototype.pdf_ingestion import MAX_EXTRACTED_CHARACTERS
+
 
 class GeminiServiceError(RuntimeError):
     """A safe, user-displayable generation failure."""
@@ -99,7 +101,7 @@ def _validate(payload: Any, requested: int, notes: str) -> dict:
     for concept in concepts:
         if not _contains_source_quote(concept["term_excerpt"], notes) or not _contains_source_quote(concept["explanation_excerpt"], notes):
             raise GeminiServiceError("Et begrep kunne ikke knyttes til notatene. Prøv igjen.")
-    if not isinstance(questions, list) or len(questions) > requested:
+    if not isinstance(questions, list) or not questions or len(questions) > requested:
         raise GeminiServiceError("KI-tjenesten returnerte et ugyldig antall spørsmål. Prøv igjen.")
     for q in questions:
         if not isinstance(q, dict) or not all(isinstance(q.get(k), str) and q[k].strip() for k in ("question", "answer", "explanation", "source_excerpt", "answer_excerpt", "explanation_excerpt")) or not isinstance(q.get("options"), list) or len(q["options"]) != 4 or not all(isinstance(o, str) and o.strip() for o in q["options"]) or not _distinct_options(q["options"]) or q["answer"] not in q["options"]:
@@ -114,10 +116,17 @@ def _validate(payload: Any, requested: int, notes: str) -> dict:
 def generate_gemini_result(notes: str, *, length: str = "middels", difficulty: str = "middels", question_count: int = 5, api_key: str | None = None, client: Any = None, model: str | None = None) -> dict:
     if not isinstance(notes, str) or not notes.strip():
         raise GeminiServiceError("Skriv inn forelesningsnotater før du genererer.")
-    key = api_key or get_api_key()
-    if not key and client is None:
-        raise GeminiServiceError("Gemini API-nøkkel mangler. Konfigurer GEMINI_API_KEY eller Streamlit Secrets.")
-    model = model or os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+    if len(notes) > MAX_EXTRACTED_CHARACTERS:
+        limit_label = f"{MAX_EXTRACTED_CHARACTERS:,}".replace(",", " ")
+        raise GeminiServiceError(
+            f"Notatene overskrider grensen på {limit_label} tegn for Gemini-generering. "
+            "Forkort notatene og prøv igjen."
+        )
+    if client is None:
+        key = api_key or get_api_key()
+        if not key:
+            raise GeminiServiceError("Gemini API-nøkkel mangler. Konfigurer GEMINI_API_KEY eller Streamlit Secrets.")
+    model = model or os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
     try:
         if client is None:
             from google import genai

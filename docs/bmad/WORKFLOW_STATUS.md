@@ -255,3 +255,11 @@ Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene fø
 - Fire grupper av senere aktiviteter står fortsatt bare som rekonstruerte sammendrag: PR #3/integrasjon; PDF Sprint 001; initial Gemini-implementering; og eldre Secrets-/API-nøkkel-/feilsøkings-/testisolering. Enkelte grupper kan representere flere meldinger, antallet er ukjent.
 - Originalmappens PROMPT 028-kilder er sammenlignet skrivebeskyttet; ingen unik original prompttekst manglet i Gemini-arkivet. Den eldre Sprint 002-seksjonen der er en statusoppsummering, ikke prompttranskripsjon. `.memlog.md` og Secrets er ikke lest; originalmappen er uendret. Se `PROMPT_HISTORY_GAPS.md`.
 - Status: komplett for tilgjengelige og trygt undersøkte kilder; ikke bevist komplett for alle Codex-sessioner.
+
+
+### Sprint 002 – modellstandard og tilstands-/valideringsherding (2026-11-16)
+
+- **Status:** Implementert i isolert Gemini-worktree. `gemini-3.5-flash-lite` er ny fallback; modellargument og `GEMINI_MODEL`-overstyring er bevart.
+- **Kvalitetsrettelser:** Inputendring fjerner AI-resultat/feedback og krever nytt samtykke; endrede AI-innstillinger og ny generering fjerner gammelt resultat/feedback/svarvalg. Adapteren avviser tom quiz og tekst over felles 1 000 000-tegnsgrense før provider-kall.
+- **Historikk/personvern:** PROMPT 001–026 og 028 beholdt, PROMPT 027 står som uavklart gap, rekonstruerte sammendrag forblir merket. `PROMPT_HISTORY_GAPS.md`, lokal modus, PDF-uttrekksgrenser og personvernadvarsel er bevart. DEC-003 står fortsatt uavklart.
+- **Verifisering:** Målrettet Gemini/UI/PDF/dokumentasjon 79 bestått; dokumentasjonstester 5 bestått; full pytest 99 bestått; ingen ekte Gemini-kall.

@@ -27,12 +27,13 @@ def response(n=1, source_excerpt="notes"):
     return json.dumps({"summary": "Et sammendrag", "summary_evidence": ["notes"], "concepts": [{"term": "Energi", "explanation": "Evne til å utføre arbeid.", "term_excerpt": "notes", "explanation_excerpt": "notes"}], "questions": [{"question": "Hva kan lagres?", "options": ["A", "B", "C", "D"], "answer": "A", "explanation": "Notatene sier det.", "source_excerpt": source_excerpt, "answer_excerpt": "notes", "explanation_excerpt": "notes"} for _ in range(n)]})
 
 
-def test_structured_result_and_settings_passed():
+def test_structured_result_and_settings_passed(monkeypatch):
+    monkeypatch.delenv("GEMINI_MODEL", raising=False)
     client = FakeClient(response())
     result = generate_gemini_result("notes", client=client, question_count=3, length="lang", difficulty="vanskelig")
     assert result["insufficient_questions"] is True
     assert result["concepts"][0]["term"] == "Energi"
-    assert client.models.calls[0]["model"] == "gemini-2.5-flash"
+    assert client.models.calls[0]["model"] == "gemini-3.5-flash-lite"
     assert "vanskelig" in client.models.calls[0]["contents"]
     assert client.models.calls[0]["config"]["response_mime_type"] == "application/json"
     assert client.models.calls[0]["config"]["response_schema"]["required"] == ["summary", "summary_evidence", "concepts", "questions"]
@@ -126,6 +127,31 @@ def test_configured_model_override_reaches_sdk(monkeypatch):
     client = FakeClient(response())
     generate_gemini_result("notes", client=client)
     assert client.models.calls[0]["model"] == "gemini-custom-test"
+
+
+def test_explicit_model_argument_takes_precedence_over_environment(monkeypatch):
+    monkeypatch.setenv("GEMINI_MODEL", "environment-model")
+    client = FakeClient(response())
+    generate_gemini_result("notes", client=client, model="argument-model")
+    assert client.models.calls[0]["model"] == "argument-model"
+
+
+def test_empty_quiz_is_rejected():
+    body = json.loads(response())
+    body["questions"] = []
+    with pytest.raises(GeminiServiceError, match="ugyldig antall spørsmål"):
+        generate_gemini_result("notes", client=FakeClient(json.dumps(body)))
+
+
+def test_oversized_notes_are_rejected_before_provider_call(monkeypatch):
+    import prototype.gemini_service as service
+
+    client = FakeClient(response())
+    monkeypatch.setattr("prototype.gemini_service.get_api_key", lambda: pytest.fail("key lookup should not occur"))
+    monkeypatch.setattr(service, "MAX_EXTRACTED_CHARACTERS", 20)
+    with pytest.raises(GeminiServiceError, match="20 tegn"):
+        generate_gemini_result("x" * 21, client=client)
+    assert client.models.calls == []
 
 
 def test_question_with_nonmatching_source_excerpt_is_rejected():

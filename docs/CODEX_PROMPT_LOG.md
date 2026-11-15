@@ -3822,3 +3822,13 @@ Stopp etter rapporten og vent på godkjenning.
 
 
 - **Avkortet kildemelding:** Den første meldingen til denne historikkontrollen var tilgjengelig bare som en delvis tekst som sluttet ved «GEMINI». Den senere fullstendige fortsettelsesmeldingen er arkivert ordrett, men den manglende avslutningen av den første meldingen er ikke rekonstruert eller talt som en full originalprompt.
+
+
+## Sprint 002 – Gemini-standard og tilstandsherding (2026-11-16)
+
+- **Kilde/ID:** Oppfølging av MVP Sprint 002 i `_bmad-output/implementation-artifacts/spec-mvp-002-gemini-hardening.md`; ingen ny PROMPT-ID tildelt.
+- **Ordrett original:** Bevart i `docs/prompts/PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-16.md`; den er ikke nummerert.
+- **Endringer:** Standard fallback er nå `gemini-3.5-flash-lite`, med `GEMINI_MODEL`- og eksplisitt modelloverstyring bevart. Gemini avviser notater over PDF-uttrekksgrensen og tom quiz før resultatvisning. Inputendring fjerner resultat og krever nytt samtykke; endrede Gemini-innstillinger fjerner resultat og quizfeedback.
+- **Historikk:** PROMPT 001–026 og 028 er bevart; PROMPT 027 står fortsatt som gap. Rekonstruerte tekster er fortsatt tydelig merket i `PROMPT_HISTORY_GAPS.md`; gap-registeret er ikke endret.
+- **Beslutninger:** DEC-003 er fortsatt uavklart om leverandørgodkjenning, kostnad, dataflyt og oppbevaring. Ingen personvernvilkår eller samtykkeadvarsel er endret.
+- **Verifisering:** Målrettet Gemini/UI/PDF/dokumentasjonssuite: 79 bestått. Dokumentasjonstester: 5 bestått. Fullsuite: 99 bestått. `git diff --check` bestod. Ingen ekte Gemini-kall eller Secrets-lesing.
