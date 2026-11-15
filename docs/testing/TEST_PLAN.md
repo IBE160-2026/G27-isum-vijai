@@ -2,6 +2,8 @@
 
 Alle T-001–T-009 står fortsatt **PLANLAGT** som testtilfeller: ingen av dem har dokumentert dekning av samtlige planlagte underkasus. Matrisene viser implementasjon og delvis kode-/testdekning på to ulike snapshots, ikke godkjenning av et helt scenario. `Implementasjon` gjelder atferden som er spesifisert for det aktuelle testtilfellet; `Full` / `Delvis` / `Ingen` beskriver testdekningen.
 
+Dette er fortsatt status for de komplette produktkontrollene T-001–T-009. Prototypens automatiserte regresjonstester dekker delmengder av tekstinput, lokal ekstraksjon, UI-merking, demoquiz og tom input; de gjør ikke et produkt-testtilfelle fullført. Se [`TEST_LOG.md`](TEST_LOG.md) for PROMPT 028-kjøringene og `tests/test_generator.py` / `tests/test_app.py` for testene.
+
 | ID | Område | Planlagt kontroll | Forventet resultat | Status |
 |---|---|---|---|---|
 | T-001 | PDF-opplasting | Last opp en gyldig PDF med testnotater; kontroller også ugyldig filtype og tom fil. | Gyldig fil godtas/behandles; ugyldige filer gir forståelig feilmelding. | PLANLAGT |

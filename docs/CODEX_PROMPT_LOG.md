@@ -3652,3 +3652,39 @@ Stopp etter rapporten og vent på godkjenning.
 - **Testbevis:** Sluttkontroll før commit: `9 passed in 0.27s`, exit 0; `git diff --check` exit 0. Se siste datostemplede kjøring i `docs/testing/TEST_LOG.md`. Dette er dokumentasjonsbranchens kjøring, ikke main; PROMPT 023s 15 tester er historiske.
 - **Commit:** Opprettet med meldingen `docs: complete test traceability and documentation review`; SHA og forfatter er bekreftet direkte fra commitobjektet. Kun de gjennomgåtte dokumentasjonsfilene og godkjent dokumentasjonstestfil er inkludert.
 - **Avgrensning:** Ingen push eller PR-opprettelse. `main`, PROMPT 023-branchen og PR #1 er uendret; `.memlog.md` er ikke inkludert.
+
+## PROMPT 028 – Product Brief-alignment og dokumentasjon etter merge
+
+- **Dato:** 2026-10-26.
+- **Formål:** Verifisere daværende main og PR-status, kartlegge Product Brief-krav mot PRD, implementasjon og tester, og dokumentere mangler uten å endre produktmål eller kode.
+- **Utførelsesstatus:** Dokumentasjonsarbeid på `docs/028-product-brief-alignment`, basert på main `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`. Ingen commit, push, merge eller PR ved den kontrollen.
+- **BMAD:** Core/BMM 6.12.4 bekreftet. Product Brief-valideringen var avgrenset fordi `.memlog.md` ikke ble lest eller endret. PRD forble `draft`.
+- **Funn:** PR #1 var merget med SHA `16a34ed30aca147e1b79a0a98eb855bde1fa6a00`; PR #2 ble kontrollert som `OPEN` 2026-10-26. Kravmatrisen skilte lokal tekstbehandling fra fast demoquiz og planlagt AI-/fil-/innstillingsfunksjonalitet.
+- **Filer:** PROMPT 028-artefakt og promptarkiv, testlogg, promptlogg, prosesslogg, testplan, testloggmal, prosjektkontekst, BMAD-status og README. Product Brief, PRD, beslutningslogg og applikasjonskode ble ikke endret.
+- **Verifisering:** På main-baseline kjørte `./.venv/bin/python -m pytest -q`: 15 bestått, 0 feilet; `git diff --check` bestod. AppTest-smoke med to notatsett viste endret sammendrag og begreper; quizen var fortsatt demo. PR #2s dokumentasjonstest bestod separat i sin worktree med 3 tester.
+- **Beslutninger:** DEC-001–DEC-005 forble uavklart. KI-provider/dataflyt, lagring/personvern, PDF/OCR, quizformat/-grenser og kildebinding var ikke avgjort.
+
+**Originalprompt og godkjenning:** Analyseprompten er arkivert ordrett i [PROMPT_028_ANALYSIS.md](prompts/PROMPT_028_ANALYSIS.md), og godkjenningen i [PROMPT_028_APPROVAL.md](prompts/PROMPT_028_APPROVAL.md). Kravmatrise og detaljert analyse står i [_bmad-output/implementation-artifacts/prompt-028-product-brief-alignment.md](../_bmad-output/implementation-artifacts/prompt-028-product-brief-alignment.md).
+
+### PROMPT 028 – integrasjon mot oppdatert origin/main (2026-10-26)
+
+- **Git-status på datoen:** `origin/main` var `120bb9052b7d477698fc4510ba302d11f4480c4e`; PR #2 var fortsatt `OPEN`. Disse opplysningene er historiske og erstattet av post-merge-kontrollen nedenfor.
+- **Bevaring:** PROMPT 028 ble arkivert og overført til `/private/tmp/G27-isum-vijai-prompt028-integrated`; sikkerhetskopi og SHA-256 står i daværende prosjektkontekst. `.memlog.md` var ikke inkludert.
+- **Tester:** Hele pytest-pakken på `120bb905…`: 15 bestått. PR #2s dokumentasjonstest bestod separat med 3 tester på lokal PR #2-worktree-commit `72ebf2c…`. `git diff --check` bestod.
+- **Produkt/BMAD:** Product Brief og PRD ble ikke endret; PRD `draft`; DEC-001–DEC-005 uavklart. Full Product Brief Validate var fortsatt avgrenset. `.memlog.md` var ikke inkludert.
+
+## PROMPT 028 – post-PR #2-integrasjon (2026-11-15)
+
+- **Verifisert PR #2-merge:** `origin/main` er `1227fb443e52815f831b3f5720b4f41844f72ad0`, mergecommit med foreldre `35ff46c422948330844f77ff07816ca86c815fc1` og `a5778f25991d9b88fa4c3c186d5b2d2536c36212`. Commit-tid er `2026-11-14 21:49:15 +01:00`; PR-spesifikk `merged_at` ble ikke hentet fordi GitHub API ikke var tilgjengelig.
+- **Branch og kilde:** `docs/028-product-brief-alignment-post-pr2` er opprettet fra denne `origin/main`. Historisk PROMPT 028-commit `72c0b67d2ac715f925d6b41a56a4636c97b4b83a` er bevart som referanse.
+- **Integrasjon:** PR #2s eksisterende logger og testbevis er beholdt; unike PROMPT 028-oppføringer er lagt til etter historikken. Tidligere statusser er tidsmerket som samtidshistorikk.
+- **Verifisering:** Resultater fra denne integrasjonsbranchen står datert i [testloggen](testing/TEST_LOG.md), sammen med eksakte kommandoer. `git diff --check` ble kjørt etter integrering.
+- **Produkt/BMAD:** Ingen applikasjonskode, Product Brief, PRD eller beslutningsstatus er endret. PRD forblir `draft`, DEC-001–DEC-005 forblir `Uavklart`; Product Brief Validate er ikke erklært fullført.
+- **Arbeidsstatus:** Ingen commit, push, merge, rebase eller PR. `.memlog.md` er ikke åpnet.
+
+### PROMPT 028 – publisering i PR #3 (2026-11-15)
+
+- **Integrering og kvalitetskontroll:** PROMPT 028 ble integrert i separat worktree etter PR #2-mergecommit `1227fb443e52815f831b3f5720b4f41844f72ad0`. De 12 gjennomgåtte dokumentasjonsfilene ble committet som `ec19c95a63e169ab90174abb2299bbdaba1ed357` med author og committer `AksVijai <akshayah.vijai@himolde.no>`.
+- **Publisering:** Commit `ec19c95…` ble pushet på `docs/028-product-brief-alignment-post-pr2` og publisert i eksisterende [PR #3](https://github.com/IBE160-2026/G27-isum-vijai/pull/3). PR #3 er ikke merget.
+- **Siste PR-kontroll:** `gh pr view 3` returnerte 2026-11-15 kl. 10:09:30 UTC: `OPEN`, base `main`, head `ec19c95a63e169ab90174abb2299bbdaba1ed357`, `MERGEABLE`; `statusCheckRollup` var tom. Dette er kontrollen før denne loggoppdateringen, ikke en statuskontroll etter ny push.
+- **Produkt/BMAD:** Product Brief Validate er fortsatt ikke fullført; PRD er `draft`; DEC-001–DEC-005 er fortsatt åpne. Integreringsoppgaven er fullført; PR #3 avventer gruppens gjennomgang og merge.
