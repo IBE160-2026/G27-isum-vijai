@@ -39,6 +39,7 @@ test-results/
 playwright-report/
 
 # Secrets and local environment; keep example files
+.streamlit/secrets.toml
 .env
 .env.*
 !.env.example

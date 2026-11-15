@@ -613,3 +613,90 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **QA-rettelser:** Flyttet notatkontroller ut av Streamlit-formen og la til `on_change`-rydding, så nytt tekstinnhold og ny PDF fjerner gammelt resultat før ny generering. La til test for dette, normalisert duplikatkontroll for svaralternativer og UI-test for lengdevalg, vanskelighetsgrader og quizantall/defaults.
 - **Personvern/sikkerhet:** Tester brukte syntetiske notater og mocker. Ingen ekte studentdata eller API-nøkler. Ingen API-/notatinnhold logges. Free Tier er ekstern behandling og krever fortsatt personvernvurdering; ingen betalt bruk ble aktivert.
 - **Begrensninger:** Kildesitater kan ikke bevise semantisk korrekthet; fri tekst har ingen besluttet størrelsesgrense. Produktvalgene er foreløpige, PRD `draft`, Product Brief Validate ufullført og DEC-001–DEC-005 åpne.
+- **Git-resultat:** Etter QA ble filene committet lokalt som `875a8f57205467d30b9b81f9a31084cc80b6bf5f` (`feat: add Gemini AI summaries and grounded quizzes`), author/committer `AksVijai <akshayah.vijai@himolde.no>`. Ingen push eller PR.
+- **Secrets-kontroll:** Brukeren opplyste om Gemini-nøkkel i Streamlit Secrets, men miljøplassering ble ikke verifisert. Ingen nøkkel lest/testet og ingen ekte Gemini-kall. `git check-ignore` fant ingen regel for `.streamlit/secrets.toml` eller `secrets.toml`; lokal `.streamlit/secrets.toml` var fraværende og ikke tracked.
+
+## MVP-002 – feildiagnose Gemini (2026-11-15)
+
+- **Miljø:** `/private/tmp/G27-isum-vijai-mvp-002-gemini/.venv/bin/python` (Python 3.12.12). `python` via shell lå først i originalarbeidsmappens venv; testene ble kjørt eksplisitt via dette worktreeets `.venv`.
+- **Konfigurasjonssikkerhet:** `.streamlit/secrets.toml` finnes, ikke tracked, og `git check-ignore -v` bekrefter ny ignore-regel. Filinnhold eller nøkkel ble ikke lest.
+- **Test:** `./.venv/bin/python -m pytest -q tests/test_gemini_service.py`: `28 passed in 0.66s` etter isolering av manglende-nøkkel-testen. Dekker nøkkelfeil, modelltilgang, rate limit/kvote, timeout, nettverk, tom/ugyldig respons, sanitert feiltekst og appens svarvalidering.
+- **Sikkerhetsavvik under første kjøringer:** Manglende-nøkkel-testen og en UI-test kunne bruke lokal Streamlit Secret og forsøke nettverk. Begge er rettet til å stubbe nøkkeloppslaget. Testene brukte bare syntetisk `notes` og «Syntetiske notater om energi», ikke studentdata. Kjøringene ga generell nettverksfeil; vi kan ikke fastslå om Gemini mottok forespørslene. Ingen flere ekte kall er utført.
+- **Sluttkontroll:** `./.venv/bin/python -m pytest -q`: `72 passed in 2.60s`, exit 0. Påfølgende `git diff --check`: exit 0.
+- **Manuell status:** Brukeren rapporterte fungerende lokal Streamlit/Gemini-UI, men første ekte manuell Gemini-generering feilet med generell melding. Ingen kontrollert ny manuell generering eller ekte API-kall er utført; integrasjonen er derfor ikke verifisert.
+
+### Oppfølging – rotårsak og isolert regresjonskjøring (2026-11-15)
+
+- **Meldingsbane:** `app.py` kaller adapteren etter aktivt Gemini-samtykke og viser `GeminiServiceError`. Adapterens brede `except Exception` fanget feil fra SDK-klientinitialisering og `generate_content`; den generiske fallbacken var nøyaktig teksten «Gemini kunne ikke behandle forespørselen. Kontroller innstillinger og tilkobling, og prøv igjen.» Den manuelle feilen kan derfor stamme fra programmeringsfeil så vel som SDK/provider-feil.
+- **SDK, offline:** Aktivt miljø: `google-genai 1.75.0`. Lokale introspeksjoner bekreftet klient- og `generate_content`-signatur, standard API-versjon `v1beta` for API-nøkkel, `HttpOptions.timeout` i millisekunder, og støtte for `response_mime_type`/`response_schema`. Lokal `GenerateContentConfig` validerte JSON-konfigurasjon. Ingen modell/API-parameter ble endret.
+- **Mockdekning:** Faktiske SDK `ClientError`-objekter for 400/401/403/404/429, `RESOURCE_EXHAUSTED`, timeout, transportfeil, klientkonfigurasjonsfeil, ukjent `TypeError`, tom/ugyldig respons og Secrets-feil. Testene kontrollerer at private exception-detaljer ikke kommer i brukerfeil. Ingen ekte Gemini-kall; notatinput var syntetisk.
+- **Målrettede tester:** `./.venv/bin/python -m pytest -q tests/test_gemini_service.py tests/test_app.py`: `51 passed in 2.69s`, exit 0.
+- **Full suite:** `./.venv/bin/python -m pytest -q`: `77 passed in 2.95s`, exit 0 (siste kjøring etter dokumentasjonsoppdatering).
+- **Diff-kontroll:** `git diff --check`: exit 0.
+- **Gjenstående:** Manuell provider-status/exception er ukjent. Ekte Gemini-generering er ikke verifisert. Neste test er én manuell generering med ufølsomme notater i det aktuelle Secrets-miljøet; ved feil deles bare `[GEMINI-…]`-koden.
+
+## Prompt-historikkontroll før Sprint 002-ferdigstilling (2026-11-15)
+
+- **Arbeidsmappe/branch:** `/private/tmp/G27-isum-vijai-mvp-002-gemini`, `feature/mvp-002-gemini-ai`. Kun dokumenter og Git-objekter i denne worktreen ble undersøkt. Ingen sessionlogg, `.memlog.md`, Secret-innhold eller originalarbeidsmappe ble åpnet.
+- **Funn før verifikasjon:** `docs/CODEX_PROMPT_LOG.md` inneholdt 30 nummererte overskrifter fordelt på 27 unike ID-er: 001–026 og 028. PROMPT 023 har tre overskrifter og PROMPT 028 to. PROMPT 027 er et uavklart hull; branchnavnet `docs/027-documentation-completion` alene fastslår ikke et promptnummer.
+- **Kildedekning:** PROMPT 028s to originalkilder er kontrollert. To oppdrag fra denne samtalen er arkivert ordrett uten promptnummer. For andre seinere PDF-, Gemini- og integrasjonsoppdrag viser oversikten uttrykkelig hvor originaltekst ikke er funnet og at eksisterende tekst er et rekonstruert sammendrag.
+- **Git-bevis:** SHA-er for PR #3- og PR #4-merge, PDF-commit/merge og Sprint 002-commit ble kontrollert med lokale Git-objekter. Sprint 002 er lokalt committet, ikke bekreftet pushet eller publisert i PR.
+- **Testkjøringer:** Siste `./.venv/bin/python -m pytest -q` etter alle dokumentendringer ga `77 passed in 4.42s`, exit 0. Målrettet `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py` ga `3 passed in 0.46s`, exit 0 før de siste loggtilleggene; dokumentasjonstesten inngår også i fullsuiten.
+- **Diff-kontroll:** `git diff --check` exit 0 etter dokumentasjonsendringene.
+- **Sikkerhet:** Ingen ekstern Gemini-diagnostikk eller generering er utført. Ingen nøkkel, Secret-innhold eller `.memlog.md` ble lest.
+- **Dokumenter:** `CODEX_PROMPT_LOG.md`, `CHANGELOG_PROCESS.md`, `PROJECT_CONTEXT.md`, `TEST_LOG.md`, `bmad/WORKFLOW_STATUS.md` og `prompts/PROMPT_HISTORY_GAPS.md`; to ordrette unummererte promptkilder ligger i `docs/prompts/`.
+- **Statusbegrensning:** Historikken kan erklæres komplett for tilgjengelige, undersøkte kilder, men ikke universelt komplett. PROMPT 027 og flere eldre post-028-originaler er ikke verifisert.
+
+## MVP-002 GEMINI-MODEL – modellisteverktøy (2026-11-15)
+
+- **Arbeidsmappe/branch:** `/private/tmp/G27-isum-vijai-mvp-002-gemini`, `feature/mvp-002-gemini-ai`. Ingen annen worktree ble brukt.
+- **Konfigurasjon:** Adapteren velger `model`-argument, deretter `GEMINI_MODEL`, ellers `gemini-2.5-flash`. `GEMINI_MODEL` var unset i Codex-prosessen; dette bekrefter ikke verdien i en annen kjørende Streamlit-prosess. Secrets-innhold ble ikke lest.
+- **SDK-introspeksjon:** Isolert venv: `google-genai 1.75.0`; klienten bruker Gemini Developer API API-key-gren med base `generativelanguage.googleapis.com`/`v1beta`. `Models.list()` signaturen returnerer `Pager[Model]`; feltene `name` og `supported_actions` finnes. `generate_content`-signatur og JSON response-config er allerede dokumentert i tidligere oppføring. Ingen nettverksforespørsel ble gjort.
+- **Tester:** Ny fake-klientdekning for modell-ID-/handlingsuttrekk, manglende nøkkel, sanitering, ingen kjøring uten bekreftelsesflagget og nøkkel ikke skrevet til stdout. Kommandoens bekreftede modus ble testet kun med mockklient; ingen reell API-kall.
+- **Ekstern diagnostikk:** Implementert, men ikke kjørt. Kommando (kun etter eksplisitt godkjenning): `./.venv/bin/python -m prototype.gemini_diagnostics --list-models --confirm-external-call`. Brukeren må godkjenne før dette kjøres.
+- **Modelvalg:** Ingen standard eller modell-ID ble endret. Kandidaten `gemini-3.5-flash-lite` er offisielt dokumentert som stabil, structured-output-kompatibel og Free Tier-priset; tilgang for denne nøkkelen er uavklart.
+- **Testkjøring:** Siste `./.venv/bin/python -m pytest -q`: `83 passed in 4.38s`, exit 0. Seks nye diagnostikktester inngår i suiten.
+- **Diff-kontroll:** `git diff --check` exit 0 etter dokumentoppdateringene.
+- **Sikkerhet:** Ingen API-nøkkel, Secrets-innhold, `.memlog.md` eller ekte notatdata ble lest eller logget. Ingen `models.list()` eller `generate_content` utført.
+
+### Godkjent nøkkelspesifikk modellisting (2026-11-15)
+
+- **Godkjenning/kommando:** Brukeren godkjente én ekstern diagnostikk. Kjørte nøyaktig `./.venv/bin/python -m prototype.gemini_diagnostics --list-models --confirm-external-call` én gang i `/private/tmp/G27-isum-vijai-mvp-002-gemini`. Ingen andre eksterne forespørsler ble utført.
+- **Resultat – tilgjengelige relevante Flash-ID-er:** `gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-3-flash-preview`, `gemini-3.1-flash-lite`, `gemini-3.1-flash-lite-preview`, `gemini-3.5-flash`, `gemini-3.5-flash-lite`, `gemini-3.6-flash`, `gemini-3.7-flash`, `gemini-3.8-flash`, `gemini-flash-latest`, `gemini-flash-lite-latest`.
+- **Støttet handling:** Hver ID over ble returnert med `generateContent`. Særlig ble både nåværende `gemini-2.5-flash` og kandidat `gemini-3.5-flash-lite` listet for nøkkelen brukt av diagnostikken.
+- **Vurdering:** Nøkkelens modelliste gjør en generell manglende-modelltilgang mindre sannsynlig ved dette diagnostikktidspunktet, men beviser ikke at en separat Streamlit-prosess bruker samme nøkkel/modell, eller at et genereringskall med appens JSON-schema lykkes. `[GEMINI-MODEL]` forblir observert feil, ikke bekreftet rotårsak.
+- **Kandidat:** Google dokumenterer [`gemini-3.5-flash-lite`](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite) som stabil, med tekstutdata og structured outputs; [prisdokumentasjonen](https://ai.google.dev/gemini-api/docs/pricing) viser gratis Standard-inndata-/utdata på Free Tier. Kombinert med nøkkelens `generateContent`-oppføring passer den kravene til sammendrag/quiz/JSON uten å antyde at generering er prøvd. Den settes ikke som standard.
+- **Status:** Ingen rå key-/header-/response-body-data ble vist, logget eller lagret. Ingen forelesningsnotater/personopplysninger og ingen `generate_content`-kall. Neste steg er godkjenning før eventuell modellendring eller genereringstest.
+
+## Midlertidig lokal GEMINI_MODEL-overstyring (2026-11-15)
+
+- **Omfang:** Bare prosessmiljøet for en separat lokal Streamlit-testinstans ble overstyrt. Ingen `.env`, Secrets, API-nøkkel, standardverdi i kildekode eller originalarbeidsmappe ble endret.
+- **Kommando:** Fra Gemini-worktree-roten ble startet: `env GEMINI_MODEL=gemini-3.5-flash-lite ./.venv/bin/python -m streamlit run app.py --server.address 127.0.0.1 --server.port 8503 --server.headless true`.
+- **Prosesskontroll:** Worktreets eksisterende Streamlit på port 8502 hadde `GEMINI_MODEL` unset. Den nye prosessen på `127.0.0.1:8503` ble kontrollert ved å hente kun `GEMINI_MODEL`-verdien fra prosessmiljøet; resultat `gemini-3.5-flash-lite`. Andre miljøvariabler ble ikke vist.
+- **Generering:** Ingen `generate_content`-kall ble utført. Overstyringen er derfor bekreftet i Streamlit-prosessmiljøet, men en vellykket generering er ikke bekreftet. Brukeren skal utføre den manuelle testen.
+- **Regresjonskontroll:** Full `./.venv/bin/python -m pytest -q`: `83 passed in 3.01s`, exit 0. Inkluderer `test_results_show_local_sources_and_demo_quiz_label`, PDF-opplastings-/uttrekkstestene, `test_gemini_requires_active_consent` og testene som sikrer at PDF-opplasting alene ikke starter generering. `git diff --check` kjøres etter dokumentendringene.
+- **Status:** Port 8503-instansen er startet med midlertidig prosessvariabel for brukerens manuelle kontroll. Port 8502-instansen er latt urørt. Ingen modellstandardendring eller ytterligere eksterne forespørsler.
+
+
+## MVP SPRINT 002 – manuell Gemini-generering og quizantall (2026-11-15)
+
+- **Manuell evidens, rapportert av bruker:** Streamlit på port 8503 kjørte med midlertidig `GEMINI_MODEL=gemini-3.5-flash-lite`. Brukeren limte inn syntetiske forelesningsnotater om prosjektledelse. Gemini ga et relevant sammendrag, tre sentrale begreper og tre relevante quizspørsmål med fire alternativer hver. Dette bekrefter tekstbasert ende-til-ende-generering for denne kjøringen; det er ikke full Sprint 002-godkjenning.
+- **Quizantall:** UI-standard er fem. Tallet sendes videre til `generate_gemini_result`; prompten ber om maksimalt dette antallet og tillater færre når kilden ikke gir støtte. Det finnes ingen `maxItems=3`-begrensning eller etterfølgende UI-filter for quizspørsmål. Valideringen godtar færre gyldige spørsmål og setter `insufficient_questions`; UI-en viser faktisk antall, f.eks. «Notatene ga grunnlag for 3 av 5 ønskede spørsmål.»
+- **Årsaksvurdering:** Koden forklarer hvorfor tre er et tillatt resultat: kildegrunningsinstruksen ber modellen utelate spørsmål uten sitatstøtte. Uten prompt-/responsopptak fra den manuelle genereringen kan vi ikke fastslå hvorfor modellen valgte akkurat tre. Ingen gyldige spørsmål ble funnet forkastet av kodefiltre; kildevalideringen er bevart. Ingen generatorendring var begrunnet av funnene.
+- **Gjenstående manuell verifikasjon:** Quizretting/poengberegning og PDF-generering med Gemini er ennå ikke manuelt kontrollert. Ingen ekstra API-kall ble utført av denne oppfølgingen.
+- **Verifisering:** Full pytest og `git diff --check` kjøres etter dokumentasjonsoppdatering; resultat føres nedenfor.
+- **Sikkerhet/status:** Ingen Secrets eller `.memlog.md` lest. Ingen commit, push, PR eller merge.
+- **Faktisk automatisert resultat:** `./.venv/bin/python -m pytest -q` ga `83 passed in 3.21s`, exit 0. Ingen Gemini-nettverkskall; tjenestetestene bruker fake-klienter.
+
+
+## MVP SPRINT 002 – sluttkontroll og manuelle tester (2026-11-15)
+
+- **Test 1 – tekst med Gemini:** Brukerrapportert kjøring på Streamlit port 8503 med lokal `GEMINI_MODEL=gemini-3.5-flash-lite`: relevant sammendrag og begreper, fire quizspørsmål av fem ønsket, og fire riktige svar ga 4/4. En tidligere kjøring ga 0/4; valgte svar er ikke dokumentert, så den poengsummen kan ikke etterprøves.
+- **Test 2 – PDF med Gemini:** Brukerrapportert test med `testnotater_informasjonssystemer_databaser.pdf`: opplasting og lokalt tekstuttrekk fungerte; Gemini ga relevant sammendrag, tre sentrale begreper og tre spørsmål av fem ønsket. Quizresultatet var 1/3 (to feil, ett riktig); ifølge brukeren samsvarte fasit og forklaringer med notatene. PDF-innholdet ble ikke åpnet i denne kontrollen.
+- **Modellkonfigurasjon:** `prototype/gemini_service.py` bruker eksplisitt `model`-argument, ellers miljøvariabel `GEMINI_MODEL`, ellers standarden `gemini-2.5-flash`. Standardverdien er uendret. `gemini-3.5-flash-lite` var den godkjente, lokale prosessoverstyringen på port 8503, ikke en kode-/standardendring.
+- **Quizantall:** Begge testene ga færre enn fem. Generatorinstruksen tillater færre når kildegrunnlaget ikke støtter flere; ingen hardkodet maksimum på tre/fem eller etterfølgende filter ble funnet. Resultatene er konsistente med implementert fallback. De nøyaktige modellgrunnene til 4 og 3 spørsmål kan ikke utledes uten responsene. Kildevalideringen er beholdt.
+- **Sprintstatus:** Tekstgenerering, quizvisning/retting og PDF→Gemini-flyt er nå manuelt rapportert testet. Dette er brukeroppgitte resultater, ikke en uavhengig reproduksjon. Historikken om tidligere manglende manuell verifikasjon beholdes som tidsriktig status ved tidligere kontroll.
+- **Kjøring:** `./.venv/bin/python -m pytest -q`: 83 bestått (fullsuite). `git diff --check`: bestått. Ingen ekstern Gemini-forespørsel utført av denne sluttkontrollen.
+- **Git/sikkerhet:** Branch `feature/mvp-002-gemini-ai`. Ingen commit, push, PR eller merge. `git status --short`/`git diff --name-only` viste ikke `.memlog.md`, Secret-filer eller nøkkelmateriale; `.memlog.md` og Secrets ble ikke åpnet. `PROMPT_HISTORY_GAPS.md` beholdes.
+- **Endelig fullsuite etter denne sluttkontrollen:** `./.venv/bin/python -m pytest -q`: `83 passed in 3.04s`, exit 0.
+- **PR-klargjøring, ny kjøring:** `./.venv/bin/python -m pytest -q`: `83 passed in 3.01s`, exit 0.

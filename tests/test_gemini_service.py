@@ -34,6 +34,8 @@ def test_structured_result_and_settings_passed():
     assert result["concepts"][0]["term"] == "Energi"
     assert client.models.calls[0]["model"] == "gemini-2.5-flash"
     assert "vanskelig" in client.models.calls[0]["contents"]
+    assert client.models.calls[0]["config"]["response_mime_type"] == "application/json"
+    assert client.models.calls[0]["config"]["response_schema"]["required"] == ["summary", "summary_evidence", "concepts", "questions"]
 
 
 @pytest.mark.parametrize("body", ["not json", "{}", response(2)])
@@ -58,6 +60,8 @@ def test_options_duplicate_after_case_and_whitespace_normalization_rejected():
 
 def test_missing_key_stops_before_call(monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    import prototype.gemini_service as service
+    monkeypatch.setattr(service, "get_api_key", lambda: None)
     with pytest.raises(GeminiServiceError, match="nøkkel"):
         generate_gemini_result("notes")
 
@@ -87,6 +91,34 @@ def test_streamlit_secrets_key_is_passed_explicitly(monkeypatch):
     generate_gemini_result("notes")
     assert captured["api_key"] == "secrets-only-key"
     assert captured["timeout"] == 30_000
+
+
+def test_sdk_initialization_configuration_error_is_classified_safely(monkeypatch):
+    from google import genai
+    import prototype.gemini_service as service
+
+    def reject_configuration(**kwargs):
+        raise ValueError("private configuration")
+
+    monkeypatch.setattr(genai, "Client", reject_configuration)
+    with pytest.raises(GeminiServiceError, match="GEMINI-CONFIG") as caught:
+        service.generate_gemini_result("notes", api_key="synthetic-key")
+    assert "private" not in str(caught.value)
+
+
+def test_streamlit_secrets_programming_error_is_not_misreported_as_missing_key(monkeypatch):
+    import streamlit
+    import prototype.gemini_service as service
+
+    class BrokenSecrets:
+        def get(self, key):
+            raise RuntimeError("private secret backend detail")
+
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setattr(streamlit, "secrets", BrokenSecrets(), raising=False)
+    with pytest.raises(GeminiServiceError, match="GEMINI-SECRETS") as caught:
+        service.generate_gemini_result("notes")
+    assert "private" not in str(caught.value)
 
 
 def test_configured_model_override_reaches_sdk(monkeypatch):
@@ -148,8 +180,55 @@ def test_provider_errors_are_sanitized():
 
 @pytest.mark.parametrize(("error", "expected"), [
     (TimeoutError("provider details"), "for lang tid"),
-    (RuntimeError("429 rate limit and private details"), "overbelastet"),
+    (RuntimeError("429 rate limit and private details"), "GEMINI-UNKNOWN"),
 ])
 def test_timeout_and_rate_limit_have_safe_guidance(error, expected):
     with pytest.raises(GeminiServiceError, match=expected):
         generate_gemini_result("notes", client=FakeClient(error=error))
+
+
+@pytest.mark.parametrize(("status_code", "api_status", "expected"), [
+    (401, "UNAUTHENTICATED", "GEMINI-AUTH"),
+    (403, "PERMISSION_DENIED", "GEMINI-ACCESS"),
+    (404, "NOT_FOUND", "GEMINI-MODEL"),
+    (429, "RESOURCE_EXHAUSTED", "GEMINI-QUOTA"),
+    (429, "OTHER", "GEMINI-RATE-LIMIT"),
+    (400, "INVALID_ARGUMENT", "GEMINI-REQUEST"),
+])
+def test_google_genai_api_errors_are_classified_without_response_body(status_code, api_status, expected):
+    from google.genai.errors import ClientError
+    error = ClientError(status_code, {"status": api_status, "message": "private note and key detail"})
+    with pytest.raises(GeminiServiceError, match=expected) as caught:
+        generate_gemini_result("notes", client=FakeClient(error=error))
+    assert "private" not in str(caught.value)
+    assert "key detail" not in str(caught.value)
+
+
+@pytest.mark.parametrize(("error", "expected"), [
+    (ConnectionError("private host and credential detail"), "GEMINI-NETWORK"),
+    (ValueError("private configuration detail"), "GEMINI-CONFIG"),
+])
+def test_provider_failure_categories_are_specific_and_sanitized(error, expected):
+    with pytest.raises(GeminiServiceError, match=expected) as caught:
+        generate_gemini_result("notes", client=FakeClient(error=error))
+    assert "private" not in str(caught.value)
+    assert "credential" not in str(caught.value)
+
+
+def test_unknown_programming_error_gets_safe_unknown_code():
+    with pytest.raises(GeminiServiceError, match="GEMINI-UNKNOWN") as caught:
+        generate_gemini_result("notes", client=FakeClient(error=TypeError("private programming detail")))
+    assert "private" not in str(caught.value)
+
+
+@pytest.mark.parametrize("body", ["", "not json"])
+def test_empty_or_malformed_provider_response_has_safe_specific_error(body):
+    with pytest.raises(GeminiServiceError, match="ufullstendig|tomt"):
+        generate_gemini_result("notes", client=FakeClient(body))
+
+
+def test_missing_response_text_is_reported_as_incomplete():
+    client = FakeClient()
+    client.models.generate_content = lambda **kwargs: object()
+    with pytest.raises(GeminiServiceError, match="tomt eller ufullstendig"):
+        generate_gemini_result("notes", client=client)

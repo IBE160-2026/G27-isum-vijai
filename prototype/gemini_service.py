@@ -19,15 +19,64 @@ def _distinct_options(options: list[str]) -> bool:
     return len(normalized) == len(options)
 
 
+def _provider_error_message(exc: Exception) -> str:
+    """Return safe guidance using exception types and allowlisted status fields only."""
+    # google-genai APIError.__str__ includes the provider response body. Never
+    # inspect or log it; its structured HTTP status and status enum are enough.
+    try:
+        from google.genai.errors import APIError
+    except ImportError:
+        APIError = ()  # type: ignore[assignment,misc]
+
+    if isinstance(exc, APIError):
+        status_code = getattr(exc, "code", None)
+        api_status = getattr(exc, "status", None)
+        if status_code == 401 or api_status == "UNAUTHENTICATED":
+            return "Gemini API-nøkkelen ble avvist. Kontroller at GEMINI_API_KEY er gyldig. [GEMINI-AUTH]"
+        if status_code == 403 or api_status == "PERMISSION_DENIED":
+            return "Gemini-kontoen har ikke tilgang til tjenesten eller modellen. Kontroller modelltilgang. [GEMINI-ACCESS]"
+        if status_code == 404 or api_status == "NOT_FOUND":
+            return "Gemini fant ikke den konfigurerte modellen. Kontroller modellnavnet og modelltilgangen. [GEMINI-MODEL]"
+        if status_code == 429 and api_status == "RESOURCE_EXHAUSTED":
+            return "Gemini-kvoten eller bruksgrensen er nådd. Kontroller kvote og fakturering. [GEMINI-QUOTA]"
+        if status_code == 429:
+            return "Gemini avviste forespørselen på grunn av en bruksgrense. Vent litt og prøv igjen. [GEMINI-RATE-LIMIT]"
+        if status_code == 400 or api_status == "INVALID_ARGUMENT":
+            return "Gemini avviste forespørselen eller konfigurasjonen. Kontroller modell og genereringsinnstillinger. [GEMINI-REQUEST]"
+        return "Gemini API returnerte en feil som ikke er klassifisert. [GEMINI-API-UNKNOWN]"
+
+    if isinstance(exc, (TimeoutError,)):
+        return "Gemini brukte for lang tid. Prøv igjen. [GEMINI-TIMEOUT]"
+    try:
+        import httpx
+    except ImportError:
+        httpx = None
+    if httpx is not None and isinstance(exc, httpx.TimeoutException):
+        return "Gemini brukte for lang tid. Prøv igjen. [GEMINI-TIMEOUT]"
+    if isinstance(exc, (ConnectionError,)) or (httpx is not None and isinstance(exc, httpx.TransportError)):
+        return "Kunne ikke koble til Gemini. Kontroller nettverkstilkoblingen og prøv igjen. [GEMINI-NETWORK]"
+    if isinstance(exc, ValueError):
+        return "Gemini-klienten kunne ikke bruke konfigurasjonen. Kontroller SDK- og Gemini-innstillingene. [GEMINI-CONFIG]"
+    return "En ukjent feil oppstod i Gemini-klienten. Del diagnostikkoden GEMINI-UNKNOWN med utvikleren."
+
+
 def get_api_key() -> str | None:
     key = os.environ.get("GEMINI_API_KEY")
     if key:
         return key
     try:
         import streamlit as st
-        return st.secrets.get("GEMINI_API_KEY")
-    except Exception:
+        from streamlit.errors import StreamlitSecretNotFoundError
+    except ImportError:
         return None
+    try:
+        return st.secrets.get("GEMINI_API_KEY")
+    except StreamlitSecretNotFoundError:
+        return None
+    except Exception:
+        raise GeminiServiceError(
+            "Streamlit Secrets kunne ikke leses. Kontroller Secrets-konfigurasjonen. [GEMINI-SECRETS]"
+        ) from None
 
 
 def _validate(payload: Any, requested: int, notes: str) -> dict:
@@ -92,15 +141,15 @@ def generate_gemini_result(notes: str, *, length: str = "middels", difficulty: s
                   "ett svar som matcher ett alternativ, og kort forklaring. "
                   "Returner bare strukturert JSON.\n\nNOTATER:\n" + notes.strip())
         response = client.models.generate_content(model=model, contents=prompt, config={"response_mime_type": "application/json", "response_schema": schema})
-        return _validate(json.loads(response.text), question_count, notes)
+        response_text = getattr(response, "text", None)
+        if not isinstance(response_text, str) or not response_text.strip():
+            raise GeminiServiceError("Gemini returnerte et tomt eller ufullstendig svar. Prøv igjen.")
+        try:
+            payload = json.loads(response_text)
+        except (json.JSONDecodeError, TypeError):
+            raise GeminiServiceError("Gemini returnerte et ufullstendig svar. Prøv igjen.") from None
+        return _validate(payload, question_count, notes)
     except GeminiServiceError:
         raise
     except Exception as exc:
-        name = type(exc).__name__.casefold()
-        if "timeout" in name or "timed out" in str(exc).casefold():
-            message = "Gemini brukte for lang tid. Prøv igjen."
-        elif "429" in str(getattr(exc, "status_code", "")) or "resourceexhausted" in name or "ratelimit" in name or "rate limit" in str(exc).casefold():
-            message = "Gemini er midlertidig overbelastet. Vent litt og prøv igjen."
-        else:
-            message = "Gemini kunne ikke behandle forespørselen. Kontroller tilkoblingen og prøv igjen."
-        raise GeminiServiceError(message) from None
+        raise GeminiServiceError(_provider_error_message(exc)) from None

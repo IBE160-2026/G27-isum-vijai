@@ -153,7 +153,9 @@ def test_gemini_requires_active_consent():
     assert any("Bekreft personverninformasjonen" in item.value for item in app.error)
 
 
-def test_gemini_mode_without_key_shows_safe_guidance():
+def test_gemini_mode_without_key_shows_safe_guidance(monkeypatch):
+    from prototype import gemini_service
+    monkeypatch.setattr(gemini_service, "get_api_key", lambda: None)
     app = AppTest.from_file(str(APP_PATH)).run()
     app.selectbox[0].set_value("Gemini AI").run()
     app.text_area[0].set_value("Syntetiske notater om energi.")
