@@ -745,3 +745,11 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **README unittest-kommando:** `.venv/bin/python -m unittest discover -s tests -v`: 14 passed, 0 failed.
 - **PR:** Endringene ligger i PR #7 `https://github.com/IBE160-2026/G27-isum-vijai/pull/7`, åpen mot main; på opprettelsestidspunkt MERGEABLE/CLEAN. Ikke merget.
 - **Diff:** `git diff --check` bestod. Ingen Gemini API-kall. Visuell brukertest, full emnerubrik og semantisk fasit er ikke verifisert.
+
+### PR #7 sluttoppfølging: promptarkiv, PRD-status og sluttkjøring (2026-11-16)
+
+- **Promptarkiv:** PROMPT 029s fulltekst ble arkivert fra tilgjengelig samtalemelding. PROMPT 030 (denne oppfølgingen) ble arkivert som neste ID. Inventartesten krever nå 029 og 030, samtidig som PROMPT 027 fortsatt skal mangle. Historiske hull er bevart.
+- **PRD-funn:** Revisjonsdokumentasjon korrigert etter å ha funnet BMAD PRD i `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/`. PRD er `draft`, og review-rubricen betegner det som ikke build-ready; det er ikke den fullstendige offisielle gruppeoppgaven.
+- **Tester:** `./.venv/bin/python -m pytest -q`: **109 passed**. Dokumentasjon: `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py`: **6 passed**. Fokusert UI/PDF/quiz/Gemini: `./.venv/bin/python -m pytest -q tests/test_app.py tests/test_pdf_ingestion.py tests/test_generator.py tests/test_gemini_service.py tests/test_gemini_diagnostics.py`: **94 passed**. `git diff --check`: bestått.
+- **Eksterne kall:** Ingen Gemini-kall ble utført. Ingen secrets eller `.memlog.md` ble åpnet.
+- **PR:** Endringene er ennå ikke committet/pushet; PR-status skal kontrolleres etter push. Ingen merge utført.

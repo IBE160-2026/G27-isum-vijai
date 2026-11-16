@@ -90,3 +90,11 @@ Den første meldingen som innledet denne sammenligningen var synlig avkuttet ett
 ## Sluttrevisjon PROMPT 029 (2026-11-16)
 
 PROMPT 029 er tildelt den komplette sluttrevisjonsforespørselen i denne Codex-økten. `PROMPT_029_FINAL_AUDIT.md` peker på originalmeldingen i samtalen, men inneholder ikke hele prompten ordrett. Arkivet markerer derfor ikke denne oppføringen som en full originaltranskripsjon. Denne oppgaven krever full ordrett lagring når teksten er tilgjengelig; dette gjenstår som et eksplisitt dokumentasjonsavvik og skal ikke forveksles med de eldre rekonstruerte sammendragene eller PROMPT 027-hullet.
+
+### Oppfølging: originaltekst arkivert (2026-11-16)
+
+Etterfølgende kontroll hentet den komplette PROMPT 029-meldingen fra tilgjengelig Codex-samtale og la den inn ordrett i `PROMPT_029_FINAL_AUDIT.md`. Seksjonene 1–17, innledende oppdragsordlyd og sluttlinjen ble sammenholdt visuelt med samtalemeldingen. Den tidligere kildepeker-statusen ovenfor beskriver den eldre snapshoten og er supersedert. Den aktuelle PROMPT 029-filen inneholder nå fulltekst; dette lukker bare PROMPT 029-transkripsjonsgapet.
+
+## Oppfølgingsprompt PROMPT 030 (2026-11-16)
+
+Den komplette oppfølgingsmeldingen om PR #7/innleveringsforberedelser er arkivert i `PROMPT_030_PR7_FINALIZATION.md` under overskriften `Original prompt`. Arkivet omfatter krav om PROMPT 029, PR/testkontroll og refleksjonsrapport. PROMPT 027 er fortsatt uavklart; de fire eldre grupper av rekonstruerte sammendrag, PROMPT 019s personvernredigering og PROMPT 009s resultatgap består.

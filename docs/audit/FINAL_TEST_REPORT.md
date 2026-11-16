@@ -8,8 +8,9 @@ Kjørt i ny Python 3.12.12 venv (`.venv`, gitignored) i audit-worktreen etter in
 
 | Kommando | Resultat |
 |---|---|
-| `.venv/bin/python -m pytest -q` | **108 passed**, 0 failed |
-| `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py` | **5 passed**, 0 failed |
+| `.venv/bin/python -m pytest -q` | **109 passed**, 0 failed (sluttkjøring etter PROMPT 029/030-arkiv og PRD-statusrettelse) |
+| `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py` | **6 passed**, 0 failed |
+| `.venv/bin/python -m pytest -q tests/test_app.py tests/test_pdf_ingestion.py tests/test_generator.py tests/test_gemini_service.py tests/test_gemini_diagnostics.py` | **94 passed**, 0 failed |
 | `.venv/bin/python -m unittest discover -s tests -v` | **14 passed**, 0 failed |
 | `git diff --check` | Bestått |
 
@@ -30,3 +31,4 @@ Første fullkjøring etter at PROMPT 029 ble lagt til, feilet én eksisterende d
 - Historisk manuell tekst-/PDF-test er brukeroppgitt i tidligere testlogg og ble ikke gjentatt.
 - PDF-testene bruker syntetisk maskinlesbar PDF; OCR, kolonner, komplekse layouter og faglig ekstraksjonskvalitet er ikke verifisert.
 - `git diff --check` ble kjørt. Visuell brukertest og hele emnets formelle sensor-/innleveringskrav er ikke tilgjengelig verifisering.
+- Oppfølgende sluttkjøring i denne PR #7-arbeidsøkten fant 109/109 beståtte tester totalt, 6/6 dokumentasjonstester og 94/94 UI/PDF/quiz/Gemini-relaterte tester. Ingen test utløste eksterne API-kall.

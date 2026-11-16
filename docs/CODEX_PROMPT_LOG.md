@@ -3845,12 +3845,21 @@ Stopp etter rapporten og vent på godkjenning.
 ## PROMPT 029 – IBE160 komplett sluttrevisjon (2026-11-16)
 
 - **Formål:** Sluttrevidere G27-isum-vijai mot tilgjengelig faglærerfeedback, kode, tester, README, BMAD- og promptdokumentasjon; rette avgrensede mangler; levere sporbar audit og en PR uten merge.
-- **Kilde/ordlyd:** `docs/prompts/PROMPT_029_FINAL_AUDIT.md` identifiserer den eksakte brukerforespørselen i Codex-økten, men er en kildepeker og ikke full ordrett transkripsjon. Ikke siter den som full originaltekst. Dette avviket er åpent.
+- **Kilde/ordlyd:** Hele brukerprompten er transkribert fra den foregående brukerbeskjeden i denne Codex-samtalen og arkivert i `docs/prompts/PROMPT_029_FINAL_AUDIT.md`. Filen inneholder metadata utenfor og originalteksten innenfor `text`-fence; alle seksjonene 1–17 og start-/sluttmarkørene ble kontrollert mot samtalemeldingen.
 - **Branch/base:** `chore/ibe160-final-quality-audit` fra `origin/main` `fef77e85f078b6e5ecdb82f09a903b8a6a1d4fc1`.
 - **Arbeid:** Tre syntetiske testnotater og tester, README-kjørbarhetsflyt, retrospektiv product-brief-presisering, kravsporbarhet, faglærerfeedback-matrise, test-/innleverings-/auditrapporter. Ingen kodefunksjon ble endret.
-- **Tester:** Full pytest 108 bestått; docs tests 5 bestått; Streamlit clean-install health check 200 uten nøkkel; `git diff --check` bestått. Ingen Gemini API-kall.
-- **Filer, commits og PR:** Føres etter endelig kontroll og GitHub-operasjoner.
+- **Tester ved første audit:** Full pytest 108 bestått; docs tests 5 bestått; Streamlit clean-install health check 200 uten nøkkel; `git diff --check` bestått. Ingen Gemini API-kall.
+- **Filer/tester/commit/PR:** Fulltekstarkivert. Denne oppfølgingen tilføyde promptinventartest og rettet revisjonsstatus etter å ha funnet PRD-utkastet; siste kjøring: full pytest 109, dokumentasjonstester 6, fokuserte UI/PDF/quiz/Gemini-tester 94; `git diff --check` bestod. Commit-SHA og push-resultat oppdateres etter Git-operasjon.
 
 **GitHub-oppdatering (2026-11-16):** Arbeidet ble pushet til `origin/chore/ibe160-final-quality-audit`; commits `4bfd261790b6de614f48c2e73dd7a1f51beb88bd` (syntetiske regresjoner) og `4f381c69833e652ba664ba702a4db2f1d6b9f828` (auditdokumentasjon). PR [#7](https://github.com/IBE160-2026/G27-isum-vijai/pull/7) er OPEN mot `main`, GitHub rapporterer MERGEABLE/CLEAN. Endrede filer er de tre testdata-/testfilene fra første commit samt README, product brief, testplan/logg, promptlogg/gaparkiv, BMAD-/prosjekt-/prosesslogg og seks `docs/audit/`-rapporter. Branch head og endelig metadataoppdatering føres av denne oppfølgingen; PR skal ikke merges uten brukerbeslutning.
 
 **Sluttkontroll (2026-11-16):** DEC-003-statusen ovenfor er avgrenset godkjenning, og erstatter eldre «uavklart»-status kun for prototypebruk innen datagrensene. Full pytest: 99 bestått; dokumentasjonstester: 5 bestått. PR #5 ble allerede merget med `f03f517fd0f5fcf7537c709fab4e746a0740763b`; denne oppdateringen kan ikke endre den lukkede PR-en. Promptarkiv og `PROMPT_HISTORY_GAPS.md` er bevart.
+
+## PROMPT 030 – Endelig ferdigstilling av PR #7 (2026-11-16)
+
+- **Formål:** Arkivere PROMPT 029 og denne oppfølgingen, kontrollere PR #7, sluttkjøre tester, avklare emne-/refleksjonskrav, oppdatere dokumentasjon og pushe endringer uten merge.
+- **Kilde/ordlyd:** Hele oppfølgingsteksten fra brukerbeskjeden i denne Codex-samtalen er arkivert i `docs/prompts/PROMPT_030_PR7_FINALIZATION.md` under `Original prompt`.
+- **Branch:** `chore/ibe160-final-quality-audit`.
+- **Handlinger:** Verifisert riktig worktree/branch, PR-åpen status og mergeability; oppdatert PROMPT 029 til full transkripsjon; opprettet PROMPT 030-arkiv; oppdatert promptinventar/gaphistorikk; kontrollert offisiell emnebeskrivelse; klargjort en gruppe-refleksjonsrapport som et lokalt arbeidsutkast, ikke del av PR.
+- **Tester:** Full pytest 109 bestått; dokumentasjonstester 6 bestått; fokuserte UI/PDF/quiz/Gemini-tester 94 bestått; `git diff --check` bestod. Ingen eksterne Gemini-kall.
+- **Filer:** Promptlogg/gapregister, fulltekst PROMPT 029, nytt PROMPT 030-arkiv, promptinventartest, auditrapporter, testlogg, prosjektkontekst og BMAD-status. Refleksjonsoutline er opprettet lokalt og utelatt fra PR. Commit-SHA/push-status registreres etter Git-operasjon.
