@@ -8,9 +8,9 @@ Kjørt i ny Python 3.12.12 venv (`.venv`, gitignored) i audit-worktreen etter in
 
 | Kommando | Resultat |
 |---|---|
-| `.venv/bin/python -m pytest -q` | **108 passed**, 0 failed (siste kjøring 6.01s) |
-| `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py` | **5 passed**, 0 failed (siste kjøring 0.36s) |
-| `.venv/bin/python -m unittest discover -s tests -v` | **14 passed**, 0 failed (siste kjøring 0.345s) |
+| `.venv/bin/python -m pytest -q` | **108 passed**, 0 failed |
+| `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py` | **5 passed**, 0 failed |
+| `.venv/bin/python -m unittest discover -s tests -v` | **14 passed**, 0 failed |
 | `git diff --check` | Bestått |
 
 De nye `tests/test_synthetic_cases.py`-testene gir ni parametriserte/kontrollerte tilfeller over tre syntetiske notatsett og promptens håndtering av notat som upålitelige data. De bekrefter at forventede kildesitater finnes ordrett, at kjente svar har sitatbevis og at ukjente påstander ikke står i testkilden; de beviser ikke semantisk korrekthet.
