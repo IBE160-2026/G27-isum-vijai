@@ -2,6 +2,8 @@
 
 **Dato:** 2026-11-16. **Audit-branch:** `chore/ibe160-final-quality-audit`, fra `origin/main` `fef77e85f078b6e5ecdb82f09a903b8a6a1d4fc1`. Dette er en retrospektiv teknisk/dokumentasjonsrevisjon, ikke formell faglærergodkjenning.
 
+**PR:** [#7](https://github.com/IBE160-2026/G27-isum-vijai/pull/7), åpen mot `main`, MERGEABLE/CLEAN ved siste GitHub-kontroll; ikke merget.
+
 ## Sammendrag
 
 MVP-ens beskrevne kjernestrøm finnes: lokal tekst/PDF-behandling, valgfri Gemini-generering etter aktivt samtykke og brukerhandling, strukturerte sammendrag/begreper/quiz, interaktiv quizretting og poengsum. Lokal quiz er demo-data. Gemini bruker standard `gemini-3.5-flash-lite` med `GEMINI_MODEL`-overstyring. DEC-003 tillater bare avgrenset prototypebruk. Ingen produksjonsbruk med personopplysninger er godkjent.

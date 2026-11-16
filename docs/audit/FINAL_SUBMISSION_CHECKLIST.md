@@ -35,4 +35,4 @@ Statusene gjelder tilgjengelig evidens per 2026-11-16. Ikke `PASS` når kontroll
 | Refleksjonsrapport (emnebeskrivelse 30 %) kontrollert/levert | NOT VERIFIED | Ingen rapport funnet i repository; avklar leveringssted og lever separat dersom dette er gruppens innlevering |
 | Sluttrapport ferdig | PASS | `FINAL_AUDIT_REPORT.md` |
 | Relevante endringer testet | PASS | Fullsuite og docs suite |
-| Pull Request opprettet | Avventer | Opprettes etter endelig verifisering; skal ikke merges av agenten |
+| Pull Request opprettet | PASS | PR #7 mot `main`, OPEN, GitHub MERGEABLE/CLEAN ved kontroll; ikke merget |
