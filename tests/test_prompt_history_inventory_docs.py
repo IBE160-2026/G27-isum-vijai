@@ -14,13 +14,14 @@ def test_prompt_inventory_preserves_expected_ids_and_unresolved_gap():
 
     heading_ids = [int(number) for number in re.findall(r"(?m)^## PROMPT (\d{3})(?:\s|$)", prompt_log)]
     heading_counts = Counter(heading_ids)
-    assert list(dict.fromkeys(heading_ids)) == [*range(1, 27), 28, 29, 30]
+    assert list(dict.fromkeys(heading_ids)) == [*range(1, 27), 28, 29, 30, 31]
     expected_counts = {number: 1 for number in range(1, 27)}
     # PROMPT 023 has three archived stages, and PROMPT 028 has two; both
     # repetitions are explicitly documented as historical, not new IDs.
     expected_counts.update({23: 3, 28: 2})
     expected_counts[29] = 1
     expected_counts[30] = 1
+    expected_counts[31] = 1
     for number, expected_count in expected_counts.items():
         assert heading_counts[number] == expected_count
     assert 27 not in heading_counts
@@ -57,6 +58,7 @@ def test_decision_003_approves_only_restricted_prototype_use():
 def test_final_audit_and_followup_prompts_are_archived_in_full():
     prompt_029 = (ROOT / "docs/prompts/PROMPT_029_FINAL_AUDIT.md").read_text(encoding="utf-8")
     prompt_030 = (ROOT / "docs/prompts/PROMPT_030_PR7_FINALIZATION.md").read_text(encoding="utf-8")
+    prompt_031 = (ROOT / "docs/prompts/PROMPT_031_FINAL_MERGE_AND_SUBMISSION.md").read_text(encoding="utf-8")
     prompt_log = (ROOT / "docs/CODEX_PROMPT_LOG.md").read_text(encoding="utf-8")
 
     assert "## Original prompt (ordrett)" in prompt_029
@@ -65,5 +67,9 @@ def test_final_audit_and_followup_prompts_are_archived_in_full():
     assert "## Original prompt" in prompt_030
     assert "## 10. SLUTTRAPPORT" in prompt_030
     assert "Fullfør alle øvrige oppgaver og oppdater PR #7 uten å merge." in prompt_030
+    assert "## Original prompt" in prompt_031
+    assert "## 7. SLUTTRAPPORT" in prompt_031
+    assert "Merge PR #7 bare når alle sikkerhets- og kvalitetskontroller er oppfylt." in prompt_031
     assert "## PROMPT 029 –" in prompt_log
     assert "## PROMPT 030 –" in prompt_log
+    assert "## PROMPT 031 –" in prompt_log

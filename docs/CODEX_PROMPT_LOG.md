@@ -3865,3 +3865,11 @@ Stopp etter rapporten og vent på godkjenning.
 - **Filer:** Promptlogg/gapregister, fulltekst PROMPT 029, nytt PROMPT 030-arkiv, promptinventartest, auditrapporter, testlogg, prosjektkontekst og BMAD-status. Refleksjonsoutline er opprettet lokalt og utelatt fra PR. Hovedcommit `81fd96b8eb9657e671f84acaf9dad9fab3c5185e`; push/PR-status kontrolleres etter push.
 
 **PROMPT 029/030 GitHub-resultat (2026-11-16):** Hovedendringene ble committet som `81fd96b8eb9657e671f84acaf9dad9fab3c5185e`; promptloggmetadata ble committet som `e0d0e27d64a6fd9be0e444f1fde01b550ce19d74`. Begge er pushet til `origin/chore/ibe160-final-quality-audit`. PR [#7](https://github.com/IBE160-2026/G27-isum-vijai/pull/7) er OPEN mot `main`, `MERGEABLE/CLEAN`, 22 filer i PR-diffen. Ingen merge. Lokal `REFLECTION_REPORT_GROUP_DRAFT.md` er bevisst ucommittet og utenfor PR.
+
+## PROMPT 031 – Endelig ferdigstilling av G27-prosjektet (2026-11-16)
+
+- **Formål:** Kontrollere promptarkiv og PR #7, bevare refleksjonsutkastet utenfor PR, kontrollere formelle krav og merge PR #7 hvis alle kvalitets- og sikkerhetsvilkår er oppfylt.
+- **Kilde/ordlyd:** Full brukerprompt er arkivert fra den synlige samtalemeldingen i `docs/prompts/PROMPT_031_FINAL_MERGE_AND_SUBMISSION.md` under `Original prompt`.
+- **Worktree/branch:** `/private/tmp/G27-isum-vijai-final-audit`, `chore/ibe160-final-quality-audit`.
+- **Førkontroll:** Refleksjonsutkastet finnes og forblir ucommittet. PR #7 er OPEN mot `main`, MERGEABLE/CLEAN; `main` er rapportert `protected: false`, og checks/review ikke rapportert.
+- **Tester/filer/merge:** Oppdateres etter gjennomføring. Ingen ekte Gemini-kall.

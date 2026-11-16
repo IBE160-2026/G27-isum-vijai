@@ -98,3 +98,7 @@ Etterfølgende kontroll hentet den komplette PROMPT 029-meldingen fra tilgjengel
 ## Oppfølgingsprompt PROMPT 030 (2026-11-16)
 
 Den komplette oppfølgingsmeldingen om PR #7/innleveringsforberedelser er arkivert i `PROMPT_030_PR7_FINALIZATION.md` under overskriften `Original prompt`. Arkivet omfatter krav om PROMPT 029, PR/testkontroll og refleksjonsrapport. PROMPT 027 er fortsatt uavklart; de fire eldre grupper av rekonstruerte sammendrag, PROMPT 019s personvernredigering og PROMPT 009s resultatgap består.
+
+## Oppfølgingsprompt PROMPT 031 (2026-11-16)
+
+Den fullstendige meldingen om endelig PR #7-merge og innleveringsforberedelser er arkivert i `PROMPT_031_FINAL_MERGE_AND_SUBMISSION.md` fra synlig samtaletekst. Dette lukker ikke PROMPT 027, de eldre rekonstruerte aktivitetsgruppene, PROMPT 019s redigering eller PROMPT 009s manglende svar/resultat.
