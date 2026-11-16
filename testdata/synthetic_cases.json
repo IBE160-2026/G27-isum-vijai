@@ -1,0 +1,59 @@
+[
+  {
+    "id": "information_systems_databases",
+    "title": "Informasjonssystemer og databaser",
+    "notes": "En relasjonsdatabase lagrer data i tabeller med rader og kolonner. En primærnøkkel identifiserer hver rad unikt. En fremmednøkkel kobler en rad til en rad i en annen tabell. Normalisering reduserer unødvendig duplisering av data.",
+    "expected_facts": [
+      "En relasjonsdatabase lagrer data i tabeller med rader og kolonner.",
+      "En primærnøkkel identifiserer hver rad unikt.",
+      "En fremmednøkkel kobler en rad til en rad i en annen tabell.",
+      "Normalisering reduserer unødvendig duplisering av data."
+    ],
+    "expected_concepts": ["relasjonsdatabase", "primærnøkkel", "fremmednøkkel", "normalisering"],
+    "expected_quiz": {
+      "question": "Hva identifiserer hver rad unikt?",
+      "answer": "En primærnøkkel",
+      "evidence": "En primærnøkkel identifiserer hver rad unikt."
+    },
+    "unsupported_claim": "Notatet sier at databasen bruker grafnoder.",
+    "missing_information_behavior": "Ikke dikt opp svar; returner færre spørsmål eller en trygg genereringsfeil."
+  },
+  {
+    "id": "programming_algorithms",
+    "title": "Programmering og algoritmer",
+    "notes": "Binærsøk finner et element i en sortert liste ved å dele søkeområdet i to for hvert steg. Tidskompleksiteten er O(log n). Lineært søk undersøker elementene etter tur og har tidskompleksitet O(n). Binærsøk krever at listen er sortert.",
+    "expected_facts": [
+      "Binærsøk finner et element i en sortert liste ved å dele søkeområdet i to for hvert steg.",
+      "Tidskompleksiteten er O(log n).",
+      "Lineært søk undersøker elementene etter tur og har tidskompleksitet O(n).",
+      "Binærsøk krever at listen er sortert."
+    ],
+    "expected_concepts": ["binærsøk", "sortert liste", "O(log n)", "lineært søk", "O(n)"],
+    "expected_quiz": {
+      "question": "Hva krever binærsøk av listen?",
+      "answer": "At listen er sortert",
+      "evidence": "Binærsøk krever at listen er sortert."
+    },
+    "unsupported_claim": "Notatet sier at binærsøk fungerer raskest på alle usorterte lister.",
+    "missing_information_behavior": "Ikke dikt opp svar; returner færre spørsmål eller en trygg genereringsfeil."
+  },
+  {
+    "id": "project_work_system_development",
+    "title": "Prosjektarbeid og systemutvikling",
+    "notes": "Et prosjekt har et avgrenset mål, en tidsplan og et budsjett. Interessenter påvirkes av prosjektet eller kan påvirke det. Risiko er en usikker hendelse som kan påvirke måloppnåelsen. Regelmessig testing kan avdekke feil før en løsning leveres.",
+    "expected_facts": [
+      "Et prosjekt har et avgrenset mål, en tidsplan og et budsjett.",
+      "Interessenter påvirkes av prosjektet eller kan påvirke det.",
+      "Risiko er en usikker hendelse som kan påvirke måloppnåelsen.",
+      "Regelmessig testing kan avdekke feil før en løsning leveres."
+    ],
+    "expected_concepts": ["avgrenset mål", "tidsplan", "budsjett", "interessenter", "risiko", "testing"],
+    "expected_quiz": {
+      "question": "Hvordan beskrives risiko?",
+      "answer": "En usikker hendelse som kan påvirke måloppnåelsen",
+      "evidence": "Risiko er en usikker hendelse som kan påvirke måloppnåelsen."
+    },
+    "unsupported_claim": "Notatet sier at testing garanterer at løsningen ikke har feil.",
+    "missing_information_behavior": "Ikke dikt opp svar; returner færre spørsmål eller en trygg genereringsfeil."
+  }
+]
