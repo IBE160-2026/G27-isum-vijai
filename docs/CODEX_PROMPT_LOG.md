@@ -3873,3 +3873,15 @@ Stopp etter rapporten og vent på godkjenning.
 - **Worktree/branch:** `/private/tmp/G27-isum-vijai-final-audit`, `chore/ibe160-final-quality-audit`.
 - **Førkontroll:** Refleksjonsutkastet finnes og forblir ucommittet. PR #7 er OPEN mot `main`, MERGEABLE/CLEAN; `main` er rapportert `protected: false`, og checks/review ikke rapportert.
 - **Tester/filer/merge:** Oppdateres etter gjennomføring. Ingen ekte Gemini-kall.
+
+
+## PROMPT 032 – README og kjørbarhet for sensor (2026-11-16)
+
+- **Formål:** Revidere README mot faktisk app, avhengigheter, oppstart, lokal/Gemini-modus, tester, begrensninger og sensorens rene oppstart.
+- **Kilde/ordlyd:** Full brukerprompt er arkivert i `docs/prompts/PROMPT_032_README_SENSOR_GUIDE.md` under `Original prompt`.
+- **Branch/worktree:** `docs/readme-sensor-setup-audit`, `/private/tmp/G27-isum-vijai-readme-audit`, basert på `origin/main` `ad818a3cb9a875a3bf12d1fecfba717b66c62058`.
+- **Resultat:** README er skrevet om med konkrete installasjonskommandoer for macOS/Linux og Windows, lokal demo uten nøkkel, Gemini-konfigurasjon, brukerveiledning, PDF-/AI-begrensninger, tester, prosjektkart, feilsøking og dokumentasjonslenker. Ingen applikasjonskode endret.
+- **Ren installasjon:** Python 3.12.12 venv opprettet; `pip install -r requirements.txt` bestod. README-startkommandoen startet Streamlit på `127.0.0.1:8501`; `/_stcore/health` svarte `ok` med `GEMINI_API_KEY` og `GEMINI_MODEL` fjernet. Ingen Gemini-kall.
+- **Tester:** Full pytest 110 bestått; dokumentasjonstester 7 bestått; fokuserte UI/PDF/quiz/Gemini-tester 94 bestått; `unittest discover` 14 bestått; 18 relative README-lenker kontrollert uten mangler; `git diff --check` bestod. Visuell browser-testing og Windows-kjøring ble ikke utført.
+- **Endrede filer:** `README.md`, promptlogg/gapregister, promptinventartest og PROMPT 032-arkivet.
+- **Git:** Branchen bygger på `origin/main` `ad818a3cb9a875a3bf12d1fecfba717b66c62058`. PR #7 er allerede merget. README-endringene er ikke committet eller pushet; avventer brukerens godkjenning.

@@ -102,3 +102,7 @@ Den komplette oppfølgingsmeldingen om PR #7/innleveringsforberedelser er arkive
 ## Oppfølgingsprompt PROMPT 031 (2026-11-16)
 
 Den fullstendige meldingen om endelig PR #7-merge og innleveringsforberedelser er arkivert i `PROMPT_031_FINAL_MERGE_AND_SUBMISSION.md` fra synlig samtaletekst. Dette lukker ikke PROMPT 027, de eldre rekonstruerte aktivitetsgruppene, PROMPT 019s redigering eller PROMPT 009s manglende svar/resultat.
+
+## Oppfølgingsprompt PROMPT 032 (2026-11-16)
+
+README- og sensoroppstartsinstruksjonen er arkivert ordrett i `PROMPT_032_README_SENSOR_GUIDE.md` fra den synlige samtalemeldingen. Historiske hull, inkludert PROMPT 027 og eldre manglende originaltekster, er uendret.
