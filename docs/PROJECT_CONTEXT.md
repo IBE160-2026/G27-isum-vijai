@@ -200,3 +200,19 @@ Skrivebeskyttet kontroll av PR #1 ble gjort 2026-10-25 kl. 01:00 Europe/Oslo (20
 - **B. Ikke godkjent:** Produksjonsbruk med personopplysninger eller konfidensielt innhold.
 - **C. Krever ny beslutning:** Produksjonsbruk, kostnadsansvar, dokumentert leverandørdataflyt/lagring/sletting, nye datakategorier og eventuelle emne-/institusjonskrav. Beslutningen er ikke juridisk eller institusjonell godkjenning.
 - Gjeldende Google-vilkår og emnekrav må følges; ingen garanti gis om gratis bruk, lagringstid eller sletting uten dokumentasjon. Se `docs/decisions/DECISION_LOG.md`.
+
+
+### Retrospektiv sluttrevisjon (2026-11-16)
+
+- Arbeidstråden `chore/ibe160-final-quality-audit` er basert på `origin/main` `fef77e85f078b6e5ecdb82f09a903b8a6a1d4fc1`, separat fra tidligere worktrees.
+- Tre syntetiske cases er lagt til. Full pytest: 108 bestått; docs tests: 5 bestått; Python 3.12 clean install og Streamlit healthcheck 200 uten API-nøkkel; ingen eksterne Gemini-kall.
+- `docs/audit/` oppsummerer kilder, krav, lærerfeedback, testbevis og innleveringsbegrensninger. Den fullstendige oppgaveteksten/sensorveiledningen ble ikke funnet og står NOT VERIFIED.
+- PROMPT 027, rekonstruerte eldre aktivitetsgrupper og manglende ordrett PROMPT 029-transkripsjon er ikke fremstilt som fullstendige; se promptarkivets gapregister.
+
+### PR #7 sluttoppfølging og innleveringskilder (2026-11-16)
+
+- PROMPT 029 er fulltekstarkivert i `docs/prompts/PROMPT_029_FINAL_AUDIT.md`; denne oppfølgingen er arkivert som PROMPT 030. PROMPT 027, PROMPT 019-redigeringen og eldre rekonstruerte aktivitetsgrupper er fortsatt synlige historikkhull.
+- Sluttrevisjonen fant BMAD-PRD-utkastet `_bmad-output/planning-artifacts/prds/prd-G27-isum-vijai-2026-10-23/prd.md`; status er `draft`, og review-rubricen sier ikke build-ready. Dette er ikke den komplette offisielle gruppeoppgaven.
+- Den offentlige IBE160-beskrivelsen for Høst 2026 sier at mappevurderingen er gruppevis: prosjektkode/funksjonalitet og dokumentasjon av KI-bruk/kvalitetssikring (70 %) samt refleksjonsrapport (30 %), med prosess, utfordringer/løsninger, kritisk KI-vurdering og etiske/teknologiske implikasjoner. Format, omfang og leveringskanal er ikke oppgitt der; full oppgavetekst/detaljrubrikk må hentes fra emneplattformen.
+- Et ikke-submittabelt gruppeutkast for refleksjonsarbeid ligger lokalt i `docs/audit/REFLECTION_REPORT_GROUP_DRAFT.md`; det er ikke en personlig refleksjon og er ikke med i PR #7.
+- Oppfølgende sluttkjøring: 109 pytest, 6 dokumentasjonstester og 94 fokuserte UI/PDF/quiz/Gemini-tester bestod. Ingen eksterne Gemini-kall.

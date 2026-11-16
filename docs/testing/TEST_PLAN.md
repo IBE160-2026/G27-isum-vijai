@@ -86,3 +86,8 @@ Før testtilfellene kan oppgraderes til `BESTÅTT`, må alle planlagte underkasu
 - **F-10 — lukket:** Dokumentasjonstesten krever lenkemål til `tests/test_generator.py` ved full main-SHA `444135e946b5635c812a24d44037c80fbf815e45` og opplysningen om seks tester. Negative kontroller dekker feil SHA og feil testantall. Dette validerer dokumentasjonsreferansen; main-testene er ikke kjørt på nytt.
 - **F-11 — lav, utsatt:** AppTest-kontrollen matcher `AppTest` generelt i miljøfeltet. En omtale i feil sammenheng kan gi falskt positivt testbevis. Oppfølging: avgrens matcher til utsagnet om at AppTest ble brukt som automatisert test.
 - **F-12 — lav, utsatt:** Markdown-tabellparseren håndterer ikke escaped pipe-tegn. Nåværende testmatriser inneholder ingen slike celler; hvis formatet senere brukes der, kan tabellbevis bli feiltolket. Oppfølging: støtt escaped pipe eller avvis slike celler tydelig dersom en relevant testcase introduseres.
+
+
+### Retrospektiv testdatarevisjon (2026-11-16)
+
+Tre syntetiske cases i `testdata/synthetic_cases.json` gir forventede fakta, begreper, ett kontrollspørsmål/svar med sitat og en eksplisitt ukjent påstand for informasjonssystemer/databaser, programmering/algoritmer og prosjektarbeid. `tests/test_synthetic_cases.py` gir deterministiske tester for kildeutdrag, lokal sammendragsdelmengde og Gemini-promptens untrusted-notes-/evidence-instrukser via fake client. Dette supplerer de historiske T-001–T-009-snapshottene, men oppgraderer ikke deres brede scenariostatus til BESTÅTT. Semantisk korrekthet må fortsatt vurderes av fagperson.

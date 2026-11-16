@@ -68,3 +68,15 @@ Dersom kursbeskyttet materiale skal lagres eller knyttes til en bruker, må innl
 På kort sikt skal produktet gjøre det enkelt å gjøre forelesningsnotater om til aktiv repetisjon. Etter hvert kan løsningen utvides slik at studenten kan samle materiale fra flere forelesninger, lage ulike typer spørsmål og få mer tilpasset repetisjon basert på hva studenten strever med.
 
 På 2–3 års sikt kan produktet utvikles til en bredere personlig studieassistent som hjelper studenten med å organisere pensum, repetere sentrale temaer og teste kunnskap gjennom semesteret. Denne utviklingen skal fortsatt bygge på den samme kjerneverdien: å gjøre studentens eget læringsmateriale lettere å forstå og bruke aktivt.
+
+## Retrospektiv presisering av MVP-en (2026-11-16)
+
+Dette avsnittet beskriver implementert prototype etter sprintene; det er skrevet retrospektivt og endrer ikke hva gruppen visste eller besluttet da den opprinnelige briefen ble skrevet.
+
+- Studenten kan bruke lokal tekstbehandling eller valgfri Gemini-generering, lime inn tekst eller laste opp maskinlesbar PDF. I Gemini-modus kan brukeren velge sammendragslengde, quizvanskelighetsgrad og ønsket antall spørsmål; lokal modus har ingen slike AI-innstillinger.
+- Resultatet kan inneholde sammendrag, begreper og flervalgsspørsmål. I Gemini-modus kan studenten svare, få fasit/forklaring og poengsum. Lokal quiz er faste demonstrasjonsdata, ikke generert fra notatene.
+- Målbare regresjonskriterier for de tre syntetiske notatene: alle registrerte forventede fakta, begreper, quizsvar og evidensutdrag finnes i testkilden; den registrerte ukjente påstanden finnes ikke; lokalt sammendrag består av ordrette kildesetninger; kildekontrollen godtar eksakte sitater og avviser den ukjente påstanden. Dette er testbare egenskaper, ikke en garanti for at frie Gemini-svar er semantisk eller faglig riktige.
+- Kjørbarhetskriterium: etter installasjon fra `requirements.txt` skal appen starte lokalt uten API-nøkkel; lokal modus skal kunne vise sammendrag/begreper og demoquiz. Gemini-resultater krever egen nøkkel og er ikke tilgjengelige i nøkkelfri modus.
+- Gemini er godkjent bare som valgfri prototypefunksjon for syntetiske, offentlige eller anonymiserte notater uten personopplysninger eller konfidensielt innhold. Se DEC-003. Dette er ikke produksjons- eller juridisk godkjenning.
+
+Varig lagring, innlogging, AI-fasit i lokal modus, OCR og garanti for faglig korrekthet er fortsatt utenfor MVP-en.
