@@ -3832,3 +3832,14 @@ Stopp etter rapporten og vent på godkjenning.
 - **Historikk:** PROMPT 001–026 og 028 er bevart; PROMPT 027 står fortsatt som gap. Rekonstruerte tekster er fortsatt tydelig merket i `PROMPT_HISTORY_GAPS.md`; gap-registeret er ikke endret.
 - **Beslutninger:** DEC-003 er fortsatt uavklart om leverandørgodkjenning, kostnad, dataflyt og oppbevaring. Ingen personvernvilkår eller samtykkeadvarsel er endret.
 - **Verifisering:** Målrettet Gemini/UI/PDF/dokumentasjonssuite: 79 bestått. Dokumentasjonstester: 5 bestått. Fullsuite: 99 bestått. `git diff --check` bestod. Ingen ekte Gemini-kall eller Secrets-lesing.
+
+
+## Sprint 002 – DEC-003 vedtak om begrenset prototypebruk (2026-11-16)
+
+- **Kilde/ID:** Ordrett brukeroppdrag er arkivert i `docs/prompts/PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-16.md`; ingen PROMPT-ID er tildelt.
+- **Beslutning:** Valgfri Gemini-bruk er godkjent bare for syntetiske, offentlige eller anonymiserte notater uten personopplysninger eller konfidensielt innhold. Aktivt samtykke og brukerens genereringshandling kreves; lokal modus skal virke uten Gemini; API-nøkler/Secrets skal ikke finnes i Git.
+- **Avgrensning:** Produksjonsbruk med personopplysninger og bruk av konfidensielt innhold er ikke godkjent. Ingen juridisk/institusjonell godkjenning hevdes. Gjeldende Google-vilkår og emnekrav gjelder; gratis bruk, lagringstid og sletting loves ikke uten dokumentasjon. Kostnad, datalagring/sletting og endret dataflyt krever dokumentasjon og/eller ny beslutning.
+- **PR-status:** PR #5 ble allerede merget til `main` på `f03f517fd0f5fcf7537c709fab4e746a0740763b`. Denne senere beslutningsoppdateringen ligger på feature-branchen og endrer ikke den lukkede PR-en; ingen ny PR eller merge utføres.
+- **Verifisering:** Dokumentasjonstester 5 bestått; full pytest 99 bestått; `git diff --check` føres etter sluttkontroll. Ingen eksterne Gemini-kall, Secrets-lesing eller `.memlog.md`-lesing.
+
+**Sluttkontroll (2026-11-16):** DEC-003-statusen ovenfor er avgrenset godkjenning, og erstatter eldre «uavklart»-status kun for prototypebruk innen datagrensene. Full pytest: 99 bestått; dokumentasjonstester: 5 bestått. PR #5 ble allerede merget med `f03f517fd0f5fcf7537c709fab4e746a0740763b`; denne oppdateringen kan ikke endre den lukkede PR-en. Promptarkiv og `PROMPT_HISTORY_GAPS.md` er bevart.

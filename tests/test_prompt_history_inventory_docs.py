@@ -37,7 +37,16 @@ def test_prompt_inventory_preserves_expected_ids_and_unresolved_gap():
         assert reconstruction_marker in rows[0]
 
 
-def test_decision_003_remains_unresolved():
+def test_decision_003_approves_only_restricted_prototype_use():
     decision_log = (ROOT / "docs/decisions/DECISION_LOG.md").read_text(encoding="utf-8")
     decision_003 = decision_log.split("### [DEC-003]", 1)[1].split("### [DEC-004]", 1)[0]
-    assert "**Status:** Uavklart." in decision_003
+    assert "**Dato:** 2026-11-16." in decision_003
+    assert "A. Godkjent prototypebruk" in decision_003
+    assert "syntetiske, offentlig tilgjengelige eller anonymiserte notater" in decision_003
+    assert "B. Ikke-godkjent produksjonsbruk" in decision_003
+    assert "Produksjonsbruk med personopplysninger er ikke godkjent" in decision_003
+    assert "C. Krever ny beslutning" in decision_003
+    assert "juridisk, institusjonell eller formell gruppe-/emnegodkjenning" in decision_003
+    assert "Ingen juridisk eller institusjonell godkjenning" not in decision_003
+    assert "Gjeldende leverandørvilkår og eventuelle emnekrav må følges" in decision_003
+    assert "Det loves ikke gratis bruk, lagringstid eller sletting" in decision_003
