@@ -263,3 +263,11 @@ Kontrollert 2026-10-18. Den første kontrollen nedenfor dokumenterer funnene fø
 - **Kvalitetsrettelser:** Inputendring fjerner AI-resultat/feedback og krever nytt samtykke; endrede AI-innstillinger og ny generering fjerner gammelt resultat/feedback/svarvalg. Adapteren avviser tom quiz og tekst over felles 1 000 000-tegnsgrense før provider-kall.
 - **Historikk/personvern:** PROMPT 001–026 og 028 beholdt, PROMPT 027 står som uavklart gap, rekonstruerte sammendrag forblir merket. `PROMPT_HISTORY_GAPS.md`, lokal modus, PDF-uttrekksgrenser og personvernadvarsel er bevart. DEC-003 står fortsatt uavklart.
 - **Verifisering:** Målrettet Gemini/UI/PDF/dokumentasjon 79 bestått; dokumentasjonstester 5 bestått; full pytest 99 bestått; ingen ekte Gemini-kall.
+
+
+### Sprint 002 – DEC-003 vedtatt for avgrenset prototypebruk (2026-11-16)
+
+- **Beslutning:** Gemini er valgfritt godkjent for syntetiske, offentlige eller anonymiserte notater uten personopplysninger/konfidensielt innhold, med synlig informasjon, aktivt samtykke og eksplisitt genereringshandling. Lokal modus og nøkkelfri Git-historikk beholdes.
+- **Ikke godkjent:** Produksjonsbruk med personopplysninger eller konfidensielt innhold. Ingen juridisk eller institusjonell godkjenning er påstått.
+- **Åpent:** Leverandørvilkår og emnekrav må følges; kostnader og eventuelle kvoter, tillatt databruk, datalagring/sletting og produksjonsbruk krever dokumentasjon og/eller ny beslutning. Ingen garanti gis uten kildegrunnlag.
+- **PR-status:** PR #5 ble merget tidligere med mergecommit `f03f517fd0f5fcf7537c709fab4e746a0740763b`. En ny commit på feature-branchen kan ikke oppdatere en allerede merget PR; denne loggoppdateringen må ikke fremstilles som del av `main` før den integreres separat.
