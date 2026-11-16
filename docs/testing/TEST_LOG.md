@@ -740,8 +740,8 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Nye tester:** `tests/test_synthetic_cases.py` kontrollerer lokal deterministisk uttrekking, bokstavelige kildeutdrag og Gemini-promptens instruks om å behandle notat som upålitelige data. Dette tester ikke semantisk modellkvalitet.
 - **Clean install/oppstart:** Python 3.12.12 venv, `pip install -r requirements.txt`; Streamlit headless på loopback svarte HTTP 200 på `/_stcore/health` med `GEMINI_API_KEY`/`GEMINI_MODEL` fjernet og uten `.streamlit/secrets.toml`. Ingen generering ble startet.
 - **Første fullkjøring:** 107 passed, 1 failed: promptinventartesten forventet bare IDs til og med PROMPT 028. Den ble oppdatert til å inkludere PROMPT 029 og fortsette å kreve at 027 er et hull.
-- **Fullsuite etter retting:** `.venv/bin/python -m pytest -q`: 108 passed, 0 failed (siste kjøring 6.06s).
-- **Dokumentasjonstester:** `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py`: 5 passed, 0 failed (siste kjøring 0.35s).
+- **Fullsuite etter retting:** `.venv/bin/python -m pytest -q`: 108 passed, 0 failed (siste kjøring 6.01s).
+- **Dokumentasjonstester:** `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py`: 5 passed, 0 failed (siste kjøring 0.36s).
 - **README unittest-kommando:** `.venv/bin/python -m unittest discover -s tests -v`: 14 passed, 0 failed (siste kjøring 0.345s).
 - **PR:** Endringene ligger i PR #7 `https://github.com/IBE160-2026/G27-isum-vijai/pull/7`, åpen mot main; på opprettelsestidspunkt MERGEABLE/CLEAN. Ikke merget.
 - **Diff:** `git diff --check` bestod. Ingen Gemini API-kall. Visuell brukertest, full emnerubrik og semantisk fasit er ikke verifisert.
