@@ -69,6 +69,8 @@ Implementert i worktree `feature/mvp-002-gemini-ai` med baseline `34cf52e41c0b4f
 
 Promptinventar/gap-regler ligger i `tests/test_prompt_history_inventory_docs.py`. `PROMPT_HISTORY_GAPS.md` er ikke endret. DEC-003 er fortsatt uavklart; ingen ekte Gemini-kall eller Secrets-lesing ble gjort.
 
+**Senere beslutning (2026-11-16):** Brukeren vedtok en begrenset DEC-003 for valgfri prototypebruk med syntetiske, offentlige eller anonymiserte data uten personopplysninger/konfidensielt innhold. Produksjonsbruk og forholdene i punkt C krever ny beslutning. Dette vedtaket kom etter den godkjente hardening-spesifikasjonen og endrer ikke dens historiske frozen intent.
+
 
 ## Spec Change Log
 

@@ -24,6 +24,10 @@ Gemini-nøkkel konfigureres som `GEMINI_API_KEY` i miljøet eller Streamlit Secr
 
 Samtykke bekreftes før Gemini-generering og nullstilles når du endrer notatene, PDF-filen eller genereringsmodus. Du må bekrefte på nytt før nye notater sendes.
 
+### Avgrensning for prototypebruk
+
+Gemini-prototypen er godkjent bare for syntetiske, offentlig tilgjengelige eller anonymiserte notater uten personopplysninger eller konfidensielt innhold. Produksjonsbruk med personopplysninger er ikke godkjent. Se [DEC-003](docs/decisions/DECISION_LOG.md). Dette er en prosjektbeslutning for prototypen, ikke juridisk eller institusjonell godkjenning. Gjeldende Google-vilkår og eventuelle emnekrav må følges. Vi lover ikke gratis bruk, bestemt lagringstid eller sletting uten dokumentasjon som støtter det.
+
 ### Starte lokalt
 
 Den dokumenterte oppskriften bruker Python 3.12. Opprett et isolert miljø og installer pakkene som står i `requirements.txt`:

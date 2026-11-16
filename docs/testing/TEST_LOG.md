@@ -722,3 +722,13 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 
 
 **Reviewoppfølging Sprint 002 (2026-11-16):** Regressjonene kontrollerer promptinventar, rekkefølge og rekonstruerte grupper, PDF-/innstillingsendringer og tømming av quizfeedback/svarvalg ved ny generering. Tom-quiz-vakten kjøres før resultatvisning. Målrettet Gemini/UI/PDF/dokumentasjonssuite: 79 bestått; dokumentasjonstester: 5 bestått; full pytest: 99 bestått; `git diff --check` bestod. DEC-003 forblir uavklart. Ingen nye Gemini-kall eller Secrets-lesing.
+
+
+## DEC-003 – avgrenset Gemini-prototypebruk (2026-11-16)
+
+- **Beslutning:** Brukeren godkjente valgfri Gemini-bruk bare for syntetiske, offentlige eller anonymiserte notater uten personopplysninger eller konfidensielt innhold. Aktivt samtykke og brukerens genereringshandling kreves; lokal modus skal virke uten Gemini; API-nøkler/Secrets skal ikke ligge i Git.
+- **Ikke godkjent:** Produksjonsbruk med personopplysninger eller konfidensielt innhold. Ingen juridisk eller institusjonell godkjenning er påstått.
+- **Ny beslutning/dokumentasjon kreves for:** Kostnadsansvar, produksjonsbruk, nye datakategorier, leverandørdataflyt, lagring/sletting og eventuelle emne-/institusjonskrav. Gjeldende Google-vilkår må følges. Det loves ikke gratis bruk, lagringstid eller sletting uten dokumentasjonsgrunnlag.
+- **Kildedokumentasjon:** `docs/decisions/DECISION_LOG.md`; README, testplan og BMAD-loggene peker på avgrensningen. Originalprompten er bevart ordrett i `docs/prompts/PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-16.md`. `PROMPT_HISTORY_GAPS.md` er uendret.
+- **Verifisering:** Dokumentasjonstester `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py`: `5 passed in 0.24s`. Full pytest `./.venv/bin/python -m pytest -q`: `99 passed in 3.80s`. Ingen eksterne Gemini-kall, Secrets-lesing eller `.memlog.md`-lesing.
+- **PR-status:** PR #5 ble merget tidligere (mergecommit `f03f517fd0f5fcf7537c709fab4e746a0740763b`). Etterfølgende beslutningsdokumentasjon på feature-branchen kan ikke oppdatere eller gjøre den allerede mergete PR-en mergebar.

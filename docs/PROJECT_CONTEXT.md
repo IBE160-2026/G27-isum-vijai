@@ -192,3 +192,11 @@ Skrivebeskyttet kontroll av PR #1 ble gjort 2026-10-25 kl. 01:00 Europe/Oslo (20
 - Lokal modus, PDF-grensene, kildebevisvalidering og personvernadvarselen består. Ingen eksternt kall ble gjort.
 - PROMPT 001–026 og 028 er bevart, PROMPT 027 forblir gap, og `PROMPT_HISTORY_GAPS.md` er uendret. DEC-003 er fortsatt uavklart om godkjenning, kostnad, dataflyt og oppbevaring.
 - Verifisering: målrettet suite 79 bestått; dokumentasjonstester 5 bestått; full pytest 99 bestått; `git diff --check` bestod.
+
+
+### DEC-003 – avgrenset prototypegodkjenning (2026-11-16)
+
+- **A. Godkjent prototypebruk:** Valgfri Gemini-bruk bare med syntetiske, offentlige eller anonymiserte notater uten personopplysninger eller konfidensielt innhold. Samtykke og brukerstart kreves; lokal modus skal virke uten Gemini; ingen nøkler/Secrets i Git.
+- **B. Ikke godkjent:** Produksjonsbruk med personopplysninger eller konfidensielt innhold.
+- **C. Krever ny beslutning:** Produksjonsbruk, kostnadsansvar, dokumentert leverandørdataflyt/lagring/sletting, nye datakategorier og eventuelle emne-/institusjonskrav. Beslutningen er ikke juridisk eller institusjonell godkjenning.
+- Gjeldende Google-vilkår og emnekrav må følges; ingen garanti gis om gratis bruk, lagringstid eller sletting uten dokumentasjon. Se `docs/decisions/DECISION_LOG.md`.

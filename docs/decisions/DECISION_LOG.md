@@ -39,12 +39,15 @@ Registrer beslutninger først etter at gruppen har tatt dem. Forslag i produktbr
 ### [DEC-003] KI-tjeneste
 
 - **Problemstilling:** Hvilken KI-tjeneste/modell skal brukes, og hvordan håndteres nøkkel og kostnad?
-- **Alternativer:** Ikke kartlagt; gruppen må vurdere aktuelle alternativer.
-- **Beslutning:** Ikke besluttet.
-- **Begrunnelse:** Brief og tilbakemelding oppgir ingen valgt tjeneste.
-- **Konsekvenser:** Uavklart.
-- **Dato:** Ikke besluttet.
-- **Status:** Uavklart.
+- **Alternativer vurdert:** Ingen ekstern KI i prototypen; valgfri Gemini-prototypebruk med strenge databegrensninger; eventuell senere produksjonsbruk etter ny vurdering.
+- **Beslutning (2026-11-16):**
+  - **A. Godkjent prototypebruk:** Gemini godkjennes som et valgfritt prototypevalg bare for syntetiske, offentlig tilgjengelige eller anonymiserte notater som ikke inneholder personopplysninger eller konfidensielt innhold. Før hvert eksternt kall skal brukeren ha synlig informasjon og aktivt samtykke, og selv starte genereringen. Lokal modus skal fungere uten Gemini. API-nøkler og Secrets skal ikke lagres i Git.
+  - **B. Ikke-godkjent produksjonsbruk:** Produksjonsbruk med personopplysninger er ikke godkjent. Beslutningen gir heller ikke generell godkjenning for konfidensielt, sensitivt eller annet ikke-offentlig kursmateriale.
+  - **C. Krever ny beslutning:** Produksjonsbruk, personopplysninger, behandling av konfidensielt innhold, datalagring/sletting, kostnadsansvar, leverandørvilkår, emne-/institusjonskrav og eventuelle endringer av datagrensene må vurderes særskilt før slik bruk.
+- **Begrunnelse:** Prototypen kan prøves med lavrisiko-notater når brukeren vet at innholdet sendes til Google, godkjenner behandlingen og starter handlingen. Avgrensningen gir ikke grunnlag for å hevde juridisk, institusjonell eller formell gruppe-/emnegodkjenning.
+- **Konsekvenser:** Gemini forblir valgfritt; lokal modus er tilgjengelig uten tjenesten. Brukere skal få tydelig beskjed om ekstern behandling og begrenset databruk. Det loves ikke gratis bruk, lagringstid eller sletting uten dokumentasjon som støtter det. Gjeldende leverandørvilkår og eventuelle emnekrav må følges. Ingen produksjonsgodkjenning følger av denne beslutningen.
+- **Dato:** 2026-11-16.
+- **Status:** Avgrenset prototypebruk godkjent etter brukerens uttrykkelige beslutning; produksjonsbruk og forholdene i punkt C er ikke godkjent og krever ny beslutning.
 
 ### [DEC-004] Testmodus
 
@@ -79,6 +82,8 @@ Brukeren oppga følgende valg for implementeringen i denne sprinten. Kilden er b
 **Status:** Foreløpige valg for implementering, ikke formelt gruppevedtak. DEC-001–DEC-005 beholder eksisterende status; DEC-003 forblir uavklart om leverandørgodkjenning, kostnad, dataflyt og oppbevaring. PRD forblir `draft`.
 
 **Implementeringsspor (2026-11-15):** Prototypen bruker Gemini Developer API gjennom Googles offisielle `google-genai` SDK. SDK-bruk og strukturert JSON-utdata følger [Google Gen AI SDK-dokumentasjonen](https://googleapis.github.io/python-genai/) og [Gemini structured output-dokumentasjonen](https://ai.google.dev/gemini-api/docs/structured-output). Dette er implementasjon av det foreløpige brukeroppgitte valget, ikke gruppevedtak. Modellnavn kan settes med `GEMINI_MODEL`; nøkkel leses fra `GEMINI_API_KEY` eller Streamlit Secrets. DEC-003 forblir åpen om produksjonsgodkjenning, kostnadsansvar og dataflyt.
+
+**Statusoppdatering (2026-11-16):** Den uttrykkelige, avgrensede prototypebeslutningen ovenfor erstatter eldre formuleringer om at Gemini-bruk overhodet ikke var besluttet. Den utvider ikke godkjenningen til produksjon, personopplysninger eller konfidensielt innhold.
 
 ## Prosessbeslutning – PROMPT 024/025-avgrenset review (2026-10-25)
 
