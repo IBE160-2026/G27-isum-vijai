@@ -14,11 +14,12 @@ def test_prompt_inventory_preserves_expected_ids_and_unresolved_gap():
 
     heading_ids = [int(number) for number in re.findall(r"(?m)^## PROMPT (\d{3})(?:\s|$)", prompt_log)]
     heading_counts = Counter(heading_ids)
-    assert list(dict.fromkeys(heading_ids)) == [*range(1, 27), 28]
+    assert list(dict.fromkeys(heading_ids)) == [*range(1, 27), 28, 29]
     expected_counts = {number: 1 for number in range(1, 27)}
     # PROMPT 023 has three archived stages, and PROMPT 028 has two; both
     # repetitions are explicitly documented as historical, not new IDs.
     expected_counts.update({23: 3, 28: 2})
+    expected_counts[29] = 1
     for number, expected_count in expected_counts.items():
         assert heading_counts[number] == expected_count
     assert 27 not in heading_counts

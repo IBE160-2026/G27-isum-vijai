@@ -9,5 +9,7 @@ Denne mappen samler prosjektkontekst, prosessporing, beslutninger, testplan og B
 - [Testplan](testing/TEST_PLAN.md)
 - [Testloggmal](testing/TEST_LOG_TEMPLATE.md)
 - [BMAD-status](bmad/WORKFLOW_STATUS.md)
+- [Sluttrevisjonens kravsporbarhet](audit/REQUIREMENTS_TRACEABILITY.md)
+- [Sluttrevisjonens sluttrapport](audit/FINAL_AUDIT_REPORT.md)
 
 Promptlogger skal bevare eksakt prompt når den er tilgjengelig. Ikke rekonstruer tidligere prompts. Skill mellom bekreftede forhold, forslag og uavklarte spørsmål.

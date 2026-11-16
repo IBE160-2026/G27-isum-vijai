@@ -200,3 +200,11 @@ Skrivebeskyttet kontroll av PR #1 ble gjort 2026-10-25 kl. 01:00 Europe/Oslo (20
 - **B. Ikke godkjent:** Produksjonsbruk med personopplysninger eller konfidensielt innhold.
 - **C. Krever ny beslutning:** Produksjonsbruk, kostnadsansvar, dokumentert leverandørdataflyt/lagring/sletting, nye datakategorier og eventuelle emne-/institusjonskrav. Beslutningen er ikke juridisk eller institusjonell godkjenning.
 - Gjeldende Google-vilkår og emnekrav må følges; ingen garanti gis om gratis bruk, lagringstid eller sletting uten dokumentasjon. Se `docs/decisions/DECISION_LOG.md`.
+
+
+### Retrospektiv sluttrevisjon (2026-11-16)
+
+- Arbeidstråden `chore/ibe160-final-quality-audit` er basert på `origin/main` `fef77e85f078b6e5ecdb82f09a903b8a6a1d4fc1`, separat fra tidligere worktrees.
+- Tre syntetiske cases er lagt til. Full pytest: 108 bestått; docs tests: 5 bestått; Python 3.12 clean install og Streamlit healthcheck 200 uten API-nøkkel; ingen eksterne Gemini-kall.
+- `docs/audit/` oppsummerer kilder, krav, lærerfeedback, testbevis og innleveringsbegrensninger. Den fullstendige oppgaveteksten/sensorveiledningen ble ikke funnet og står NOT VERIFIED.
+- PROMPT 027, rekonstruerte eldre aktivitetsgrupper og manglende ordrett PROMPT 029-transkripsjon er ikke fremstilt som fullstendige; se promptarkivets gapregister.

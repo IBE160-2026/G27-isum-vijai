@@ -732,3 +732,15 @@ Oppføringene nedenfor er bevart fra PROMPT 028-kilden. De beskriver sine opprin
 - **Kildedokumentasjon:** `docs/decisions/DECISION_LOG.md`; README, testplan og BMAD-loggene peker på avgrensningen. Originalprompten er bevart ordrett i `docs/prompts/PROMPT_UNNUMBERED_FOLLOWUPS_2026-11-16.md`. `PROMPT_HISTORY_GAPS.md` er uendret.
 - **Verifisering:** Dokumentasjonstester `./.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py`: `5 passed in 0.24s`. Full pytest `./.venv/bin/python -m pytest -q`: `99 passed in 3.80s`. Ingen eksterne Gemini-kall, Secrets-lesing eller `.memlog.md`-lesing.
 - **PR-status:** PR #5 ble merget tidligere (mergecommit `f03f517fd0f5fcf7537c709fab4e746a0740763b`). Etterfølgende beslutningsdokumentasjon på feature-branchen kan ikke oppdatere eller gjøre den allerede mergete PR-en mergebar.
+
+
+## Sluttrevisjon og syntetiske regresjoner (2026-11-16)
+
+- **Nye data:** `testdata/synthetic_cases.json` inneholder tre oppdiktede notatsett om relasjonsdatabaser, algoritmer og prosjektarbeid, med forventede fakta/begreper og en eksplisitt fraværende påstand per case.
+- **Nye tester:** `tests/test_synthetic_cases.py` kontrollerer lokal deterministisk uttrekking, bokstavelige kildeutdrag og Gemini-promptens instruks om å behandle notat som upålitelige data. Dette tester ikke semantisk modellkvalitet.
+- **Clean install/oppstart:** Python 3.12.12 venv, `pip install -r requirements.txt`; Streamlit headless på loopback svarte HTTP 200 på `/_stcore/health` med `GEMINI_API_KEY`/`GEMINI_MODEL` fjernet og uten `.streamlit/secrets.toml`. Ingen generering ble startet.
+- **Første fullkjøring:** 107 passed, 1 failed: promptinventartesten forventet bare IDs til og med PROMPT 028. Den ble oppdatert til å inkludere PROMPT 029 og fortsette å kreve at 027 er et hull.
+- **Fullsuite etter retting:** `.venv/bin/python -m pytest -q`: 108 passed, 0 failed (6.00s).
+- **Dokumentasjonstester:** `.venv/bin/python -m pytest -q tests/test_prompt024_traceability_docs.py tests/test_prompt_history_inventory_docs.py`: 5 passed, 0 failed (0.35s).
+- **README unittest-kommando:** `.venv/bin/python -m unittest discover -s tests -v`: 14 passed, 0 failed (0.329s).
+- **Diff:** `git diff --check` bestod. Ingen Gemini API-kall. Visuell brukertest, full emnerubrik og semantisk fasit er ikke verifisert.

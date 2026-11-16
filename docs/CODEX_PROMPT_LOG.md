@@ -3842,4 +3842,13 @@ Stopp etter rapporten og vent på godkjenning.
 - **PR-status:** PR #5 ble allerede merget til `main` på `f03f517fd0f5fcf7537c709fab4e746a0740763b`. Denne senere beslutningsoppdateringen ligger på feature-branchen og endrer ikke den lukkede PR-en; ingen ny PR eller merge utføres.
 - **Verifisering:** Dokumentasjonstester 5 bestått; full pytest 99 bestått; `git diff --check` føres etter sluttkontroll. Ingen eksterne Gemini-kall, Secrets-lesing eller `.memlog.md`-lesing.
 
+## PROMPT 029 – IBE160 komplett sluttrevisjon (2026-11-16)
+
+- **Formål:** Sluttrevidere G27-isum-vijai mot tilgjengelig faglærerfeedback, kode, tester, README, BMAD- og promptdokumentasjon; rette avgrensede mangler; levere sporbar audit og en PR uten merge.
+- **Kilde/ordlyd:** `docs/prompts/PROMPT_029_FINAL_AUDIT.md` identifiserer den eksakte brukerforespørselen i Codex-økten, men er en kildepeker og ikke full ordrett transkripsjon. Ikke siter den som full originaltekst. Dette avviket er åpent.
+- **Branch/base:** `chore/ibe160-final-quality-audit` fra `origin/main` `fef77e85f078b6e5ecdb82f09a903b8a6a1d4fc1`.
+- **Arbeid:** Tre syntetiske testnotater og tester, README-kjørbarhetsflyt, retrospektiv product-brief-presisering, kravsporbarhet, faglærerfeedback-matrise, test-/innleverings-/auditrapporter. Ingen kodefunksjon ble endret.
+- **Tester:** Full pytest 108 bestått; docs tests 5 bestått; Streamlit clean-install health check 200 uten nøkkel; `git diff --check` bestått. Ingen Gemini API-kall.
+- **Filer, commits og PR:** Føres etter endelig kontroll og GitHub-operasjoner.
+
 **Sluttkontroll (2026-11-16):** DEC-003-statusen ovenfor er avgrenset godkjenning, og erstatter eldre «uavklart»-status kun for prototypebruk innen datagrensene. Full pytest: 99 bestått; dokumentasjonstester: 5 bestått. PR #5 ble allerede merget med `f03f517fd0f5fcf7537c709fab4e746a0740763b`; denne oppdateringen kan ikke endre den lukkede PR-en. Promptarkiv og `PROMPT_HISTORY_GAPS.md` er bevart.

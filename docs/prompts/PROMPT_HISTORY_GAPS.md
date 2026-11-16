@@ -85,3 +85,8 @@ Originalmappens dokumentasjon er kontrollert uten endringer. Ingen Codex-session
 ### Avkortet historikkmelding
 
 Den første meldingen som innledet denne sammenligningen var synlig avkuttet etter ordet «GEMINI». Den separat mottatte fortsettelses-/godkjenningsmeldingen finnes ordrett i oppfølgingsarkivet. Manglende tekst fra den avkuttede meldingen er ikke gjenfunnet eller rekonstruert og telles ikke som en full originalprompt. Dette er et eget kildehull, adskilt fra det nummererte PROMPT 027-hullet og de fire eldre aktivitetsgruppene.
+
+
+## Sluttrevisjon PROMPT 029 (2026-11-16)
+
+PROMPT 029 er tildelt den komplette sluttrevisjonsforespørselen i denne Codex-økten. `PROMPT_029_FINAL_AUDIT.md` peker på originalmeldingen i samtalen, men inneholder ikke hele prompten ordrett. Arkivet markerer derfor ikke denne oppføringen som en full originaltranskripsjon. Denne oppgaven krever full ordrett lagring når teksten er tilgjengelig; dette gjenstår som et eksplisitt dokumentasjonsavvik og skal ikke forveksles med de eldre rekonstruerte sammendragene eller PROMPT 027-hullet.

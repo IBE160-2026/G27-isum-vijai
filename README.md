@@ -41,6 +41,12 @@ streamlit run app.py
 
 Åpne adressen Streamlit viser i terminalen. Prototypen er konfigurert til å lytte bare på `127.0.0.1` på denne maskinen. I Windows PowerShell aktiveres miljøet med `.venv\Scripts\Activate.ps1`.
 
+### Prøve løsningen uten API-nøkkel
+
+Gemini er valgfritt. Etter oppstart velger du **Lokal**, limer inn syntetiske notater og velger **Generer læringsressurser**. Lokal modus lager et enkelt, deterministisk sammendrag og begrepsliste samt en tydelig merket demoquiz; quizspørsmålene er ikke utledet fra notatene. Svar på spørsmålene og velg **Sjekk svar** for å se poengsum og forklaringer. Du trenger ingen API-nøkkel for denne flyten. Gemini-modus krever en egen `GEMINI_API_KEY`; uten nøkkel skal appen gi en veiledende feil og ikke sende et kall.
+
+Tre syntetiske, ufølsomme testnotater med forventede fakta, begreper og en påstand som ikke støttes av notatet finnes i [`testdata/synthetic_cases.json`](testdata/synthetic_cases.json). De brukes til deterministiske tester, ikke som bevis på modellkvalitet.
+
 Ved første kontroll manglet `streamlit` og `pytest` i utviklingsmiljøets standard-Python. Etter at installasjonsbehovet var forklart og godkjent, ble avhengighetene installert i prosjektets isolerte `.venv` og brukt til verifiseringen.
 
 ### Tester
@@ -52,4 +58,4 @@ python -m unittest discover -s tests -v
 pytest -q
 ```
 
-Kjøring med `pytest` krever at avhengighetene i `requirements.txt` er installert. Testene dekker lokal behandling av notater, PDF-uttrekk/feil, kilde- og demo-merking, tekstvalidering, quizstruktur, avvisning av ugyldige mockresultater og kontrollert håndtering av uventede generatorfeil.
+Kjøring med `pytest` krever at avhengighetene i `requirements.txt` er installert. Testene dekker lokal behandling av notater, PDF-uttrekk/feil, kilde- og demo-merking, tekstvalidering, quizstruktur, avvisning av ugyldige mockresultater og kontrollert håndtering av uventede generatorfeil. Gemini-kall i automatiske tester er mock-basert; testene oppretter ikke eksterne API-forespørsler. Se også `docs/audit/` for kravsporbarhet og avgrensninger i sluttkontrollen.
